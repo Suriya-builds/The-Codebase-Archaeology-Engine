@@ -101,7 +101,8 @@ def test_declared_mutant_that_does_not_apply(variant):
         (package / "mutants" / "ignore-min-subtotal.patch").write_text(
             "--- a/shopcart/discounts.py\n+++ b/shopcart/discounts.py\n"
             "@@ -1,1 +1,1 @@\n-no such line\n+replacement\n")
-    assert codes(variant(edit)) == {"W3_MUTANT_INVALID"}
+    # The only mutant gave no verdict, so there is also no mutation evidence at all.
+    assert codes(variant(edit)) == {"W3_MUTANT_INVALID", "W3_NO_MUTANTS"}
 
 
 def _weaken(package, manifest):
