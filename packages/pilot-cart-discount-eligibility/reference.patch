@@ -1,0 +1,92 @@
+diff --git a/shopcart/discounts.py b/shopcart/discounts.py
+index 67d7758..d73d390 100644
+--- a/shopcart/discounts.py
++++ b/shopcart/discounts.py
+@@ -2,7 +2,23 @@ from dataclasses import dataclass
+ from decimal import Decimal
+ 
+ from shopcart.errors import InvalidDiscountError
+-from shopcart.money import round_money
++from shopcart.money import ZERO, round_money, to_money
++
++
++@dataclass(frozen=True)
++class Eligibility:
++    """Conditions a cart must meet before a discount takes anything off."""
++
++    min_subtotal: Decimal = ZERO
++    categories: frozenset | None = None
++
++    def eligible_subtotal(self, cart):
++        """Sum of the lines the discount may be applied to."""
++        total = ZERO
++        for line in cart.lines():
++            if self.categories is None or line.product.category in self.categories:
++                total += line.line_total()
++        return total
+ 
+ 
+ @dataclass(frozen=True)
+@@ -11,6 +27,7 @@ class Discount:
+ 
+     code: str
+     percent: Decimal
++    eligibility: Eligibility | None = None
+ 
+     @classmethod
+     def from_config(cls, config):
+@@ -25,11 +42,17 @@ class Discount:
+         if not isinstance(code, str) or not code.strip():
+             raise InvalidDiscountError("discount code must be a non-empty string")
+         percent = _parse_percent(config.get("percent"))
+-        return cls(code=code.strip().upper(), percent=percent)
++        eligibility = _parse_eligibility(config.get("eligibility"))
++        return cls(code=code.strip().upper(), percent=percent, eligibility=eligibility)
+ 
+     def amount_for(self, cart):
+         """The amount this discount takes off the given cart."""
+-        return round_money(cart.subtotal() * self.percent / 100)
++        if self.eligibility is None:
++            return round_money(cart.subtotal() * self.percent / 100)
++        eligible = self.eligibility.eligible_subtotal(cart)
++        if eligible < self.eligibility.min_subtotal:
++            return ZERO
++        return round_money(eligible * self.percent / 100)
+ 
+ 
+ def _parse_percent(raw):
+@@ -42,3 +65,34 @@ def _parse_percent(raw):
+     if not percent.is_finite() or percent <= 0 or percent > 100:
+         raise InvalidDiscountError("percent must be greater than 0 and at most 100")
+     return percent
++
++
++def _parse_eligibility(raw):
++    if raw is None:
++        return None
++    if not isinstance(raw, dict):
++        raise InvalidDiscountError("eligibility must be a mapping")
++    min_subtotal = _parse_min_subtotal(raw.get("min_subtotal", "0"))
++    categories = raw.get("categories")
++    if categories is not None:
++        categories = _parse_categories(categories)
++    return Eligibility(min_subtotal=min_subtotal, categories=categories)
++
++
++def _parse_min_subtotal(raw):
++    try:
++        amount = to_money(raw)
++    except (TypeError, ValueError) as exc:
++        raise InvalidDiscountError("eligibility.min_subtotal must be a money value") from exc
++    if amount < 0:
++        raise InvalidDiscountError("eligibility.min_subtotal must not be negative")
++    return amount
++
++
++def _parse_categories(raw):
++    if not isinstance(raw, list) or len(raw) == 0:
++        raise InvalidDiscountError("eligibility.categories must be a non-empty list")
++    for category in raw:
++        if not isinstance(category, str) or not category.strip():
++            raise InvalidDiscountError("eligibility.categories must contain non-blank strings")
++    return frozenset(raw)

@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+.venv/
+/unwritten-evidence/
+# Raw per-suite logs are large and reproducible; evidence.json and mutant diffs are kept.
+/evidence/*/logs/

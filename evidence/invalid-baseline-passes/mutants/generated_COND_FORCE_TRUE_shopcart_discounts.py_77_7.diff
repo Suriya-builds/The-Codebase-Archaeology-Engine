@@ -1,0 +1,9 @@
+--- reference/shopcart/discounts.py
++++ mutant/shopcart/discounts.py
+@@ -75,5 +75,5 @@
+     min_subtotal = _parse_min_subtotal(raw.get("min_subtotal", "0"))
+     categories = raw.get("categories")
+-    if categories is not None:
++    if True:
+         categories = _parse_categories(categories)
+     return Eligibility(min_subtotal=min_subtotal, categories=categories)

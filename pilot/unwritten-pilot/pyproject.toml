@@ -1,0 +1,8 @@
+[project]
+name = "unwritten-pilot"
+version = "0.1.0"
+description = "Pilot shopping-cart library for the UNWRITTEN verification harness"
+requires-python = ">=3.10"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

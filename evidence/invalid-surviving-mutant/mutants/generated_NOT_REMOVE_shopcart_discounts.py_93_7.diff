@@ -1,0 +1,9 @@
+--- reference/shopcart/discounts.py
++++ mutant/shopcart/discounts.py
+@@ -91,5 +91,5 @@
+ 
+ def _parse_categories(raw):
+-    if not isinstance(raw, list) or len(raw) == 0:
++    if isinstance(raw, list) or len(raw) == 0:
+         raise InvalidDiscountError("eligibility.categories must be a non-empty list")
+     for category in raw:

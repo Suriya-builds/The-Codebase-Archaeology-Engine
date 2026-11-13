@@ -1,0 +1,50 @@
+{
+  "schema_version": "0.1",
+  "task_id": "invalid-surviving-mutant",
+  "title": "Configurable discount eligibility (deliberately invalid package)",
+  "repo": {
+    "name": "unwritten-pilot",
+    "commit": "667512bac0534ea742a7a7c3e3262142ac914c30"
+  },
+  "execution": {
+    "dockerfile": "environment/Dockerfile",
+    "python_path": [
+      "."
+    ],
+    "repo_test_paths": [
+      "tests"
+    ],
+    "timeout_seconds": 120
+  },
+  "mutation": {
+    "generate": true,
+    "declared": [
+      {
+        "id": "ignore-min-subtotal",
+        "patch": "mutants/ignore-min-subtotal.patch",
+        "description": "The minimum subtotal is parsed but never enforced."
+      },
+      {
+        "id": "min-subtotal-checks-whole-cart",
+        "patch": "mutants/min-subtotal-checks-whole-cart.patch",
+        "description": "The minimum is compared with the whole cart subtotal instead of the eligible subtotal."
+      },
+      {
+        "id": "category-match-discounts-whole-cart",
+        "patch": "mutants/category-match-discounts-whole-cart.patch",
+        "description": "Once any line is eligible, the percentage is taken from the whole cart."
+      },
+      {
+        "id": "eligibility-required",
+        "patch": "mutants/eligibility-required.patch",
+        "description": "Breaks backward compatibility: a discount without eligibility takes nothing off."
+      }
+    ],
+    "waivers": []
+  },
+  "provenance": {
+    "authored_by": "human",
+    "llm_calls": 0,
+    "notes": "DELIBERATELY INVALID. Same reference implementation and mutants as pilot-cart-discount-eligibility, but with a weak feature suite. Worlds 1 and 2 pass; the harness must reject it with W3_MUTANT_SURVIVED."
+  }
+}

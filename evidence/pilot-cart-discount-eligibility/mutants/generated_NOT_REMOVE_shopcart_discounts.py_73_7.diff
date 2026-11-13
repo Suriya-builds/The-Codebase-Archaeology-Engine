@@ -1,0 +1,9 @@
+--- reference/shopcart/discounts.py
++++ mutant/shopcart/discounts.py
+@@ -71,5 +71,5 @@
+     if raw is None:
+         return None
+-    if not isinstance(raw, dict):
++    if isinstance(raw, dict):
+         raise InvalidDiscountError("eligibility must be a mapping")
+     min_subtotal = _parse_min_subtotal(raw.get("min_subtotal", "0"))

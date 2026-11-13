@@ -1,0 +1,9 @@
+--- reference/shopcart/discounts.py
++++ mutant/shopcart/discounts.py
+@@ -69,5 +69,5 @@
+ 
+ def _parse_eligibility(raw):
+-    if raw is None:
++    if True:
+         return None
+     if not isinstance(raw, dict):

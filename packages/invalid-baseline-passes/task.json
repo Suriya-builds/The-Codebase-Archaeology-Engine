@@ -1,0 +1,50 @@
+{
+  "schema_version": "0.1",
+  "task_id": "invalid-baseline-passes",
+  "title": "Configurable discount eligibility (deliberately invalid package)",
+  "repo": {
+    "name": "unwritten-pilot",
+    "commit": "667512bac0534ea742a7a7c3e3262142ac914c30"
+  },
+  "execution": {
+    "dockerfile": "environment/Dockerfile",
+    "python_path": [
+      "."
+    ],
+    "repo_test_paths": [
+      "tests"
+    ],
+    "timeout_seconds": 120
+  },
+  "mutation": {
+    "generate": true,
+    "declared": [
+      {
+        "id": "ignore-min-subtotal",
+        "patch": "mutants/ignore-min-subtotal.patch",
+        "description": "The minimum subtotal is parsed but never enforced."
+      },
+      {
+        "id": "min-subtotal-checks-whole-cart",
+        "patch": "mutants/min-subtotal-checks-whole-cart.patch",
+        "description": "The minimum is compared with the whole cart subtotal instead of the eligible subtotal."
+      },
+      {
+        "id": "category-match-discounts-whole-cart",
+        "patch": "mutants/category-match-discounts-whole-cart.patch",
+        "description": "Once any line is eligible, the percentage is taken from the whole cart."
+      },
+      {
+        "id": "eligibility-required",
+        "patch": "mutants/eligibility-required.patch",
+        "description": "Breaks backward compatibility: a discount without eligibility takes nothing off."
+      }
+    ],
+    "waivers": []
+  },
+  "provenance": {
+    "authored_by": "human",
+    "llm_calls": 0,
+    "notes": "DELIBERATELY INVALID. Identical to pilot-cart-discount-eligibility plus one feature test (tests/feature/test_discount_happy_path.py) that already passes at the base commit. The harness must reject it with W1_FEATURE_PASSES_AT_BASE."
+  }
+}

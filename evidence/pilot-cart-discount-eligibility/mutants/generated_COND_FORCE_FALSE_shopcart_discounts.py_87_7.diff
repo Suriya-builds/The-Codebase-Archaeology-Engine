@@ -1,0 +1,9 @@
+--- reference/shopcart/discounts.py
++++ mutant/shopcart/discounts.py
+@@ -85,5 +85,5 @@
+     except (TypeError, ValueError) as exc:
+         raise InvalidDiscountError("eligibility.min_subtotal must be a money value") from exc
+-    if amount < 0:
++    if False:
+         raise InvalidDiscountError("eligibility.min_subtotal must not be negative")
+     return amount

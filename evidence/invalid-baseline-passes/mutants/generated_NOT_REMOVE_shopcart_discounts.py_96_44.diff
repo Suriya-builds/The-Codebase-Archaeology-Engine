@@ -1,0 +1,9 @@
+--- reference/shopcart/discounts.py
++++ mutant/shopcart/discounts.py
+@@ -94,5 +94,5 @@
+         raise InvalidDiscountError("eligibility.categories must be a non-empty list")
+     for category in raw:
+-        if not isinstance(category, str) or not category.strip():
++        if not isinstance(category, str) or category.strip():
+             raise InvalidDiscountError("eligibility.categories must contain non-blank strings")
+     return frozenset(raw)

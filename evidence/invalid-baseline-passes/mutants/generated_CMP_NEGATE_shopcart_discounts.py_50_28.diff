@@ -1,0 +1,9 @@
+--- reference/shopcart/discounts.py
++++ mutant/shopcart/discounts.py
+@@ -48,5 +48,5 @@
+     def amount_for(self, cart):
+         """The amount this discount takes off the given cart."""
+-        if self.eligibility is None:
++        if self.eligibility is not None:
+             return round_money(cart.subtotal() * self.percent / 100)
+         eligible = self.eligibility.eligible_subtotal(cart)

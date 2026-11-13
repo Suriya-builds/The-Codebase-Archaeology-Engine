@@ -1,0 +1,9 @@
+--- reference/shopcart/discounts.py
++++ mutant/shopcart/discounts.py
+@@ -17,5 +17,5 @@
+         total = ZERO
+         for line in cart.lines():
+-            if self.categories is None or line.product.category in self.categories:
++            if True:
+                 total += line.line_total()
+         return total

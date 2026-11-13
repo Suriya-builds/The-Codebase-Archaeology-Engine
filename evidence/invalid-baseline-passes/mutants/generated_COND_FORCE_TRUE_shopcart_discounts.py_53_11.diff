@@ -1,0 +1,9 @@
+--- reference/shopcart/discounts.py
++++ mutant/shopcart/discounts.py
+@@ -51,5 +51,5 @@
+             return round_money(cart.subtotal() * self.percent / 100)
+         eligible = self.eligibility.eligible_subtotal(cart)
+-        if eligible < self.eligibility.min_subtotal:
++        if True:
+             return ZERO
+         return round_money(eligible * self.percent / 100)

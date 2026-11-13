@@ -1,0 +1,13 @@
+diff --git a/shopcart/discounts.py b/shopcart/discounts.py
+index d73d390..5b9e898 100644
+--- a/shopcart/discounts.py
++++ b/shopcart/discounts.py
+@@ -48,7 +48,7 @@ class Discount:
+     def amount_for(self, cart):
+         """The amount this discount takes off the given cart."""
+         if self.eligibility is None:
+-            return round_money(cart.subtotal() * self.percent / 100)
++            return ZERO
+         eligible = self.eligibility.eligible_subtotal(cart)
+         if eligible < self.eligibility.min_subtotal:
+             return ZERO

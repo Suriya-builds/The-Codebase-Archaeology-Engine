@@ -1,0 +1,15 @@
+diff --git a/shopcart/discounts.py b/shopcart/discounts.py
+index d73d390..a0a8783 100644
+--- a/shopcart/discounts.py
++++ b/shopcart/discounts.py
+@@ -52,7 +52,9 @@ class Discount:
+         eligible = self.eligibility.eligible_subtotal(cart)
+         if eligible < self.eligibility.min_subtotal:
+             return ZERO
+-        return round_money(eligible * self.percent / 100)
++        if eligible == ZERO:
++            return ZERO
++        return round_money(cart.subtotal() * self.percent / 100)
+ 
+ 
+ def _parse_percent(raw):
