@@ -1,0 +1,9 @@
+--- reference/shopcart/discounts.py
++++ mutant/shopcart/discounts.py
+@@ -40,5 +40,5 @@
+             raise InvalidDiscountError("discount config must be a mapping")
+         code = config.get("code")
+-        if not isinstance(code, str) or not code.strip():
++        if False:
+             raise InvalidDiscountError("discount code must be a non-empty string")
+         percent = _parse_percent(config.get("percent"))

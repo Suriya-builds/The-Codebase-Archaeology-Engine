@@ -1,0 +1,1523 @@
+{
+  "contract_map_schema": "0.1",
+  "harness": {
+    "name": "unwritten",
+    "version": "0.1.0"
+  },
+  "repository": {
+    "name": "unwritten-pilot",
+    "commit": "667512bac0534ea742a7a7c3e3262142ac914c30",
+    "tree": "79bc8aba14de40bd9f84d39685f3a138465b1c2f"
+  },
+  "adapter": "python",
+  "environment": {
+    "runner": "docker",
+    "isolation": {
+      "network": "none",
+      "read_only_root": true,
+      "capabilities": "none",
+      "user": "65534:65534",
+      "memory": "1g",
+      "cpus": "2",
+      "pids": "256",
+      "tmpfs": "/tmp:rw,size=256m"
+    },
+    "image": "unwritten-env:9fe81e86edac96ca",
+    "image_id": "sha256:65b04c7f77af2cace45c6d2251c1febfcb58ba69a0c1d424fc837959c3ddfa72",
+    "dockerfile_sha256": "9fe81e86edac96ca8bbaabe257e9632307b980e7f0069187c4fa625cfb6685ff",
+    "python_version": "3.12.16",
+    "pytest_version": "8.3.4"
+  },
+  "process": {
+    "llm_calls": 0,
+    "llm_note": "the harness contains no model client; supplied hypotheses are read from a file and judged only by executing their probes",
+    "hypotheses_file": "hypotheses.json"
+  },
+  "summary": {
+    "contracts": 34,
+    "hypothesis": 4,
+    "refuted": 2,
+    "verified": 28,
+    "baseline_tests": 38,
+    "baseline_runs": 2,
+    "faults_injected": 45,
+    "faults_detected": 44,
+    "faults_undetected": 1,
+    "faults_timed_out": 0
+  },
+  "fingerprint": "e85e82db43c08951f57165dff9517fd7d59c4a60650c1f2e994bffda9a556d3e",
+  "contracts": [
+    {
+      "id": "test:tests/test_cart.py::test_adding_same_product_merges_quantities",
+      "description": "adding same product merges quantities",
+      "category": "behaviour",
+      "origin": "repository",
+      "evidence_type": "existing_test",
+      "source": {
+        "file": "tests/test_cart.py",
+        "symbol": "test_adding_same_product_merges_quantities",
+        "line": 25
+      },
+      "related": [
+        {
+          "file": "shopcart/cart.py",
+          "symbol": "Cart.add"
+        },
+        {
+          "file": "shopcart/cart.py",
+          "symbol": "_check_quantity"
+        },
+        {
+          "file": "shopcart/catalog.py",
+          "symbol": "Product.__post_init__"
+        },
+        {
+          "file": "shopcart/money.py",
+          "symbol": "to_money"
+        }
+      ],
+      "validation": {
+        "method": "the repository's own test, run at the pinned commit twice and against every injected fault",
+        "probes": [
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_cart.py::test_adding_same_product_merges_quantities"
+          }
+        ],
+        "probe_count": 1,
+        "faults_detected": 11,
+        "result": "passes_and_detects_faults"
+      },
+      "status": "verified",
+      "confidence": "high"
+    },
+    {
+      "id": "test:tests/test_cart.py::test_empty_cart_totals_zero",
+      "description": "empty cart totals zero",
+      "category": "behaviour",
+      "origin": "repository",
+      "evidence_type": "existing_test",
+      "source": {
+        "file": "tests/test_cart.py",
+        "symbol": "test_empty_cart_totals_zero",
+        "line": 11
+      },
+      "related": [
+        {
+          "file": "shopcart/cart.py",
+          "symbol": "Cart.is_empty"
+        },
+        {
+          "file": "shopcart/cart.py",
+          "symbol": "Cart.total"
+        },
+        {
+          "file": "shopcart/catalog.py",
+          "symbol": "Product.__post_init__"
+        },
+        {
+          "file": "shopcart/money.py",
+          "symbol": "to_money"
+        }
+      ],
+      "validation": {
+        "method": "the repository's own test, run at the pinned commit twice and against every injected fault",
+        "probes": [
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_cart.py::test_empty_cart_totals_zero"
+          }
+        ],
+        "probe_count": 1,
+        "faults_detected": 7,
+        "result": "passes_and_detects_faults"
+      },
+      "status": "verified",
+      "confidence": "high"
+    },
+    {
+      "id": "test:tests/test_cart.py::test_float_prices_are_rejected",
+      "description": "float prices are rejected",
+      "category": "behaviour",
+      "origin": "repository",
+      "evidence_type": "existing_test",
+      "source": {
+        "file": "tests/test_cart.py",
+        "symbol": "test_float_prices_are_rejected",
+        "line": 62
+      },
+      "related": [
+        {
+          "file": "shopcart/catalog.py",
+          "symbol": "Product.__post_init__"
+        },
+        {
+          "file": "shopcart/money.py",
+          "symbol": "to_money"
+        }
+      ],
+      "validation": {
+        "method": "the repository's own test, run at the pinned commit twice and against every injected fault",
+        "probes": [
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_cart.py::test_float_prices_are_rejected"
+          }
+        ],
+        "probe_count": 1,
+        "faults_detected": 6,
+        "result": "passes_and_detects_faults"
+      },
+      "status": "verified",
+      "confidence": "high"
+    },
+    {
+      "id": "test:tests/test_cart.py::test_invalid_quantity_is_rejected",
+      "description": "invalid quantity is rejected",
+      "category": "behaviour",
+      "origin": "repository",
+      "evidence_type": "existing_test",
+      "source": {
+        "file": "tests/test_cart.py",
+        "symbol": "test_invalid_quantity_is_rejected",
+        "line": 53
+      },
+      "related": [
+        {
+          "file": "shopcart/cart.py",
+          "symbol": "_check_quantity"
+        },
+        {
+          "file": "shopcart/catalog.py",
+          "symbol": "Product.__post_init__"
+        },
+        {
+          "file": "shopcart/money.py",
+          "symbol": "to_money"
+        }
+      ],
+      "validation": {
+        "method": "the repository's own test, run at the pinned commit twice and against every injected fault",
+        "probes": [
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[-1]"
+          },
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[0]"
+          },
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[1.5]"
+          },
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[2]"
+          },
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[True]"
+          }
+        ],
+        "probe_count": 5,
+        "faults_detected": 8,
+        "result": "passes_and_detects_faults"
+      },
+      "status": "verified",
+      "confidence": "high"
+    },
+    {
+      "id": "test:tests/test_cart.py::test_lines_keep_insertion_order",
+      "description": "lines keep insertion order",
+      "category": "behaviour",
+      "origin": "repository",
+      "evidence_type": "existing_test",
+      "source": {
+        "file": "tests/test_cart.py",
+        "symbol": "test_lines_keep_insertion_order",
+        "line": 32
+      },
+      "related": [
+        {
+          "file": "shopcart/cart.py",
+          "symbol": "Cart.add"
+        },
+        {
+          "file": "shopcart/cart.py",
+          "symbol": "_check_quantity"
+        },
+        {
+          "file": "shopcart/catalog.py",
+          "symbol": "Product.__post_init__"
+        },
+        {
+          "file": "shopcart/money.py",
+          "symbol": "to_money"
+        }
+      ],
+      "validation": {
+        "method": "the repository's own test, run at the pinned commit twice and against every injected fault",
+        "probes": [
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_cart.py::test_lines_keep_insertion_order"
+          }
+        ],
+        "probe_count": 1,
+        "faults_detected": 10,
+        "result": "passes_and_detects_faults"
+      },
+      "status": "verified",
+      "confidence": "high"
+    },
+    {
+      "id": "test:tests/test_cart.py::test_product_price_is_normalised_to_cents",
+      "description": "product price is normalised to cents",
+      "category": "behaviour",
+      "origin": "repository",
+      "evidence_type": "existing_test",
+      "source": {
+        "file": "tests/test_cart.py",
+        "symbol": "test_product_price_is_normalised_to_cents",
+        "line": 58
+      },
+      "related": [
+        {
+          "file": "shopcart/catalog.py",
+          "symbol": "Product.__post_init__"
+        },
+        {
+          "file": "shopcart/money.py",
+          "symbol": "to_money"
+        }
+      ],
+      "validation": {
+        "method": "the repository's own test, run at the pinned commit twice and against every injected fault",
+        "probes": [
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_cart.py::test_product_price_is_normalised_to_cents"
+          }
+        ],
+        "probe_count": 1,
+        "faults_detected": 4,
+        "result": "passes_and_detects_faults"
+      },
+      "status": "verified",
+      "confidence": "high"
+    },
+    {
+      "id": "test:tests/test_cart.py::test_remove_deletes_line",
+      "description": "remove deletes line",
+      "category": "behaviour",
+      "origin": "repository",
+      "evidence_type": "existing_test",
+      "source": {
+        "file": "tests/test_cart.py",
+        "symbol": "test_remove_deletes_line",
+        "line": 39
+      },
+      "related": [
+        {
+          "file": "shopcart/cart.py",
+          "symbol": "Cart.add"
+        },
+        {
+          "file": "shopcart/cart.py",
+          "symbol": "Cart.remove"
+        },
+        {
+          "file": "shopcart/cart.py",
+          "symbol": "_check_quantity"
+        },
+        {
+          "file": "shopcart/catalog.py",
+          "symbol": "Product.__post_init__"
+        },
+        {
+          "file": "shopcart/money.py",
+          "symbol": "to_money"
+        }
+      ],
+      "validation": {
+        "method": "the repository's own test, run at the pinned commit twice and against every injected fault",
+        "probes": [
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_cart.py::test_remove_deletes_line"
+          }
+        ],
+        "probe_count": 1,
+        "faults_detected": 12,
+        "result": "passes_and_detects_faults"
+      },
+      "status": "verified",
+      "confidence": "high"
+    },
+    {
+      "id": "test:tests/test_cart.py::test_remove_unknown_sku_raises_key_error",
+      "description": "remove unknown sku raises key error",
+      "category": "behaviour",
+      "origin": "repository",
+      "evidence_type": "existing_test",
+      "source": {
+        "file": "tests/test_cart.py",
+        "symbol": "test_remove_unknown_sku_raises_key_error",
+        "line": 47
+      },
+      "related": [
+        {
+          "file": "shopcart/catalog.py",
+          "symbol": "Product.__post_init__"
+        },
+        {
+          "file": "shopcart/money.py",
+          "symbol": "to_money"
+        }
+      ],
+      "validation": {
+        "method": "the repository's own test, run at the pinned commit twice and against every injected fault",
+        "probes": [
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_cart.py::test_remove_unknown_sku_raises_key_error"
+          }
+        ],
+        "probe_count": 1,
+        "faults_detected": 4,
+        "result": "passes_and_detects_faults"
+      },
+      "status": "verified",
+      "confidence": "high"
+    },
+    {
+      "id": "test:tests/test_cart.py::test_subtotal_sums_line_totals",
+      "description": "subtotal sums line totals",
+      "category": "behaviour",
+      "origin": "repository",
+      "evidence_type": "existing_test",
+      "source": {
+        "file": "tests/test_cart.py",
+        "symbol": "test_subtotal_sums_line_totals",
+        "line": 18
+      },
+      "related": [
+        {
+          "file": "shopcart/cart.py",
+          "symbol": "Cart.add"
+        },
+        {
+          "file": "shopcart/cart.py",
+          "symbol": "_check_quantity"
+        },
+        {
+          "file": "shopcart/catalog.py",
+          "symbol": "Product.__post_init__"
+        },
+        {
+          "file": "shopcart/money.py",
+          "symbol": "to_money"
+        }
+      ],
+      "validation": {
+        "method": "the repository's own test, run at the pinned commit twice and against every injected fault",
+        "probes": [
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_cart.py::test_subtotal_sums_line_totals"
+          }
+        ],
+        "probe_count": 1,
+        "faults_detected": 10,
+        "result": "passes_and_detects_faults"
+      },
+      "status": "verified",
+      "confidence": "high"
+    },
+    {
+      "id": "test:tests/test_discounts.py::test_code_is_trimmed_and_uppercased",
+      "description": "code is trimmed and uppercased",
+      "category": "behaviour",
+      "origin": "repository",
+      "evidence_type": "existing_test",
+      "source": {
+        "file": "tests/test_discounts.py",
+        "symbol": "test_code_is_trimmed_and_uppercased",
+        "line": 35
+      },
+      "related": [
+        {
+          "file": "shopcart/catalog.py",
+          "symbol": "Product.__post_init__"
+        },
+        {
+          "file": "shopcart/discounts.py",
+          "symbol": "Discount.from_config"
+        },
+        {
+          "file": "shopcart/discounts.py",
+          "symbol": "_parse_percent"
+        },
+        {
+          "file": "shopcart/money.py",
+          "symbol": "to_money"
+        }
+      ],
+      "validation": {
+        "method": "the repository's own test, run at the pinned commit twice and against every injected fault",
+        "probes": [
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_discounts.py::test_code_is_trimmed_and_uppercased"
+          }
+        ],
+        "probe_count": 1,
+        "faults_detected": 13,
+        "result": "passes_and_detects_faults"
+      },
+      "status": "verified",
+      "confidence": "high"
+    },
+    {
+      "id": "test:tests/test_discounts.py::test_config_must_be_a_mapping",
+      "description": "config must be a mapping",
+      "category": "behaviour",
+      "origin": "repository",
+      "evidence_type": "existing_test",
+      "source": {
+        "file": "tests/test_discounts.py",
+        "symbol": "test_config_must_be_a_mapping",
+        "line": 56
+      },
+      "related": [
+        {
+          "file": "shopcart/catalog.py",
+          "symbol": "Product.__post_init__"
+        },
+        {
+          "file": "shopcart/discounts.py",
+          "symbol": "Discount.from_config"
+        },
+        {
+          "file": "shopcart/money.py",
+          "symbol": "to_money"
+        }
+      ],
+      "validation": {
+        "method": "the repository's own test, run at the pinned commit twice and against every injected fault",
+        "probes": [
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_discounts.py::test_config_must_be_a_mapping"
+          }
+        ],
+        "probe_count": 1,
+        "faults_detected": 6,
+        "result": "passes_and_detects_faults"
+      },
+      "status": "verified",
+      "confidence": "high"
+    },
+    {
+      "id": "test:tests/test_discounts.py::test_discount_amount_rounds_half_up",
+      "description": "discount amount rounds half up",
+      "category": "behaviour",
+      "origin": "repository",
+      "evidence_type": "existing_test",
+      "source": {
+        "file": "tests/test_discounts.py",
+        "symbol": "test_discount_amount_rounds_half_up",
+        "line": 23
+      },
+      "related": [
+        {
+          "file": "shopcart/cart.py",
+          "symbol": "Cart.add"
+        },
+        {
+          "file": "shopcart/cart.py",
+          "symbol": "Cart.total"
+        },
+        {
+          "file": "shopcart/cart.py",
+          "symbol": "_check_quantity"
+        },
+        {
+          "file": "shopcart/catalog.py",
+          "symbol": "Product.__post_init__"
+        },
+        {
+          "file": "shopcart/discounts.py",
+          "symbol": "Discount.from_config"
+        },
+        {
+          "file": "shopcart/discounts.py",
+          "symbol": "_parse_percent"
+        },
+        {
+          "file": "shopcart/money.py",
+          "symbol": "to_money"
+        }
+      ],
+      "validation": {
+        "method": "the repository's own test, run at the pinned commit twice and against every injected fault",
+        "probes": [
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_discounts.py::test_discount_amount_rounds_half_up"
+          }
+        ],
+        "probe_count": 1,
+        "faults_detected": 21,
+        "result": "passes_and_detects_faults"
+      },
+      "status": "verified",
+      "confidence": "high"
+    },
+    {
+      "id": "test:tests/test_discounts.py::test_full_discount_makes_cart_free",
+      "description": "full discount makes cart free",
+      "category": "behaviour",
+      "origin": "repository",
+      "evidence_type": "existing_test",
+      "source": {
+        "file": "tests/test_discounts.py",
+        "symbol": "test_full_discount_makes_cart_free",
+        "line": 30
+      },
+      "related": [
+        {
+          "file": "shopcart/cart.py",
+          "symbol": "Cart.add"
+        },
+        {
+          "file": "shopcart/cart.py",
+          "symbol": "Cart.total"
+        },
+        {
+          "file": "shopcart/cart.py",
+          "symbol": "_check_quantity"
+        },
+        {
+          "file": "shopcart/catalog.py",
+          "symbol": "Product.__post_init__"
+        },
+        {
+          "file": "shopcart/discounts.py",
+          "symbol": "Discount.from_config"
+        },
+        {
+          "file": "shopcart/discounts.py",
+          "symbol": "_parse_percent"
+        },
+        {
+          "file": "shopcart/money.py",
+          "symbol": "to_money"
+        }
+      ],
+      "validation": {
+        "method": "the repository's own test, run at the pinned commit twice and against every injected fault",
+        "probes": [
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_discounts.py::test_full_discount_makes_cart_free"
+          }
+        ],
+        "probe_count": 1,
+        "faults_detected": 21,
+        "result": "passes_and_detects_faults"
+      },
+      "status": "verified",
+      "confidence": "high"
+    },
+    {
+      "id": "test:tests/test_discounts.py::test_invalid_code_is_rejected",
+      "description": "invalid code is rejected",
+      "category": "behaviour",
+      "origin": "repository",
+      "evidence_type": "existing_test",
+      "source": {
+        "file": "tests/test_discounts.py",
+        "symbol": "test_invalid_code_is_rejected",
+        "line": 51
+      },
+      "related": [
+        {
+          "file": "shopcart/catalog.py",
+          "symbol": "Product.__post_init__"
+        },
+        {
+          "file": "shopcart/discounts.py",
+          "symbol": "Discount.from_config"
+        },
+        {
+          "file": "shopcart/money.py",
+          "symbol": "to_money"
+        }
+      ],
+      "validation": {
+        "method": "the repository's own test, run at the pinned commit twice and against every injected fault",
+        "probes": [
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_discounts.py::test_invalid_code_is_rejected[   ]"
+          },
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_discounts.py::test_invalid_code_is_rejected[7]"
+          },
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_discounts.py::test_invalid_code_is_rejected[None]"
+          },
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_discounts.py::test_invalid_code_is_rejected[]"
+          }
+        ],
+        "probe_count": 4,
+        "faults_detected": 8,
+        "result": "passes_and_detects_faults"
+      },
+      "status": "verified",
+      "confidence": "high"
+    },
+    {
+      "id": "test:tests/test_discounts.py::test_invalid_percent_is_rejected",
+      "description": "invalid percent is rejected",
+      "category": "behaviour",
+      "origin": "repository",
+      "evidence_type": "existing_test",
+      "source": {
+        "file": "tests/test_discounts.py",
+        "symbol": "test_invalid_percent_is_rejected",
+        "line": 45
+      },
+      "related": [
+        {
+          "file": "shopcart/catalog.py",
+          "symbol": "Product.__post_init__"
+        },
+        {
+          "file": "shopcart/discounts.py",
+          "symbol": "_parse_percent"
+        },
+        {
+          "file": "shopcart/money.py",
+          "symbol": "to_money"
+        }
+      ],
+      "validation": {
+        "method": "the repository's own test, run at the pinned commit twice and against every injected fault",
+        "probes": [
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[-5]"
+          },
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[0]"
+          },
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[101]"
+          },
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[2.5]"
+          },
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[None]"
+          },
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[True]"
+          },
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[abc]"
+          }
+        ],
+        "probe_count": 7,
+        "faults_detected": 11,
+        "result": "passes_and_detects_faults"
+      },
+      "status": "verified",
+      "confidence": "high"
+    },
+    {
+      "id": "test:tests/test_discounts.py::test_percentage_discount_applies_to_whole_subtotal",
+      "description": "percentage discount applies to whole subtotal",
+      "category": "behaviour",
+      "origin": "repository",
+      "evidence_type": "existing_test",
+      "source": {
+        "file": "tests/test_discounts.py",
+        "symbol": "test_percentage_discount_applies_to_whole_subtotal",
+        "line": 18
+      },
+      "related": [
+        {
+          "file": "shopcart/cart.py",
+          "symbol": "Cart.add"
+        },
+        {
+          "file": "shopcart/cart.py",
+          "symbol": "Cart.total"
+        },
+        {
+          "file": "shopcart/cart.py",
+          "symbol": "_check_quantity"
+        },
+        {
+          "file": "shopcart/catalog.py",
+          "symbol": "Product.__post_init__"
+        },
+        {
+          "file": "shopcart/discounts.py",
+          "symbol": "Discount.from_config"
+        },
+        {
+          "file": "shopcart/discounts.py",
+          "symbol": "_parse_percent"
+        },
+        {
+          "file": "shopcart/money.py",
+          "symbol": "to_money"
+        }
+      ],
+      "validation": {
+        "method": "the repository's own test, run at the pinned commit twice and against every injected fault",
+        "probes": [
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_discounts.py::test_percentage_discount_applies_to_whole_subtotal"
+          }
+        ],
+        "probe_count": 1,
+        "faults_detected": 21,
+        "result": "passes_and_detects_faults"
+      },
+      "status": "verified",
+      "confidence": "high"
+    },
+    {
+      "id": "test:tests/test_discounts.py::test_unknown_config_keys_are_ignored",
+      "description": "unknown config keys are ignored",
+      "category": "behaviour",
+      "origin": "repository",
+      "evidence_type": "existing_test",
+      "source": {
+        "file": "tests/test_discounts.py",
+        "symbol": "test_unknown_config_keys_are_ignored",
+        "line": 39
+      },
+      "related": [
+        {
+          "file": "shopcart/catalog.py",
+          "symbol": "Product.__post_init__"
+        },
+        {
+          "file": "shopcart/discounts.py",
+          "symbol": "Discount.from_config"
+        },
+        {
+          "file": "shopcart/discounts.py",
+          "symbol": "_parse_percent"
+        },
+        {
+          "file": "shopcart/money.py",
+          "symbol": "to_money"
+        }
+      ],
+      "validation": {
+        "method": "the repository's own test, run at the pinned commit twice and against every injected fault",
+        "probes": [
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_discounts.py::test_unknown_config_keys_are_ignored"
+          }
+        ],
+        "probe_count": 1,
+        "faults_detected": 13,
+        "result": "passes_and_detects_faults"
+      },
+      "status": "verified",
+      "confidence": "high"
+    },
+    {
+      "id": "guard:shopcart/cart.py:Cart.remove:1",
+      "description": "`Cart.remove` raises `KeyError` when `sku not in self._lines`",
+      "category": "error_handling",
+      "origin": "static_analysis",
+      "evidence_type": "guard_clause",
+      "source": {
+        "file": "shopcart/cart.py",
+        "symbol": "Cart.remove",
+        "line": 31
+      },
+      "related": [
+        {
+          "file": "shopcart/cart.py",
+          "symbol": "Cart.remove"
+        }
+      ],
+      "guard": {
+        "file": "shopcart/cart.py",
+        "symbol": "Cart.remove",
+        "index": 1,
+        "condition": "sku not in self._lines",
+        "exception": "KeyError"
+      },
+      "validation": {
+        "method": "remove the guard and see whether a baseline-passing test fails",
+        "fault": "generated:COND_FORCE_FALSE:shopcart/cart.py:31:11",
+        "probes": [],
+        "probe_count": 0,
+        "result": "unprotected",
+        "note": "the code enforces this, but no test fails when the check is removed"
+      },
+      "status": "hypothesis",
+      "confidence": "medium"
+    },
+    {
+      "id": "guard:shopcart/cart.py:_check_quantity:1",
+      "description": "`_check_quantity` raises `InvalidQuantityError` when `isinstance(quantity, bool) or not isinstance(quantity, int)` (\"quantity must be an integer\")",
+      "category": "type_validation",
+      "origin": "static_analysis",
+      "evidence_type": "guard_clause",
+      "source": {
+        "file": "shopcart/cart.py",
+        "symbol": "_check_quantity",
+        "line": 54
+      },
+      "related": [
+        {
+          "file": "shopcart/cart.py",
+          "symbol": "_check_quantity"
+        }
+      ],
+      "guard": {
+        "file": "shopcart/cart.py",
+        "symbol": "_check_quantity",
+        "index": 1,
+        "condition": "isinstance(quantity, bool) or not isinstance(quantity, int)",
+        "exception": "InvalidQuantityError"
+      },
+      "validation": {
+        "method": "remove the guard and see whether a baseline-passing test fails",
+        "fault": "generated:COND_FORCE_FALSE:shopcart/cart.py:54:7",
+        "probes": [
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[1.5]"
+          },
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[2]"
+          },
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[True]"
+          }
+        ],
+        "probe_count": 3,
+        "result": "guard_removal_detected"
+      },
+      "status": "verified",
+      "confidence": "high"
+    },
+    {
+      "id": "guard:shopcart/cart.py:_check_quantity:2",
+      "description": "`_check_quantity` raises `InvalidQuantityError` when `quantity < 1` (\"quantity must be at least 1\")",
+      "category": "value_validation",
+      "origin": "static_analysis",
+      "evidence_type": "guard_clause",
+      "source": {
+        "file": "shopcart/cart.py",
+        "symbol": "_check_quantity",
+        "line": 56
+      },
+      "related": [
+        {
+          "file": "shopcart/cart.py",
+          "symbol": "_check_quantity"
+        }
+      ],
+      "guard": {
+        "file": "shopcart/cart.py",
+        "symbol": "_check_quantity",
+        "index": 2,
+        "condition": "quantity < 1",
+        "exception": "InvalidQuantityError"
+      },
+      "validation": {
+        "method": "remove the guard and see whether a baseline-passing test fails",
+        "fault": "generated:COND_FORCE_FALSE:shopcart/cart.py:56:7",
+        "probes": [
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[-1]"
+          },
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[0]"
+          }
+        ],
+        "probe_count": 2,
+        "result": "guard_removal_detected"
+      },
+      "status": "verified",
+      "confidence": "high"
+    },
+    {
+      "id": "guard:shopcart/catalog.py:Product.__post_init__:1",
+      "description": "`Product.__post_init__` raises `ValueError` when `price < 0` (\"price must not be negative\")",
+      "category": "value_validation",
+      "origin": "static_analysis",
+      "evidence_type": "guard_clause",
+      "source": {
+        "file": "shopcart/catalog.py",
+        "symbol": "Product.__post_init__",
+        "line": 16
+      },
+      "related": [
+        {
+          "file": "shopcart/catalog.py",
+          "symbol": "Product.__post_init__"
+        }
+      ],
+      "guard": {
+        "file": "shopcart/catalog.py",
+        "symbol": "Product.__post_init__",
+        "index": 1,
+        "condition": "price < 0",
+        "exception": "ValueError"
+      },
+      "validation": {
+        "method": "remove the guard and see whether a baseline-passing test fails",
+        "fault": "generated:COND_FORCE_FALSE:shopcart/catalog.py:16:11",
+        "probes": [
+          {
+            "suite": "probes",
+            "nodeid": "_unwritten/probes/test_hyp_negative_price_rejected.py::test_negative_price_is_rejected"
+          }
+        ],
+        "probe_count": 1,
+        "result": "guard_removal_detected"
+      },
+      "status": "verified",
+      "confidence": "high"
+    },
+    {
+      "id": "guard:shopcart/discounts.py:Discount.from_config:1",
+      "description": "`Discount.from_config` raises `InvalidDiscountError` when `not isinstance(config, dict)` (\"discount config must be a mapping\")",
+      "category": "type_validation",
+      "origin": "static_analysis",
+      "evidence_type": "guard_clause",
+      "source": {
+        "file": "shopcart/discounts.py",
+        "symbol": "Discount.from_config",
+        "line": 22
+      },
+      "related": [
+        {
+          "file": "shopcart/discounts.py",
+          "symbol": "Discount.from_config"
+        }
+      ],
+      "guard": {
+        "file": "shopcart/discounts.py",
+        "symbol": "Discount.from_config",
+        "index": 1,
+        "condition": "not isinstance(config, dict)",
+        "exception": "InvalidDiscountError"
+      },
+      "validation": {
+        "method": "remove the guard and see whether a baseline-passing test fails",
+        "fault": "generated:COND_FORCE_FALSE:shopcart/discounts.py:22:11",
+        "probes": [
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_discounts.py::test_config_must_be_a_mapping"
+          }
+        ],
+        "probe_count": 1,
+        "result": "guard_removal_detected"
+      },
+      "status": "verified",
+      "confidence": "high"
+    },
+    {
+      "id": "guard:shopcart/discounts.py:Discount.from_config:2",
+      "description": "`Discount.from_config` raises `InvalidDiscountError` when `not isinstance(code, str) or not code.strip()` (\"discount code must be a non-empty string\")",
+      "category": "type_validation",
+      "origin": "static_analysis",
+      "evidence_type": "guard_clause",
+      "source": {
+        "file": "shopcart/discounts.py",
+        "symbol": "Discount.from_config",
+        "line": 25
+      },
+      "related": [
+        {
+          "file": "shopcart/discounts.py",
+          "symbol": "Discount.from_config"
+        }
+      ],
+      "guard": {
+        "file": "shopcart/discounts.py",
+        "symbol": "Discount.from_config",
+        "index": 2,
+        "condition": "not isinstance(code, str) or not code.strip()",
+        "exception": "InvalidDiscountError"
+      },
+      "validation": {
+        "method": "remove the guard and see whether a baseline-passing test fails",
+        "fault": "generated:COND_FORCE_FALSE:shopcart/discounts.py:25:11",
+        "probes": [
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_discounts.py::test_invalid_code_is_rejected[   ]"
+          },
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_discounts.py::test_invalid_code_is_rejected[7]"
+          },
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_discounts.py::test_invalid_code_is_rejected[None]"
+          },
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_discounts.py::test_invalid_code_is_rejected[]"
+          }
+        ],
+        "probe_count": 4,
+        "result": "guard_removal_detected"
+      },
+      "status": "verified",
+      "confidence": "high"
+    },
+    {
+      "id": "guard:shopcart/discounts.py:_parse_percent:1",
+      "description": "`_parse_percent` raises `InvalidDiscountError` when `isinstance(raw, bool) or not isinstance(raw, (int, str, Decimal))` (\"percent must be a number\")",
+      "category": "type_validation",
+      "origin": "static_analysis",
+      "evidence_type": "guard_clause",
+      "source": {
+        "file": "shopcart/discounts.py",
+        "symbol": "_parse_percent",
+        "line": 36
+      },
+      "related": [
+        {
+          "file": "shopcart/discounts.py",
+          "symbol": "_parse_percent"
+        }
+      ],
+      "guard": {
+        "file": "shopcart/discounts.py",
+        "symbol": "_parse_percent",
+        "index": 1,
+        "condition": "isinstance(raw, bool) or not isinstance(raw, (int, str, Decimal))",
+        "exception": "InvalidDiscountError"
+      },
+      "validation": {
+        "method": "remove the guard and see whether a baseline-passing test fails",
+        "fault": "generated:COND_FORCE_FALSE:shopcart/discounts.py:36:7",
+        "probes": [
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[2.5]"
+          },
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[None]"
+          },
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[True]"
+          }
+        ],
+        "probe_count": 3,
+        "result": "guard_removal_detected"
+      },
+      "status": "verified",
+      "confidence": "high"
+    },
+    {
+      "id": "guard:shopcart/discounts.py:_parse_percent:2",
+      "description": "`_parse_percent` raises `InvalidDiscountError` when `not percent.is_finite() or percent <= 0 or percent > 100` (\"percent must be greater than 0 and at most 100\")",
+      "category": "value_validation",
+      "origin": "static_analysis",
+      "evidence_type": "guard_clause",
+      "source": {
+        "file": "shopcart/discounts.py",
+        "symbol": "_parse_percent",
+        "line": 42
+      },
+      "related": [
+        {
+          "file": "shopcart/discounts.py",
+          "symbol": "_parse_percent"
+        }
+      ],
+      "guard": {
+        "file": "shopcart/discounts.py",
+        "symbol": "_parse_percent",
+        "index": 2,
+        "condition": "not percent.is_finite() or percent <= 0 or percent > 100",
+        "exception": "InvalidDiscountError"
+      },
+      "validation": {
+        "method": "remove the guard and see whether a baseline-passing test fails",
+        "fault": "generated:COND_FORCE_FALSE:shopcart/discounts.py:42:7",
+        "probes": [
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[-5]"
+          },
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[0]"
+          },
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[101]"
+          }
+        ],
+        "probe_count": 3,
+        "result": "guard_removal_detected"
+      },
+      "status": "verified",
+      "confidence": "high"
+    },
+    {
+      "id": "guard:shopcart/money.py:to_money:1",
+      "description": "`to_money` raises `TypeError` when `isinstance(value, bool) or isinstance(value, float)` (\"money values must be str, int or Decimal\")",
+      "category": "type_validation",
+      "origin": "static_analysis",
+      "evidence_type": "guard_clause",
+      "source": {
+        "file": "shopcart/money.py",
+        "symbol": "to_money",
+        "line": 12
+      },
+      "related": [
+        {
+          "file": "shopcart/money.py",
+          "symbol": "to_money"
+        }
+      ],
+      "guard": {
+        "file": "shopcart/money.py",
+        "symbol": "to_money",
+        "index": 1,
+        "condition": "isinstance(value, bool) or isinstance(value, float)",
+        "exception": "TypeError"
+      },
+      "validation": {
+        "method": "remove the guard and see whether a baseline-passing test fails",
+        "fault": "generated:COND_FORCE_FALSE:shopcart/money.py:12:7",
+        "probes": [
+          {
+            "suite": "repo_tests",
+            "nodeid": "tests/test_cart.py::test_float_prices_are_rejected"
+          }
+        ],
+        "probe_count": 1,
+        "result": "guard_removal_detected"
+      },
+      "status": "verified",
+      "confidence": "high"
+    },
+    {
+      "id": "guard:shopcart/money.py:to_money:2",
+      "description": "`to_money` raises `ValueError` when `not amount.is_finite()`",
+      "category": "error_handling",
+      "origin": "static_analysis",
+      "evidence_type": "guard_clause",
+      "source": {
+        "file": "shopcart/money.py",
+        "symbol": "to_money",
+        "line": 18
+      },
+      "related": [
+        {
+          "file": "shopcart/money.py",
+          "symbol": "to_money"
+        }
+      ],
+      "guard": {
+        "file": "shopcart/money.py",
+        "symbol": "to_money",
+        "index": 2,
+        "condition": "not amount.is_finite()",
+        "exception": "ValueError"
+      },
+      "validation": {
+        "method": "remove the guard and see whether a baseline-passing test fails",
+        "fault": "generated:COND_FORCE_FALSE:shopcart/money.py:18:7",
+        "probes": [
+          {
+            "suite": "probes",
+            "nodeid": "_unwritten/probes/test_hyp_non_finite_money_rejected.py::test_non_finite_values_are_rejected[-Infinity]"
+          },
+          {
+            "suite": "probes",
+            "nodeid": "_unwritten/probes/test_hyp_non_finite_money_rejected.py::test_non_finite_values_are_rejected[Infinity]"
+          },
+          {
+            "suite": "probes",
+            "nodeid": "_unwritten/probes/test_hyp_non_finite_money_rejected.py::test_non_finite_values_are_rejected[NaN]"
+          }
+        ],
+        "probe_count": 3,
+        "result": "guard_removal_detected"
+      },
+      "status": "verified",
+      "confidence": "high"
+    },
+    {
+      "id": "hyp:negative-price-rejected",
+      "description": "A product cannot be created with a negative price; a price of zero is allowed.",
+      "category": "value_validation",
+      "origin": "fixture: hand-written stand-in for model output (no model was called)",
+      "evidence_type": "supplied_hypothesis",
+      "source": {
+        "file": "shopcart/catalog.py",
+        "symbol": "Product.__post_init__",
+        "line": null
+      },
+      "related": [
+        {
+          "file": "shopcart/catalog.py",
+          "symbol": "Product.__post_init__"
+        },
+        {
+          "file": "shopcart/money.py",
+          "symbol": "to_money"
+        }
+      ],
+      "stated_confidence": "medium",
+      "validation": {
+        "method": "supplied probe, run at the pinned commit twice and against every injected fault",
+        "probe_file": "probes/test_hyp_negative_price_rejected.py",
+        "probes": [
+          {
+            "suite": "probes",
+            "nodeid": "_unwritten/probes/test_hyp_negative_price_rejected.py::test_negative_price_is_rejected"
+          },
+          {
+            "suite": "probes",
+            "nodeid": "_unwritten/probes/test_hyp_negative_price_rejected.py::test_zero_price_is_allowed"
+          }
+        ],
+        "probe_count": 2,
+        "faults_detected": 6,
+        "result": "passes_and_detects_faults"
+      },
+      "status": "verified",
+      "confidence": "high"
+    },
+    {
+      "id": "hyp:non-finite-money-rejected",
+      "description": "Money values must be finite: NaN and Infinity are rejected with ValueError.",
+      "category": "value_validation",
+      "origin": "fixture: hand-written stand-in for model output (no model was called)",
+      "evidence_type": "supplied_hypothesis",
+      "source": {
+        "file": "shopcart/money.py",
+        "symbol": "to_money",
+        "line": null
+      },
+      "related": [
+        {
+          "file": "shopcart/money.py",
+          "symbol": "to_money"
+        }
+      ],
+      "stated_confidence": "medium",
+      "validation": {
+        "method": "supplied probe, run at the pinned commit twice and against every injected fault",
+        "probe_file": "probes/test_hyp_non_finite_money_rejected.py",
+        "probes": [
+          {
+            "suite": "probes",
+            "nodeid": "_unwritten/probes/test_hyp_non_finite_money_rejected.py::test_non_finite_values_are_rejected[-Infinity]"
+          },
+          {
+            "suite": "probes",
+            "nodeid": "_unwritten/probes/test_hyp_non_finite_money_rejected.py::test_non_finite_values_are_rejected[Infinity]"
+          },
+          {
+            "suite": "probes",
+            "nodeid": "_unwritten/probes/test_hyp_non_finite_money_rejected.py::test_non_finite_values_are_rejected[NaN]"
+          }
+        ],
+        "probe_count": 3,
+        "faults_detected": 3,
+        "result": "passes_and_detects_faults"
+      },
+      "status": "verified",
+      "confidence": "high"
+    },
+    {
+      "id": "hyp:discount-codes-case-sensitive",
+      "description": "Discount codes are case-sensitive and stored exactly as configured.",
+      "category": "behaviour",
+      "origin": "fixture: hand-written stand-in for model output (no model was called)",
+      "evidence_type": "supplied_hypothesis",
+      "source": {
+        "file": "shopcart/discounts.py",
+        "symbol": "Discount.from_config",
+        "line": null
+      },
+      "related": [],
+      "stated_confidence": "low",
+      "validation": {
+        "method": "supplied probe, run at the pinned commit twice and against every injected fault",
+        "probe_file": "probes/test_hyp_discount_codes_case_sensitive.py",
+        "probes": [
+          {
+            "suite": "probes",
+            "nodeid": "_unwritten/probes/test_hyp_discount_codes_case_sensitive.py::test_code_is_stored_as_given"
+          }
+        ],
+        "probe_count": 1,
+        "faults_detected": 0,
+        "result": "probe_assertion_failed",
+        "note": "the pinned commit contradicts this claim: assert 'TEN' == 'ten'"
+      },
+      "status": "refuted",
+      "confidence": "refuted"
+    },
+    {
+      "id": "hyp:quantity-upper-limit",
+      "description": "A cart line cannot hold more than 999 units of a product.",
+      "category": "value_validation",
+      "origin": "fixture: hand-written stand-in for model output (no model was called)",
+      "evidence_type": "supplied_hypothesis",
+      "source": {
+        "file": "shopcart/cart.py",
+        "symbol": "Cart.add",
+        "line": null
+      },
+      "related": [],
+      "stated_confidence": "low",
+      "validation": {
+        "method": "supplied probe, run at the pinned commit twice and against every injected fault",
+        "probe_file": "probes/test_hyp_quantity_upper_limit.py",
+        "probes": [
+          {
+            "suite": "probes",
+            "nodeid": "_unwritten/probes/test_hyp_quantity_upper_limit.py::test_quantity_above_limit_is_rejected"
+          }
+        ],
+        "probe_count": 1,
+        "faults_detected": 0,
+        "result": "probe_assertion_failed",
+        "note": "the pinned commit contradicts this claim: DID NOT RAISE <class 'shopcart.errors.InvalidQuantityError'>"
+      },
+      "status": "refuted",
+      "confidence": "refuted"
+    },
+    {
+      "id": "hyp:stock-is-checked",
+      "description": "Adding a product checks available stock.",
+      "category": "behaviour",
+      "origin": "fixture: hand-written stand-in for model output (no model was called)",
+      "evidence_type": "supplied_hypothesis",
+      "source": {
+        "file": "shopcart/cart.py",
+        "symbol": "Cart.add",
+        "line": null
+      },
+      "related": [],
+      "stated_confidence": "low",
+      "validation": {
+        "method": "supplied probe, run at the pinned commit twice and against every injected fault",
+        "probe_file": "probes/test_hyp_stock_is_checked.py",
+        "probes": [],
+        "probe_count": 0,
+        "faults_detected": 0,
+        "result": "probe_collection_error",
+        "note": "the probe could not be imported: E   ModuleNotFoundError: No module named 'shopcart.inventory'"
+      },
+      "status": "hypothesis",
+      "confidence": "low"
+    },
+    {
+      "id": "hyp:errors-share-a-base-class",
+      "description": "Every error the library defines derives from CartError.",
+      "category": "interface",
+      "origin": "fixture: hand-written stand-in for model output (no model was called)",
+      "evidence_type": "supplied_hypothesis",
+      "source": {
+        "file": "shopcart/errors.py",
+        "symbol": "CartError",
+        "line": null
+      },
+      "related": [],
+      "stated_confidence": "high",
+      "validation": {
+        "method": "supplied probe, run at the pinned commit twice and against every injected fault",
+        "probe_file": "probes/test_hyp_errors_share_a_base_class.py",
+        "probes": [
+          {
+            "suite": "probes",
+            "nodeid": "_unwritten/probes/test_hyp_errors_share_a_base_class.py::test_errors_share_a_base_class"
+          }
+        ],
+        "probe_count": 1,
+        "faults_detected": 0,
+        "result": "passes_but_insensitive",
+        "note": "the probe passes, but no injected fault changes its result; it may not test the code it claims to"
+      },
+      "status": "hypothesis",
+      "confidence": "low"
+    },
+    {
+      "id": "hyp:totals-never-negative",
+      "description": "A cart total is never negative, whatever discount is applied.",
+      "category": "behaviour",
+      "origin": "fixture: hand-written stand-in for model output (no model was called)",
+      "evidence_type": "supplied_hypothesis",
+      "source": {
+        "file": "shopcart/cart.py",
+        "symbol": "Cart.total",
+        "line": null
+      },
+      "related": [],
+      "stated_confidence": "medium",
+      "validation": {
+        "method": "supplied probe, run at the pinned commit twice and against every injected fault",
+        "probe_file": null,
+        "probes": [],
+        "probe_count": 0,
+        "faults_detected": 0,
+        "result": "no_probe",
+        "note": "no probe was supplied"
+      },
+      "status": "hypothesis",
+      "confidence": "low"
+    }
+  ],
+  "unprotected_behaviour": [
+    {
+      "fault": "generated:COND_FORCE_FALSE:shopcart/cart.py:31:11",
+      "file": "shopcart/cart.py",
+      "line": 31,
+      "description": "`if sku not in self._lines` becomes `if False`",
+      "symbol": "Cart.remove"
+    }
+  ],
+  "timing": {
+    "started_at": "2026-11-13T19:38:04+00:00",
+    "finished_at": "2026-11-13T19:38:20+00:00",
+    "duration_seconds": 15.75
+  }
+}

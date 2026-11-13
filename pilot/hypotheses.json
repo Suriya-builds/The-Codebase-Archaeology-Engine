@@ -1,0 +1,82 @@
+{
+  "proposed_by": "fixture: hand-written stand-in for model output (no model was called)",
+  "hypotheses": [
+    {
+      "id": "negative-price-rejected",
+      "description": "A product cannot be created with a negative price; a price of zero is allowed.",
+      "category": "value_validation",
+      "confidence": "medium",
+      "source": {
+        "file": "shopcart/catalog.py",
+        "symbol": "Product.__post_init__"
+      },
+      "probe": "import pytest\n\nfrom shopcart import Product\n\n\ndef test_negative_price_is_rejected():\n    with pytest.raises(ValueError):\n        Product(\"X\", \"X\", \"-0.01\", \"misc\")\n\n\ndef test_zero_price_is_allowed():\n    assert Product(\"X\", \"X\", \"0\", \"misc\").price == 0\n"
+    },
+    {
+      "id": "non-finite-money-rejected",
+      "description": "Money values must be finite: NaN and Infinity are rejected with ValueError.",
+      "category": "value_validation",
+      "confidence": "medium",
+      "source": {
+        "file": "shopcart/money.py",
+        "symbol": "to_money"
+      },
+      "probe": "import pytest\n\nfrom shopcart.money import to_money\n\n\n@pytest.mark.parametrize(\"value\", [\"NaN\", \"Infinity\", \"-Infinity\"])\ndef test_non_finite_values_are_rejected(value):\n    with pytest.raises(ValueError):\n        to_money(value)\n"
+    },
+    {
+      "id": "discount-codes-case-sensitive",
+      "description": "Discount codes are case-sensitive and stored exactly as configured.",
+      "category": "behaviour",
+      "confidence": "low",
+      "source": {
+        "file": "shopcart/discounts.py",
+        "symbol": "Discount.from_config"
+      },
+      "probe": "from shopcart import Discount\n\n\ndef test_code_is_stored_as_given():\n    assert Discount.from_config({\"code\": \"ten\", \"percent\": 10}).code == \"ten\"\n"
+    },
+    {
+      "id": "quantity-upper-limit",
+      "description": "A cart line cannot hold more than 999 units of a product.",
+      "category": "value_validation",
+      "confidence": "low",
+      "source": {
+        "file": "shopcart/cart.py",
+        "symbol": "Cart.add"
+      },
+      "probe": "import pytest\n\nfrom shopcart import Cart, InvalidQuantityError, Product\n\n\ndef test_quantity_above_limit_is_rejected():\n    with pytest.raises(InvalidQuantityError):\n        Cart().add(Product(\"X\", \"X\", \"1\", \"misc\"), 1000)\n"
+    },
+    {
+      "id": "stock-is-checked",
+      "description": "Adding a product checks available stock.",
+      "category": "behaviour",
+      "confidence": "low",
+      "source": {
+        "file": "shopcart/cart.py",
+        "symbol": "Cart.add"
+      },
+      "probe": "from shopcart.inventory import Stock\n\n\ndef test_stock_is_consulted():\n    assert Stock().available(\"X\") >= 0\n"
+    },
+    {
+      "id": "errors-share-a-base-class",
+      "description": "Every error the library defines derives from CartError.",
+      "category": "interface",
+      "confidence": "high",
+      "source": {
+        "file": "shopcart/errors.py",
+        "symbol": "CartError"
+      },
+      "probe": "from shopcart import CartError, InvalidDiscountError, InvalidQuantityError\n\n\ndef test_errors_share_a_base_class():\n    assert issubclass(InvalidQuantityError, CartError)\n    assert issubclass(InvalidDiscountError, CartError)\n"
+    },
+    {
+      "id": "totals-never-negative",
+      "description": "A cart total is never negative, whatever discount is applied.",
+      "category": "behaviour",
+      "confidence": "medium",
+      "source": {
+        "file": "shopcart/cart.py",
+        "symbol": "Cart.total"
+      },
+      "probe": null
+    }
+  ]
+}

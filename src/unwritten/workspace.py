@@ -53,5 +53,8 @@ def install_package_tests(package, workspace):
     if package.regression_tests.is_dir():
         shutil.copytree(package.regression_tests, target / "regression", ignore=_IGNORE)
         suites.append({"name": "regression_package", "paths": [f"{PACKAGE_TESTS_DIR}/regression"]})
+    if package.contract_tests.is_dir():
+        shutil.copytree(package.contract_tests, target / "contracts", ignore=_IGNORE)
+        suites.append({"name": "regression_contracts", "paths": [f"{PACKAGE_TESTS_DIR}/contracts"]})
     suites.append({"name": "regression_repo", "paths": list(package.repo_test_paths)})
     return suites

@@ -54,12 +54,15 @@ def verified(pilot_repo, tmp_path_factory):
 def variant(tmp_path, pilot_repo):
     """Copy the valid package, let the test damage it, then verify it locally.
 
-    Generated mutants are switched off to keep these runs short; pass
-    ``generate=True`` to keep them.
+    Generated mutants and attached contracts are switched off to keep these
+    runs short and focused; pass ``generate=True`` or ``keep_contracts=True``
+    to keep them.
     """
-    def build(edit, generate=False, declared=("ignore-min-subtotal",)):
+    def build(edit, generate=False, declared=("ignore-min-subtotal",), keep_contracts=False):
         package = tmp_path / "package"
         shutil.copytree(PACKAGES / VALID, package)
+        if not keep_contracts:
+            (package / "contracts.json").unlink()
         manifest = json.loads((package / "task.json").read_text())
         manifest["mutation"]["generate"] = generate
         manifest["mutation"]["declared"] = [
@@ -77,3 +80,30 @@ def codes(evidence):
 
 def reason(evidence, code):
     return next(r for r in evidence["reasons"] if r["code"] == code)
+
+
+HYPOTHESES = ROOT / "pilot" / "hypotheses.json"
+PROFILE = ROOT / "pilot" / "profile.json"
+
+
+@pytest.fixture(scope="session")
+def contract_map(pilot_repo, tmp_path_factory):
+    """Extract the pilot's contract map once per (runner, with/without hypotheses)."""
+    from unwritten.contracts import extract_contracts
+    from unwritten.profile import load_profile
+
+    cache = {}
+
+    def run(runner="local", hypotheses=True, fresh=False):
+        key = (runner, hypotheses)
+        if fresh or key not in cache:
+            out = tmp_path_factory.mktemp("contracts") / "map"
+            result = extract_contracts(
+                pilot_repo, load_profile(PROFILE), make_runner(runner), out,
+                HYPOTHESES if hypotheses else None, jobs=4)
+            if fresh:
+                return result
+            cache[key] = result
+        return cache[key]
+
+    return run

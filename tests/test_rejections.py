@@ -23,12 +23,12 @@ def test_feature_test_that_cannot_be_imported_at_base(variant):
                 assert Eligibility().categories is None
         """)
     evidence = variant(edit)
-    assert codes(evidence) == {"W1_FEATURE_FAILS_WITHOUT_ASSERTION"}
-    assert reason(evidence, "W1_FEATURE_FAILS_WITHOUT_ASSERTION")["items"] == [
+    assert codes(evidence) == {"W1_FEATURE_COLLECTION_ERROR"}
+    assert reason(evidence, "W1_FEATURE_COLLECTION_ERROR")["items"] == [
         "_unwritten/feature/test_extra.py"]
 
 
-def test_feature_test_that_fails_with_an_error_instead_of_an_assertion(variant):
+def test_feature_test_that_crashes_instead_of_asserting(variant):
     def edit(package, manifest):
         _feature_test(package, """
             from shopcart import Discount
@@ -39,8 +39,8 @@ def test_feature_test_that_fails_with_an_error_instead_of_an_assertion(variant):
                 assert discount.eligibility is not None
         """)
     evidence = variant(edit)
-    assert codes(evidence) == {"W1_FEATURE_FAILS_WITHOUT_ASSERTION"}
-    (item,) = reason(evidence, "W1_FEATURE_FAILS_WITHOUT_ASSERTION")["items"]
+    assert codes(evidence) == {"W1_FEATURE_RUNTIME_ERROR"}
+    (item,) = reason(evidence, "W1_FEATURE_RUNTIME_ERROR")["items"]
     assert "builtins.AttributeError" in item
 
 
@@ -53,7 +53,7 @@ def test_skipped_feature_test_is_not_accepted_as_a_failure(variant):
             def test_placeholder():
                 assert False
         """)
-    assert "W1_FEATURE_FAILS_WITHOUT_ASSERTION" in codes(variant(edit))
+    assert codes(variant(edit)) == {"W1_FEATURE_NOT_EXECUTED"}
 
 
 def test_reference_that_breaks_existing_behaviour(variant):

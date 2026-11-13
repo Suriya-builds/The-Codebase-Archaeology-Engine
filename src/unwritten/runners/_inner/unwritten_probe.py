@@ -12,6 +12,29 @@ import pytest
 _LIMIT = 4000
 
 
+def _test_roots():
+    return [r.rstrip("/") for r in os.environ.get("UNWRITTEN_TEST_ROOTS", "").split(os.pathsep) if r]
+
+
+def _raised_in(excinfo, rootdir):
+    """Innermost traceback frame that lies inside the workspace.
+
+    Returns (relative path, is test code). Frames outside the workspace (the
+    standard library, pytest, assertion helpers) are skipped, so a failing
+    ``self.assertEqual`` is attributed to the test that called it.
+    """
+    root = os.path.realpath(str(rootdir)) + os.sep
+    for entry in reversed(list(excinfo.traceback)):
+        path = os.path.realpath(str(entry.path))
+        if not path.startswith(root):
+            continue
+        relative = path[len(root):].replace(os.sep, "/")
+        in_tests = os.path.basename(relative) == "conftest.py" or any(
+            relative == r or relative.startswith(r + "/") for r in _test_roots())
+        return relative, in_tests
+    return None, True
+
+
 def _clip(text):
     text = str(text)
     return text if len(text) <= _LIMIT else text[:_LIMIT] + "\n...[truncated]"
@@ -40,8 +63,14 @@ class Probe:
             if call.excinfo is not None:
                 kind = call.excinfo.type
                 phase["exc_type"] = f"{kind.__module__}.{kind.__qualname__}"
+                raised_in, in_tests = _raised_in(call.excinfo, item.config.rootpath)
+                phase["raised_in"] = raised_in
+                # A behavioural assertion: an explicit pytest failure (DID NOT RAISE,
+                # pytest.fail), or an AssertionError that test code itself raised.
+                # An AssertionError from inside the code under test is a crash.
                 phase["assertion_level"] = bool(
-                    issubclass(kind, AssertionError) or issubclass(kind, pytest.fail.Exception))
+                    issubclass(kind, pytest.fail.Exception)
+                    or (issubclass(kind, AssertionError) and in_tests))
                 phase["message"] = _clip(call.excinfo.value)
         entry = self.tests.setdefault(item.nodeid, {"nodeid": item.nodeid, "phases": {}})
         entry["phases"][report.when] = phase

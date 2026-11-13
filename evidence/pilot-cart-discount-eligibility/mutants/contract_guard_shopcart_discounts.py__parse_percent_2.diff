@@ -1,0 +1,9 @@
+--- reference/shopcart/discounts.py
++++ mutant/shopcart/discounts.py
+@@ -63,5 +63,5 @@
+     except ArithmeticError as exc:
+         raise InvalidDiscountError("percent must be a number") from exc
+-    if not percent.is_finite() or percent <= 0 or percent > 100:
++    if False:
+         raise InvalidDiscountError("percent must be greater than 0 and at most 100")
+     return percent

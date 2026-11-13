@@ -1,0 +1,9 @@
+{
+  "repo": {"name": "unwritten-pilot", "commit": "667512bac0534ea742a7a7c3e3262142ac914c30"},
+  "execution": {
+    "dockerfile": "environment/Dockerfile",
+    "python_path": ["."],
+    "repo_test_paths": ["tests"],
+    "timeout_seconds": 120
+  }
+}

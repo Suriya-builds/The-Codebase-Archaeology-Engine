@@ -1,0 +1,9 @@
+--- reference/shopcart/discounts.py
++++ mutant/shopcart/discounts.py
+@@ -37,5 +37,5 @@
+         configuration files keep loading.
+         """
+-        if not isinstance(config, dict):
++        if False:
+             raise InvalidDiscountError("discount config must be a mapping")
+         code = config.get("code")

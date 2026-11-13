@@ -117,17 +117,17 @@ PASSED = {"outcome": "passed"}
      "failed", "assertion"),
     (_raw(setup=PASSED, call={"outcome": "failed", "assertion_level": False,
                               "exc_type": "builtins.AttributeError"}, teardown=PASSED),
-     "failed", "exception"),
-    (_raw(setup={"outcome": "failed", "exc_type": "builtins.RuntimeError"}), "error", "setup_error"),
+     "failed", "runtime_error"),
+    (_raw(setup={"outcome": "failed", "exc_type": "builtins.RuntimeError"}), "error", "runtime_error"),
     (_raw(setup={"outcome": "skipped"}), "skipped", None),
-    (_raw(setup=PASSED, call=PASSED, teardown={"outcome": "failed"}), "error", "teardown_error"),
+    (_raw(setup=PASSED, call=PASSED, teardown={"outcome": "failed"}), "error", "runtime_error"),
     (_raw(setup=PASSED, call={"outcome": "skipped", "xfail": True}, teardown=PASSED), "xfailed", None),
     (_raw(setup=PASSED, call={"outcome": "passed", "xfail": True}, teardown=PASSED), "xpassed", None),
-    (_raw(setup=PASSED), "error", "setup_error"),
+    (_raw(setup=PASSED), "error", "runtime_error"),
 ])
 def test_classify_test(raw, outcome, category):
     result = classify_test(raw)
-    assert (result.outcome, result.category) == (outcome, category)
+    assert (result.outcome, result.failure_class) == (outcome, category)
 
 
 # ---------------------------------------------------------------- repeatability comparison

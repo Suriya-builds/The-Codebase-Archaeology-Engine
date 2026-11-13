@@ -23,7 +23,7 @@ def test_valid_package_is_accepted_with_full_evidence(verified, runner_name):
         feature = worlds["world1"]["suites"]["feature"]
         assert len(feature["tests"]) == 25 and feature["collection_errors"] == []
         assert {t["outcome"] for t in feature["tests"]} == {"failed"}
-        assert {t["category"] for t in feature["tests"]} == {"assertion"}
+        assert {t["failure_class"] for t in feature["tests"]} == {"assertion"}
         assert all(t["exc_type"] and t["detail"] for t in feature["tests"])
         for suite in ("regression_package", "regression_repo"):
             tests = worlds["world1"]["suites"][suite]["tests"]

@@ -1,7 +1,21 @@
-"""Turning raw probe reports into per-test results with a failure class."""
+"""Turning raw probe reports into per-test results with a failure class.
+
+Failure classes, kept strictly apart:
+
+    assertion         an AssertionError raised by test code, or an explicit
+                      pytest failure such as "DID NOT RAISE"
+    runtime_error     any other exception in the test body or a fixture,
+                      including an AssertionError raised by the code under test
+    collection_error  pytest could not import or collect a file (suite level)
+    timeout           the suite exceeded its time limit (suite level)
+    infrastructure    the sandbox or pytest itself failed; raised as
+                      HarnessError and never turned into a verdict
+"""
 import json
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
+
+from unwritten.errors import HarnessError
 
 # A test that ended in one of these did not report a defect.
 BENIGN = ("passed", "skipped", "xfailed")
@@ -13,8 +27,10 @@ class TestResult:
 
     nodeid: str
     outcome: str            # passed | failed | error | skipped | xfailed | xpassed
-    category: str | None    # assertion | exception | setup_error | teardown_error
+    failure_class: str | None   # assertion | runtime_error
     exc_type: str | None = None
+    phase: str | None = None    # setup | call | teardown, for failures
+    raised_in: str | None = None
     message: str | None = None
     detail: str | None = None
 
@@ -56,25 +72,27 @@ def _counts(tests):
 def classify_test(raw):
     phases = raw.get("phases", {})
     setup, call, teardown = phases.get("setup"), phases.get("call"), phases.get("teardown")
+    nodeid = raw["nodeid"]
 
-    def failed(phase, outcome, category):
-        return TestResult(raw["nodeid"], outcome, category, phase.get("exc_type"),
-                          phase.get("message"), phase.get("detail"))
+    def failed(phase, name, outcome, failure_class):
+        return TestResult(nodeid, outcome, failure_class, phase.get("exc_type"), name,
+                          phase.get("raised_in"), phase.get("message"), phase.get("detail"))
 
     if setup and setup["outcome"] == "failed":
-        return failed(setup, "error", "setup_error")
+        return failed(setup, "setup", "error", "runtime_error")
     if setup and setup["outcome"] == "skipped":
-        return TestResult(raw["nodeid"], "xfailed" if setup.get("xfail") else "skipped", None)
+        return TestResult(nodeid, "xfailed" if setup.get("xfail") else "skipped", None)
     if call is None:
-        return TestResult(raw["nodeid"], "error", "setup_error", message="test body never ran")
+        return TestResult(nodeid, "error", "runtime_error", phase="setup",
+                          message="test body never ran")
     if call["outcome"] == "failed":
-        category = "assertion" if call.get("assertion_level") else "exception"
-        return failed(call, "failed", category)
+        failure_class = "assertion" if call.get("assertion_level") else "runtime_error"
+        return failed(call, "call", "failed", failure_class)
     if teardown and teardown["outcome"] == "failed":
-        return failed(teardown, "error", "teardown_error")
+        return failed(teardown, "teardown", "error", "runtime_error")
     if call.get("xfail"):
-        return TestResult(raw["nodeid"], "xfailed" if call["outcome"] == "skipped" else "xpassed", None)
-    return TestResult(raw["nodeid"], call["outcome"], None)
+        return TestResult(nodeid, "xfailed" if call["outcome"] == "skipped" else "xpassed", None)
+    return TestResult(nodeid, call["outcome"], None)
 
 
 def load_suite(name, out_dir, summary, log_reference):
@@ -90,6 +108,7 @@ def load_suite(name, out_dir, summary, log_reference):
         suite.tests = sorted((classify_test(t) for t in raw["tests"]), key=lambda t: t.nodeid)
         suite.collection_errors = sorted(raw["collection_errors"], key=lambda e: e["nodeid"])
     elif not suite.timed_out:
-        suite.collection_errors = [{
-            "nodeid": name, "detail": "pytest wrote no report; see the suite log"}]
+        raise HarnessError(
+            f"suite {name!r} ended without a report (pytest exit code {suite.exit_code}); "
+            f"this is an infrastructure failure, not a test result. See {log_reference}")
     return suite

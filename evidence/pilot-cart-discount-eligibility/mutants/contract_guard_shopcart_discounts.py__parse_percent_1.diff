@@ -1,0 +1,9 @@
+--- reference/shopcart/discounts.py
++++ mutant/shopcart/discounts.py
+@@ -57,5 +57,5 @@
+ 
+ def _parse_percent(raw):
+-    if isinstance(raw, bool) or not isinstance(raw, (int, str, Decimal)):
++    if False:
+         raise InvalidDiscountError("percent must be a number")
+     try:

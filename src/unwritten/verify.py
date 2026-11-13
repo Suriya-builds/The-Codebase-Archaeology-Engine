@@ -131,8 +131,37 @@ def verify_package(package_dir, repo, runner, out_dir, repeat=2, progress=None, 
     }
     evidence["summary"] = {name: {"status": world["status"], **world["summary"]}
                            for name, world in runs[0]["worlds"].items()}
+    if package.contracts:
+        evidence["contracts"] = _contract_evidence(package, runs[0]["worlds"])
     evidence["runs"] = runs
     return _finish(evidence, out_dir, started, clock)
+
+
+def _contract_evidence(package, worlds):
+    """Per attached contract: how its probes fared and which mutants they killed."""
+    def outcomes(world):
+        return {(name, t["nodeid"]): t["outcome"]
+                for name, suite in worlds[world].get("suites", {}).items() for t in suite["tests"]}
+
+    base, correct = outcomes("world1"), outcomes("world2")
+    report = []
+    for contract in package.contracts:
+        keys = {(p["suite"], p["nodeid"]) for p in contract["probes"]}
+        killed = [m["id"] for m in worlds["world3"].get("mutants", [])
+                  if any((k["suite"], k["test"]) in keys for k in m["killed_by"])]
+        report.append({
+            "id": contract["id"], "description": contract["description"],
+            "origin": contract.get("origin"), "evidence_type": contract.get("evidence_type"),
+            "probes": [{"suite": suite, "nodeid": nodeid,
+                        "world1": base.get((suite, nodeid), "not_run"),
+                        "world2": correct.get((suite, nodeid), "not_run")}
+                       for suite, nodeid in sorted(keys)],
+            "holds_at_base": all(base.get(k) == "passed" for k in keys),
+            "preserved_by_reference": all(correct.get(k) == "passed" for k in keys)
+                                      if correct else None,
+            "mutants_killed": killed,
+        })
+    return report
 
 
 def _finish(evidence, out_dir, started, clock):

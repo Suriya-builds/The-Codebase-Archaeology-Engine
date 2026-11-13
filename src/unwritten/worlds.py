@@ -13,12 +13,14 @@ from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from unwritten.classify import BENIGN, load_suite
+from unwritten.classify import BENIGN
+from unwritten.execution import run_in_sandbox
+from unwritten.adapters import detect_adapter
 from unwritten.mutation import declared_mutants, generate_mutants
 from unwritten.patches import PatchDoesNotApply, apply_patch, is_under, touched_paths
 from unwritten.workspace import export_commit, install_package_tests
 
-REGRESSION_SUITES = ("regression_package", "regression_repo")
+REGRESSION_SUITES = ("regression_package", "regression_contracts", "regression_repo")
 
 
 @dataclass
@@ -64,7 +66,7 @@ class WorldResult:
             "reasons": sorted([r.code, sorted(r.items)] for r in self.reasons),
             "suites": {
                 name: {
-                    "tests": [[t.nodeid, t.outcome, t.category, t.exc_type] for t in suite.tests],
+                    "tests": [[t.nodeid, t.outcome, t.failure_class, t.exc_type] for t in suite.tests],
                     "collection_errors": [e["nodeid"] for e in suite.collection_errors],
                     "timed_out": suite.timed_out,
                 } for name, suite in sorted(self.suites.items())
@@ -96,16 +98,11 @@ class RunContext:
         """Build a workspace, run every suite in the sandbox, return SuiteResults."""
         workspace = self.build_source(name, patches, mutant)
         suites = install_package_tests(self.package, workspace)
-        relative = Path("logs") / self.label / name
-        out = self.out_dir / relative
-        out.mkdir(parents=True, exist_ok=True)
-        summary = self.runner.run(workspace, suites, self.package, out)
+        results, summary = run_in_sandbox(
+            self.runner, self.package, workspace, suites, self.out_dir,
+            Path("logs") / self.label / name)
         shutil.rmtree(workspace, ignore_errors=True)
-        results = {}
-        for suite in suites:
-            result = load_suite(suite["name"], out, summary,
-                                (relative / f"{suite['name']}.log").as_posix())
-            results[suite["name"]] = result
+        for result in results.values():
             if result.pytest_version:
                 self.observed["pytest_version"] = result.pytest_version
         self.observed["python_version"] = summary.get("python_version")
@@ -117,6 +114,49 @@ def _timeouts(world, suites):
     if timed_out:
         world.reject("EXECUTION_TIMEOUT",
                      "suites exceeded the package's time limit", timed_out)
+
+
+def _failing_contracts(package, suites):
+    """Attached contracts with a probe that is missing or not passing in ``suites``."""
+    outcomes = {(name, t.nodeid): t.outcome for name, suite in suites.items() for t in suite.tests}
+    failing = []
+    for contract in package.contracts:
+        bad = [p["nodeid"] for p in contract["probes"]
+               if outcomes.get((p["suite"], p["nodeid"])) != "passed"]
+        if bad:
+            failing.append(f"{contract['id']}: {contract['description']} "
+                           f"[{len(bad)} of {len(contract['probes'])} probes not passing]")
+    return failing
+
+
+def _contract_mutants(package, reference_workspace):
+    """One mutant per attached guard contract: the guard, removed.
+
+    The guard is located again in the patched source, because the reference
+    patch may have moved it. Returns (mutants, ids of guards no longer found).
+    """
+    guarded = [c for c in package.contracts if "guard" in c]
+    if not guarded:
+        return [], []
+    adapter = detect_adapter(reference_workspace)
+    mutants, missing = [], []
+    for contract in guarded:
+        wanted = contract["guard"]
+        path = Path(reference_workspace) / wanted["file"]
+        data = path.read_bytes() if path.is_file() else b""
+        guard = next((g for g in adapter.guards(data, wanted["file"])
+                      if (g.symbol, g.condition, g.exception)
+                      == (wanted["symbol"], wanted["condition"], wanted["exception"])), None)
+        removal = next((m for m in adapter.mutants(data, wanted["file"], {guard.line})
+                        if m.id == adapter.guard_mutant_id(guard)), None) if guard else None
+        if removal is None:
+            missing.append(contract["id"])
+            continue
+        removal.id = f"contract:{contract['id']}"
+        removal.origin = "contract"
+        removal.description = f"violates a verified contract: {contract['description']}"
+        mutants.append(removal)
+    return mutants, missing
 
 
 def _regression_tests(suites):
@@ -138,9 +178,9 @@ class BrokenWorld:
         feature = world.suites["feature"]
 
         if feature.collection_errors:
-            world.reject("W1_FEATURE_FAILS_WITHOUT_ASSERTION",
-                         "feature tests could not be collected at the base commit; an import or "
-                         "syntax error says nothing about the missing behaviour",
+            world.reject("W1_FEATURE_COLLECTION_ERROR",
+                         "feature tests could not be imported or collected at the base commit; "
+                         "that says nothing about the missing behaviour",
                          [e["nodeid"] for e in feature.collection_errors])
         if not feature.tests and not feature.collection_errors:
             world.reject("W1_NO_FEATURE_TESTS", "the package has no feature tests")
@@ -149,13 +189,18 @@ class BrokenWorld:
             world.reject("W1_FEATURE_PASSES_AT_BASE",
                          "feature tests already pass before the feature exists, so they do not "
                          "detect its absence", passing)
-        wrong = [f"{t.nodeid} [{t.outcome}: {t.exc_type or t.category or 'no failure'}]"
-                 for t in feature.tests
-                 if t.outcome not in ("passed", "xpassed") and t.category != "assertion"]
-        if wrong:
-            world.reject("W1_FEATURE_FAILS_WITHOUT_ASSERTION",
-                         "feature tests must fail through an assertion, not through an error, "
-                         "skip or expected failure", wrong)
+        crashed = [f"{t.nodeid} [{t.exc_type} in {t.phase}, raised in {t.raised_in}]"
+                   for t in feature.tests if t.failure_class == "runtime_error"]
+        if crashed:
+            world.reject("W1_FEATURE_RUNTIME_ERROR",
+                         "feature tests must fail through a behavioural assertion; these crash "
+                         "instead (typically on an interface that does not exist yet)", crashed)
+        idle = [f"{t.nodeid} [{t.outcome}]" for t in feature.tests
+                if t.outcome in ("skipped", "xfailed")]
+        if idle:
+            world.reject("W1_FEATURE_NOT_EXECUTED",
+                         "skipped or expected-failure tests assert nothing about the base commit",
+                         idle)
 
         regression = _regression_tests(world.suites)
         broken = [f"{suite}::{e['nodeid']} [collection error]"
@@ -168,10 +213,15 @@ class BrokenWorld:
                          "regression tests must pass at the base commit", broken)
         if not regression:
             world.reject("W1_NO_REGRESSION_TESTS", "no regression test ran at the base commit")
+        unproven = _failing_contracts(ctx.package, world.suites)
+        if unproven:
+            world.reject("W1_CONTRACT_PROBE_NOT_PASSING",
+                         "attached contracts must hold at the base commit; these do not, so "
+                         "they are not verified contracts of this commit", unproven)
 
         world.summary = {
             "feature_tests": len(feature.tests),
-            "feature_failing_by_assertion": sum(t.category == "assertion" for t in feature.tests),
+            "feature_failing_by_assertion": sum(t.failure_class == "assertion" for t in feature.tests),
             "regression_tests": len(regression),
             "regression_passing": sum(t.outcome == "passed" for t in regression.values()),
         }
@@ -202,7 +252,7 @@ class CorrectWorld:
         _timeouts(world, world.suites)
 
         feature = world.suites["feature"]
-        failing = [f"{t.nodeid} [{t.outcome}: {t.exc_type or t.category}]"
+        failing = [f"{t.nodeid} [{t.outcome}: {t.exc_type or t.failure_class}]"
                    for t in feature.tests if t.outcome != "passed"]
         failing += [f"{e['nodeid']} [collection error]" for e in feature.collection_errors]
         if failing:
@@ -233,6 +283,11 @@ class CorrectWorld:
         if broken:
             world.reject("W2_REGRESSION_BROKEN",
                          "the reference implementation changes existing behaviour", broken)
+        violated = _failing_contracts(package, world.suites)
+        if violated:
+            world.reject("W2_CONTRACT_VIOLATED",
+                         "the reference implementation breaks contracts that were verified at "
+                         "the base commit", violated)
 
         world.summary = {
             "feature_tests": len(feature.tests),
@@ -260,11 +315,15 @@ class DeceptionWorld:
 
         package = ctx.package
         mutants = declared_mutants(package)
-        if package.generate_mutants:
+        guards_not_found = []
+        if package.generate_mutants or package.contracts:
             reference = ctx.build_source("reference-source", [package.reference_patch])
-            mutants += generate_mutants(
-                reference, package.reference_patch.read_text(encoding="utf-8"),
-                package.repo_test_paths)
+            if package.generate_mutants:
+                mutants += generate_mutants(
+                    reference, package.reference_patch.read_text(encoding="utf-8"),
+                    package.repo_test_paths)
+            contract_mutants, guards_not_found = _contract_mutants(package, reference)
+            mutants += contract_mutants
             shutil.rmtree(reference, ignore_errors=True)
         if not mutants:
             world.reject("W3_NO_MUTANTS",
@@ -325,6 +384,8 @@ class DeceptionWorld:
             "mutants_executed": len(executed),
             "declared": sum(m["origin"] == "declared" for m in executed),
             "generated": sum(m["origin"] == "generated" for m in executed),
+            "contract": sum(m["origin"] == "contract" for m in executed),
+            "contract_guards_not_found": guards_not_found,
             "killed": killed,
             "survived": len(executed) - killed,
             "survived_waived": sum(m["status"] == "survived" and "waiver" in m for m in executed),
@@ -344,7 +405,7 @@ def _killers(baseline, suites):
         for test in suite.tests:
             if (name, test.nodeid) in baseline and test.outcome != "passed":
                 killer = {"suite": name, "test": test.nodeid, "outcome": test.outcome,
-                          "category": test.category, "exc_type": test.exc_type}
+                          "failure_class": test.failure_class, "exc_type": test.exc_type}
                 if test.message:
                     killer["message"] = test.message[:300]
                 killers.append(killer)

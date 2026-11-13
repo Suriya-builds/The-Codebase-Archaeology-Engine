@@ -23,6 +23,8 @@ def main():
     env["PYTHONPATH"] = os.pathsep.join(search)
     env["PYTHONDONTWRITEBYTECODE"] = "1"
     env["PYTHONHASHSEED"] = "0"
+    env["UNWRITTEN_TEST_ROOTS"] = os.pathsep.join(
+        path for suite in spec["suites"] for path in suite["paths"])
 
     summary = {"python_version": platform.python_version(), "suites": {}}
     for suite in spec["suites"]:

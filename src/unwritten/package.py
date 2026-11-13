@@ -9,6 +9,8 @@ Layout, fixed by convention:
     tests/regression/       optional; must pass at base and with the reference
     mutants/*.patch         declared mutants, each a diff on top of the reference
     environment/Dockerfile  execution environment (dependencies only, no repo)
+    contracts.json          optional; verified contracts this task must preserve
+    tests/contracts/        optional; probes of those contracts (see contracts.attach)
 """
 import hashlib
 import json
@@ -19,6 +21,7 @@ from pathlib import Path
 from unwritten.errors import PackageError
 
 SCHEMA_VERSION = "0.1"
+CONTRACTS_FILE = "contracts.json"
 _SHA = re.compile(r"[0-9a-f]{40}")
 _ID = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]*")
 
@@ -52,6 +55,11 @@ class TaskPackage:
     generate_mutants: bool
     waivers: tuple
     provenance: dict = field(default_factory=dict)
+    contracts: tuple = ()
+
+    @property
+    def contract_tests(self):
+        return self.root / "tests" / "contracts"
 
     @property
     def reference_patch(self):
@@ -174,13 +182,28 @@ def load_package(root):
     if not isinstance(provenance, dict):
         problems.append("provenance must be an object")
 
+    contracts = []
+    if (root / CONTRACTS_FILE).is_file():
+        try:
+            entries = json.loads((root / CONTRACTS_FILE).read_text(encoding="utf-8"))["contracts"]
+            for entry in entries:
+                if not (isinstance(entry["id"], str) and isinstance(entry["description"], str)
+                        and entry["probes"]
+                        and all(isinstance(p["suite"], str) and isinstance(p["nodeid"], str)
+                                for p in entry["probes"])):
+                    raise ValueError(entry.get("id"))
+                contracts.append(entry)
+        except (ValueError, KeyError, TypeError) as exc:
+            problems.append(f"{CONTRACTS_FILE} is malformed: every contract needs id, description "
+                            f"and at least one probe ({exc!r})")
+
     if problems:
         raise PackageError(problems)
     return TaskPackage(
         root=root, task_id=task_id, title=title.strip(), repo_name=repo_name, commit=commit,
         dockerfile=dockerfile, python_path=python_path, repo_test_paths=repo_test_paths,
         timeout_seconds=timeout, declared_mutants=tuple(declared), generate_mutants=generate,
-        waivers=tuple(waivers), provenance=provenance,
+        waivers=tuple(waivers), provenance=provenance, contracts=tuple(contracts),
     )
 
 
