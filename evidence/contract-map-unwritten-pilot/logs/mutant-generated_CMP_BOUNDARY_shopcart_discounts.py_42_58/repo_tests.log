@@ -1,0 +1,31 @@
+$ pytest -p unwritten_probe -p no:cacheprovider --rootdir . -q --continue-on-collection-errors tests
+...............F..............                                           [100%]
+=================================== FAILURES ===================================
+______________________ test_full_discount_makes_cart_free ______________________
+
+    def test_full_discount_makes_cart_free():
+>       discount = Discount.from_config({"code": "FREE", "percent": 100})
+
+tests/test_discounts.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+shopcart/discounts.py:27: in from_config
+    percent = _parse_percent(config.get("percent"))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+raw = 100
+
+    def _parse_percent(raw):
+        if isinstance(raw, bool) or not isinstance(raw, (int, str, Decimal)):
+            raise InvalidDiscountError("percent must be a number")
+        try:
+            percent = Decimal(raw)
+        except ArithmeticError as exc:
+            raise InvalidDiscountError("percent must be a number") from exc
+        if not percent.is_finite() or percent <= 0 or percent >= 100:
+>           raise InvalidDiscountError("percent must be greater than 0 and at most 100")
+E           shopcart.errors.InvalidDiscountError: percent must be greater than 0 and at most 100
+
+shopcart/discounts.py:43: InvalidDiscountError
+=========================== short test summary info ============================
+FAILED tests/test_discounts.py::test_full_discount_makes_cart_free - shopcart...
+1 failed, 29 passed in 0.06s

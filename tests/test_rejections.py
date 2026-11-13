@@ -53,7 +53,8 @@ def test_skipped_feature_test_is_not_accepted_as_a_failure(variant):
             def test_placeholder():
                 assert False
         """)
-    assert codes(variant(edit)) == {"W1_FEATURE_NOT_EXECUTED"}
+    # World 2 objects as well: a skipped test does not pass with the reference either.
+    assert codes(variant(edit)) == {"W1_FEATURE_NOT_EXECUTED", "W2_FEATURE_FAILS_WITH_REFERENCE"}
 
 
 def test_reference_that_breaks_existing_behaviour(variant):
@@ -179,3 +180,23 @@ def test_harness_problems_are_errors_not_rejections(tmp_path, pilot_repo, capsys
         verify_package(PACKAGES / VALID, pilot_repo, make_runner("local"), tmp_path / "precious")
     with pytest.raises(HarnessError, match="at least 2 runs"):
         verify_package(PACKAGES / VALID, pilot_repo, make_runner("local"), tmp_path / "o", repeat=1)
+
+
+def test_declared_mutant_that_hangs_gives_no_verdict(variant):
+    """A mutant whose tests time out is neither killed nor survived."""
+    def edit(package, manifest):
+        manifest["execution"]["timeout_seconds"] = 4
+        patch = package / "mutants" / "ignore-min-subtotal.patch"
+        patch.write_text(
+            "--- a/shopcart/discounts.py\n+++ b/shopcart/discounts.py\n@@ -49,2 +49,4 @@\n"
+            "         \"\"\"The amount this discount takes off the given cart.\"\"\"\n"
+            "+        while True:\n+            pass\n"
+            "         if self.eligibility is None:\n")
+    evidence = variant(edit)
+    assert codes(evidence) == {"W3_MUTANT_INVALID", "W3_NO_MUTANTS"}
+    (mutant,) = evidence["runs"][0]["worlds"]["world3"]["mutants"]
+    assert mutant["status"] == "invalid" and "timed out" in mutant["error"]
+    assert mutant["killed_by"] == []
+    summary = evidence["summary"]["world3"]
+    assert (summary["killed"], summary["survived"], summary["invalid"]) == (0, 0, 1)
+    assert summary["mutation_score"] is None

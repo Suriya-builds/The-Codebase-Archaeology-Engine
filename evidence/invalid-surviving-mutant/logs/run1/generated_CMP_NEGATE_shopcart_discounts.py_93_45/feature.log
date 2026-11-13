@@ -1,0 +1,55 @@
+$ pytest -p unwritten_probe -p no:cacheprovider --rootdir . -q --continue-on-collection-errors _unwritten/feature
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+______________ test_category_restricts_discount_to_matching_lines ______________
+
+    def test_category_restricts_discount_to_matching_lines():
+        cart = cart_of((NOVEL, 2), (MUG, 1))  # books 25.00, home 8.00
+>       assert cart.total(discount(categories=["books"])) == Decimal("30.50")
+
+_unwritten/feature/test_discount_eligibility.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_unwritten/feature/test_discount_eligibility.py:23: in discount
+    return Discount.from_config({"code": "TEST", "percent": 10, "eligibility": eligibility})
+shopcart/discounts.py:45: in from_config
+    eligibility = _parse_eligibility(config.get("eligibility"))
+shopcart/discounts.py:78: in _parse_eligibility
+    categories = _parse_categories(categories)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+raw = ['books']
+
+    def _parse_categories(raw):
+        if not isinstance(raw, list) or len(raw) != 0:
+>           raise InvalidDiscountError("eligibility.categories must be a non-empty list")
+E           shopcart.errors.InvalidDiscountError: eligibility.categories must be a non-empty list
+
+shopcart/discounts.py:94: InvalidDiscountError
+___________________ test_no_eligible_lines_means_no_discount ___________________
+
+    def test_no_eligible_lines_means_no_discount():
+        cart = cart_of((NOVEL, 2), (MUG, 1))
+>       assert cart.total(discount(categories=["garden"])) == Decimal("33.00")
+
+_unwritten/feature/test_discount_eligibility.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_unwritten/feature/test_discount_eligibility.py:23: in discount
+    return Discount.from_config({"code": "TEST", "percent": 10, "eligibility": eligibility})
+shopcart/discounts.py:45: in from_config
+    eligibility = _parse_eligibility(config.get("eligibility"))
+shopcart/discounts.py:78: in _parse_eligibility
+    categories = _parse_categories(categories)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+raw = ['garden']
+
+    def _parse_categories(raw):
+        if not isinstance(raw, list) or len(raw) != 0:
+>           raise InvalidDiscountError("eligibility.categories must be a non-empty list")
+E           shopcart.errors.InvalidDiscountError: eligibility.categories must be a non-empty list
+
+shopcart/discounts.py:94: InvalidDiscountError
+=========================== short test summary info ============================
+FAILED _unwritten/feature/test_discount_eligibility.py::test_category_restricts_discount_to_matching_lines
+FAILED _unwritten/feature/test_discount_eligibility.py::test_no_eligible_lines_means_no_discount
+2 failed, 1 passed in 0.03s

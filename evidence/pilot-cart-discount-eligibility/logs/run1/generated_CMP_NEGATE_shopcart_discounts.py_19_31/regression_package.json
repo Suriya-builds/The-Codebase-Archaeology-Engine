@@ -1,0 +1,111 @@
+{
+ "pytest_version": "8.3.4",
+ "exit_status": 1,
+ "tests": [
+  {
+   "nodeid": "_unwritten/regression/test_discount_compatibility.py::test_discount_without_eligibility_applies_to_whole_cart",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/regression/test_discount_compatibility.py::test_empty_eligibility_places_no_restriction",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "def test_empty_eligibility_places_no_restriction():\n        discount = Discount.from_config({\"code\": \"TEN\", \"percent\": 10, \"eligibility\": {}})\n>       assert cart_of((NOVEL, 2), (MUG, 1)).total(discount) == Decimal(\"29.70\")\n\n_unwritten/regression/test_discount_compatibility.py:29: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \nshopcart/cart.py:50: in total\n    return max(subtotal - discount.amount_for(self), ZERO)\nshopcart/discounts.py:52: in amount_for\n    eligible = self.eligibility.eligible_subtotal(cart)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = Eligibility(min_subtotal=Decimal('0.00'), categories=None)\ncart = <shopcart.cart.Cart object at 0x7f73c07c2240>\n\n    def eligible_subtotal(self, cart):\n        \"\"\"Sum of the lines the discount may be applied to.\"\"\"\n        total = ZERO\n        for line in cart.lines():\n>           if self.categories is not None or line.product.category in self.categories:\nE           TypeError: argument of type 'NoneType' is not iterable\n\nshopcart/discounts.py:19: TypeError",
+     "exc_type": "builtins.TypeError",
+     "raised_in": "shopcart/discounts.py",
+     "assertion_level": false,
+     "message": "argument of type 'NoneType' is not iterable"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/regression/test_discount_compatibility.py::test_zero_min_subtotal_is_valid_and_always_met",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "def test_zero_min_subtotal_is_valid_and_always_met():\n        discount = Discount.from_config(\n            {\"code\": \"TEN\", \"percent\": 10, \"eligibility\": {\"min_subtotal\": 0}})\n>       assert cart_of((MUG, 1)).total(discount) == Decimal(\"7.20\")\n\n_unwritten/regression/test_discount_compatibility.py:35: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \nshopcart/cart.py:50: in total\n    return max(subtotal - discount.amount_for(self), ZERO)\nshopcart/discounts.py:52: in amount_for\n    eligible = self.eligibility.eligible_subtotal(cart)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = Eligibility(min_subtotal=Decimal('0.00'), categories=None)\ncart = <shopcart.cart.Cart object at 0x7f73c07e6ff0>\n\n    def eligible_subtotal(self, cart):\n        \"\"\"Sum of the lines the discount may be applied to.\"\"\"\n        total = ZERO\n        for line in cart.lines():\n>           if self.categories is not None or line.product.category in self.categories:\nE           TypeError: argument of type 'NoneType' is not iterable\n\nshopcart/discounts.py:19: TypeError",
+     "exc_type": "builtins.TypeError",
+     "raised_in": "shopcart/discounts.py",
+     "assertion_level": false,
+     "message": "argument of type 'NoneType' is not iterable"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/regression/test_discount_compatibility.py::test_min_subtotal_only_keeps_every_line_eligible",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "def test_min_subtotal_only_keeps_every_line_eligible():\n        discount = Discount.from_config(\n            {\"code\": \"TEN\", \"percent\": 10, \"eligibility\": {\"min_subtotal\": \"10.00\"}})\n>       assert cart_of((NOVEL, 2), (MUG, 1)).total(discount) == Decimal(\"29.70\")\n\n_unwritten/regression/test_discount_compatibility.py:41: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \nshopcart/cart.py:50: in total\n    return max(subtotal - discount.amount_for(self), ZERO)\nshopcart/discounts.py:52: in amount_for\n    eligible = self.eligibility.eligible_subtotal(cart)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = Eligibility(min_subtotal=Decimal('10.00'), categories=None)\ncart = <shopcart.cart.Cart object at 0x7f73c07c0290>\n\n    def eligible_subtotal(self, cart):\n        \"\"\"Sum of the lines the discount may be applied to.\"\"\"\n        total = ZERO\n        for line in cart.lines():\n>           if self.categories is not None or line.product.category in self.categories:\nE           TypeError: argument of type 'NoneType' is not iterable\n\nshopcart/discounts.py:19: TypeError",
+     "exc_type": "builtins.TypeError",
+     "raised_in": "shopcart/discounts.py",
+     "assertion_level": false,
+     "message": "argument of type 'NoneType' is not iterable"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/regression/test_discount_compatibility.py::test_unknown_eligibility_keys_are_ignored",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "def test_unknown_eligibility_keys_are_ignored():\n        discount = Discount.from_config(\n            {\"code\": \"TEN\", \"percent\": 10, \"eligibility\": {\"weekday\": \"monday\"}})\n>       assert cart_of((MUG, 1)).total(discount) == Decimal(\"7.20\")\n\n_unwritten/regression/test_discount_compatibility.py:47: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \nshopcart/cart.py:50: in total\n    return max(subtotal - discount.amount_for(self), ZERO)\nshopcart/discounts.py:52: in amount_for\n    eligible = self.eligibility.eligible_subtotal(cart)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = Eligibility(min_subtotal=Decimal('0.00'), categories=None)\ncart = <shopcart.cart.Cart object at 0x7f73c09d3890>\n\n    def eligible_subtotal(self, cart):\n        \"\"\"Sum of the lines the discount may be applied to.\"\"\"\n        total = ZERO\n        for line in cart.lines():\n>           if self.categories is not None or line.product.category in self.categories:\nE           TypeError: argument of type 'NoneType' is not iterable\n\nshopcart/discounts.py:19: TypeError",
+     "exc_type": "builtins.TypeError",
+     "raised_in": "shopcart/discounts.py",
+     "assertion_level": false,
+     "message": "argument of type 'NoneType' is not iterable"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/regression/test_discount_compatibility.py::test_cart_whose_lines_are_all_eligible_gets_the_full_discount",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  }
+ ],
+ "collection_errors": []
+}

@@ -1,0 +1,27 @@
+$ pytest -p unwritten_probe -p no:cacheprovider --rootdir . -q --continue-on-collection-errors _unwritten/probes
+F.......                                                                 [100%]
+==================================== ERRORS ====================================
+_______ ERROR collecting _unwritten/probes/test_hyp_stock_is_checked.py ________
+ImportError while importing test module '/workspace/_unwritten/probes/test_hyp_stock_is_checked.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+_unwritten/probes/test_hyp_stock_is_checked.py:1: in <module>
+    from shopcart.inventory import Stock
+E   ModuleNotFoundError: No module named 'shopcart.inventory'
+=================================== FAILURES ===================================
+_________________________ test_code_is_stored_as_given _________________________
+
+    def test_code_is_stored_as_given():
+>       assert Discount.from_config({"code": "ten", "percent": 10}).code == "ten"
+E       AssertionError: assert 'TEN' == 'ten'
+E         
+E         - ten
+E         + TEN
+
+_unwritten/probes/test_hyp_discount_codes_case_sensitive.py:5: AssertionError
+=========================== short test summary info ============================
+FAILED _unwritten/probes/test_hyp_discount_codes_case_sensitive.py::test_code_is_stored_as_given
+ERROR _unwritten/probes/test_hyp_stock_is_checked.py
+1 failed, 7 passed, 1 error in 0.03s

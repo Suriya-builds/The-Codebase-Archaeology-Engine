@@ -88,7 +88,10 @@ def verify_package(package_dir, repo, runner, out_dir, repeat=2, progress=None, 
         "manual_interventions": [
             {"type": "mutant_waiver", "mutant_id": w.mutant_id,
              "justification": w.justification, "approved_by": w.approved_by}
-            for w in package.waivers],
+            for w in package.waivers] + [
+            {"type": "contract_override", "contract_id": o.contract_id, "reason": o.reason,
+             "new_behaviour": o.new_behaviour, "replacement_tests": list(o.replacement_tests)}
+            for o in package.contract_overrides],
         "package_provenance": package.provenance,
     }
 
@@ -144,6 +147,7 @@ def _contract_evidence(package, worlds):
                 for name, suite in worlds[world].get("suites", {}).items() for t in suite["tests"]}
 
     base, correct = outcomes("world1"), outcomes("world2")
+    overrides = {o.contract_id: o for o in package.contract_overrides}
     report = []
     for contract in package.contracts:
         keys = {(p["suite"], p["nodeid"]) for p in contract["probes"]}
@@ -161,6 +165,25 @@ def _contract_evidence(package, worlds):
                                       if correct else None,
             "mutants_killed": killed,
         })
+        override = overrides.get(contract["id"])
+        if override:
+            report[-1]["override"] = {
+                "reason": override.reason, "new_behaviour": override.new_behaviour,
+                "replacement_tests": [
+                    {"test": test,
+                     "world1": base.get(("feature", test.replace("tests/", "_unwritten/", 1)), "not_run"),
+                     "world2": correct.get(("feature", test.replace("tests/", "_unwritten/", 1)), "not_run")}
+                    for test in override.replacement_tests],
+            }
+    if overrides:
+        others = [c for c in report if "override" not in c]
+        for contract in report:
+            if "override" in contract:
+                contract["override"]["other_contracts"] = {
+                    "attached": len(others),
+                    "preserved_by_reference": sum(bool(c["preserved_by_reference"]) for c in others),
+                    "not_preserved": [c["id"] for c in others if not c["preserved_by_reference"]],
+                }
     return report
 
 

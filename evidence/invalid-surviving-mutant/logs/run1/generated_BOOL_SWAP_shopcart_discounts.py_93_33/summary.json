@@ -1,0 +1,23 @@
+{
+ "python_version": "3.12.16",
+ "suites": {
+  "feature": {
+   "exit_code": 0,
+   "timed_out": false,
+   "duration_seconds": 0.367,
+   "report_written": true
+  },
+  "regression_package": {
+   "exit_code": 0,
+   "timed_out": false,
+   "duration_seconds": 0.416,
+   "report_written": true
+  },
+  "regression_repo": {
+   "exit_code": 0,
+   "timed_out": false,
+   "duration_seconds": 0.43,
+   "report_written": true
+  }
+ }
+}

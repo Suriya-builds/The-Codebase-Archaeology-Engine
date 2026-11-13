@@ -32,7 +32,9 @@ def _world_line(world):
                 f"{s['regression_passing']}/{s['regression_tests']} regression pass")
     elif world.name == "world3":
         text = (f"{s['killed']}/{s['mutants_executed']} mutants killed "
-                f"({s['declared']} declared, {s['generated']} generated, {s['contract']} contract)")
+                f"({s['declared']} declared, {s['generated']} generated, {s['contract']} contract)"
+                + (f"; {s['equivalent']} equivalent" if s["equivalent"] else "")
+                + (f"; {s['invalid']} without verdict" if s["invalid"] else ""))
     else:
         text = ""
     return f"  {world.name[-1]}  {world.title:<16}{world.status.upper():<9}{text}"
@@ -104,7 +106,9 @@ def _contracts_extract(args):
                 detail = (f"{validation['probe_count']} probes" if status == "verified"
                           else validation["result"])
                 print(f"    {contract['id']}\n        {contract['description']}  [{detail}]")
-    print(f"\nundetected faults {summary['faults_undetected']} (behaviour no test defends)")
+    print(f"\nfaults            {summary['faults_injected']} injected: {summary['faults_killed']} killed, "
+          f"{summary['faults_survived']} survived, {summary['faults_equivalent']} equivalent, "
+          f"{summary['faults_unexecutable']} unexecutable")
     print(f"fingerprint       {contract_map['fingerprint'][:12]}")
     print(f"contract map      {Path(contract_map['map_dir']) / MAP_FILE}")
     return 0

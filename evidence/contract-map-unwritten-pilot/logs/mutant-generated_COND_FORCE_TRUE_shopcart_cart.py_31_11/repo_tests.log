@@ -1,0 +1,25 @@
+$ pytest -p unwritten_probe -p no:cacheprovider --rootdir . -q --continue-on-collection-errors tests
+....F.........................                                           [100%]
+=================================== FAILURES ===================================
+___________________________ test_remove_deletes_line ___________________________
+
+    def test_remove_deletes_line():
+        cart = Cart()
+        cart.add(NOVEL)
+        cart.add(MUG)
+>       cart.remove("BK-1")
+
+tests/test_cart.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <shopcart.cart.Cart object at 0x7fd2ee975310>, sku = 'BK-1'
+
+    def remove(self, sku):
+        if True:
+>           raise KeyError(sku)
+E           KeyError: 'BK-1'
+
+shopcart/cart.py:32: KeyError
+=========================== short test summary info ============================
+FAILED tests/test_cart.py::test_remove_deletes_line - KeyError: 'BK-1'
+1 failed, 29 passed in 0.06s

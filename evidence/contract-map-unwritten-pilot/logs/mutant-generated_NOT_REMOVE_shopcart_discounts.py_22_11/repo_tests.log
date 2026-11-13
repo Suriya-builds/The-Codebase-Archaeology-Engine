@@ -1,0 +1,150 @@
+$ pytest -p unwritten_probe -p no:cacheprovider --rootdir . -q --continue-on-collection-errors tests
+.............FFFFF...........F                                           [100%]
+=================================== FAILURES ===================================
+______________ test_percentage_discount_applies_to_whole_subtotal ______________
+
+    def test_percentage_discount_applies_to_whole_subtotal():
+>       discount = Discount.from_config({"code": "TEN", "percent": 10})
+
+tests/test_discounts.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+cls = <class 'shopcart.discounts.Discount'>
+config = {'code': 'TEN', 'percent': 10}
+
+    @classmethod
+    def from_config(cls, config):
+        """Build a discount from a plain mapping, e.g. parsed JSON.
+    
+        Keys this version does not understand are ignored, so that newer
+        configuration files keep loading.
+        """
+        if isinstance(config, dict):
+>           raise InvalidDiscountError("discount config must be a mapping")
+E           shopcart.errors.InvalidDiscountError: discount config must be a mapping
+
+shopcart/discounts.py:23: InvalidDiscountError
+_____________________ test_discount_amount_rounds_half_up ______________________
+
+    def test_discount_amount_rounds_half_up():
+>       discount = Discount.from_config({"code": "ODD", "percent": "15"})
+
+tests/test_discounts.py:24: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+cls = <class 'shopcart.discounts.Discount'>
+config = {'code': 'ODD', 'percent': '15'}
+
+    @classmethod
+    def from_config(cls, config):
+        """Build a discount from a plain mapping, e.g. parsed JSON.
+    
+        Keys this version does not understand are ignored, so that newer
+        configuration files keep loading.
+        """
+        if isinstance(config, dict):
+>           raise InvalidDiscountError("discount config must be a mapping")
+E           shopcart.errors.InvalidDiscountError: discount config must be a mapping
+
+shopcart/discounts.py:23: InvalidDiscountError
+______________________ test_full_discount_makes_cart_free ______________________
+
+    def test_full_discount_makes_cart_free():
+>       discount = Discount.from_config({"code": "FREE", "percent": 100})
+
+tests/test_discounts.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+cls = <class 'shopcart.discounts.Discount'>
+config = {'code': 'FREE', 'percent': 100}
+
+    @classmethod
+    def from_config(cls, config):
+        """Build a discount from a plain mapping, e.g. parsed JSON.
+    
+        Keys this version does not understand are ignored, so that newer
+        configuration files keep loading.
+        """
+        if isinstance(config, dict):
+>           raise InvalidDiscountError("discount config must be a mapping")
+E           shopcart.errors.InvalidDiscountError: discount config must be a mapping
+
+shopcart/discounts.py:23: InvalidDiscountError
+_____________________ test_code_is_trimmed_and_uppercased ______________________
+
+    def test_code_is_trimmed_and_uppercased():
+>       assert Discount.from_config({"code": "  ten ", "percent": 10}).code == "TEN"
+
+tests/test_discounts.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+cls = <class 'shopcart.discounts.Discount'>
+config = {'code': '  ten ', 'percent': 10}
+
+    @classmethod
+    def from_config(cls, config):
+        """Build a discount from a plain mapping, e.g. parsed JSON.
+    
+        Keys this version does not understand are ignored, so that newer
+        configuration files keep loading.
+        """
+        if isinstance(config, dict):
+>           raise InvalidDiscountError("discount config must be a mapping")
+E           shopcart.errors.InvalidDiscountError: discount config must be a mapping
+
+shopcart/discounts.py:23: InvalidDiscountError
+_____________________ test_unknown_config_keys_are_ignored _____________________
+
+    def test_unknown_config_keys_are_ignored():
+>       discount = Discount.from_config({"code": "TEN", "percent": 10, "campaign": "spring"})
+
+tests/test_discounts.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+cls = <class 'shopcart.discounts.Discount'>
+config = {'campaign': 'spring', 'code': 'TEN', 'percent': 10}
+
+    @classmethod
+    def from_config(cls, config):
+        """Build a discount from a plain mapping, e.g. parsed JSON.
+    
+        Keys this version does not understand are ignored, so that newer
+        configuration files keep loading.
+        """
+        if isinstance(config, dict):
+>           raise InvalidDiscountError("discount config must be a mapping")
+E           shopcart.errors.InvalidDiscountError: discount config must be a mapping
+
+shopcart/discounts.py:23: InvalidDiscountError
+________________________ test_config_must_be_a_mapping _________________________
+
+    def test_config_must_be_a_mapping():
+        with pytest.raises(InvalidDiscountError):
+>           Discount.from_config(["TEN", 10])
+
+tests/test_discounts.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+cls = <class 'shopcart.discounts.Discount'>, config = ['TEN', 10]
+
+    @classmethod
+    def from_config(cls, config):
+        """Build a discount from a plain mapping, e.g. parsed JSON.
+    
+        Keys this version does not understand are ignored, so that newer
+        configuration files keep loading.
+        """
+        if isinstance(config, dict):
+            raise InvalidDiscountError("discount config must be a mapping")
+>       code = config.get("code")
+E       AttributeError: 'list' object has no attribute 'get'
+
+shopcart/discounts.py:24: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_discounts.py::test_percentage_discount_applies_to_whole_subtotal
+FAILED tests/test_discounts.py::test_discount_amount_rounds_half_up - shopcar...
+FAILED tests/test_discounts.py::test_full_discount_makes_cart_free - shopcart...
+FAILED tests/test_discounts.py::test_code_is_trimmed_and_uppercased - shopcar...
+FAILED tests/test_discounts.py::test_unknown_config_keys_are_ignored - shopca...
+FAILED tests/test_discounts.py::test_config_must_be_a_mapping - AttributeErro...
+6 failed, 24 passed in 0.09s

@@ -1,0 +1,123 @@
+$ pytest -p unwritten_probe -p no:cacheprovider --rootdir . -q --continue-on-collection-errors _unwritten/feature
+FFFFFFFFF................                                                [100%]
+=================================== FAILURES ===================================
+_______________ test_discount_is_not_applied_below_min_subtotal ________________
+
+    def test_discount_is_not_applied_below_min_subtotal():
+        cart = cart_of((NOVEL, 2), (MUG, 1))  # 33.00
+>       assert cart.total(discount(min_subtotal="50.00")) == Decimal("33.00")
+E       AssertionError: assert Decimal('29.70') == Decimal('33.00')
+E        +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('50.00'), categories=None)))
+E        +    where total = <shopcart.cart.Cart object at 0x7fae616daa20>.total
+E        +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('50.00'), categories=None)) = discount(min_subtotal='50.00')
+E        +  and   Decimal('33.00') = Decimal('33.00')
+
+_unwritten/feature/test_discount_eligibility.py:26: AssertionError
+___________________ test_min_subtotal_boundary_is_inclusive ____________________
+
+    def test_min_subtotal_boundary_is_inclusive():
+        cart = cart_of((NOVEL, 2), (MUG, 1))  # 33.00
+        assert cart.total(discount(min_subtotal="33.00")) == Decimal("29.70")
+>       assert cart.total(discount(min_subtotal="33.01")) == Decimal("33.00")
+E       AssertionError: assert Decimal('29.70') == Decimal('33.00')
+E        +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('33.01'), categories=None)))
+E        +    where total = <shopcart.cart.Cart object at 0x7fae60d7d820>.total
+E        +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('33.01'), categories=None)) = discount(min_subtotal='33.01')
+E        +  and   Decimal('33.00') = Decimal('33.00')
+
+_unwritten/feature/test_discount_eligibility.py:32: AssertionError
+___________________ test_ineligible_discount_amount_is_zero ____________________
+
+    def test_ineligible_discount_amount_is_zero():
+        cart = cart_of((MUG, 1))
+>       assert discount(min_subtotal="8.01").amount_for(cart) == Decimal("0.00")
+E       AssertionError: assert Decimal('0.80') == Decimal('0.00')
+E        +  where Decimal('0.80') = amount_for(<shopcart.cart.Cart object at 0x7fae60d69e80>)
+E        +    where amount_for = Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('8.01'), categories=None)).amount_for
+E        +      where Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('8.01'), categories=None)) = discount(min_subtotal='8.01')
+E        +  and   Decimal('0.00') = Decimal('0.00')
+
+_unwritten/feature/test_discount_eligibility.py:37: AssertionError
+______________ test_category_restricts_discount_to_matching_lines ______________
+
+    def test_category_restricts_discount_to_matching_lines():
+        cart = cart_of((NOVEL, 2), (MUG, 1))  # books 25.00, home 8.00
+>       assert cart.total(discount(categories=["books"])) == Decimal("30.50")
+E       AssertionError: assert Decimal('29.70') == Decimal('30.50')
+E        +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))))
+E        +    where total = <shopcart.cart.Cart object at 0x7fae60da4830>.total
+E        +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))) = discount(categories=['books'])
+E        +  and   Decimal('30.50') = Decimal('30.50')
+
+_unwritten/feature/test_discount_eligibility.py:42: AssertionError
+___________________ test_several_categories_are_all_eligible ___________________
+
+    def test_several_categories_are_all_eligible():
+        cart = cart_of((NOVEL, 2), (MUG, 1), (PEN, 10))  # 25.00 + 8.00 + 3.00
+>       assert cart.total(discount(categories=["books", "office"])) == Decimal("33.20")
+E       AssertionError: assert Decimal('32.40') == Decimal('33.20')
+E        +  where Decimal('32.40') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'office', 'books'}))))
+E        +    where total = <shopcart.cart.Cart object at 0x7fae60da5970>.total
+E        +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'office', 'books'}))) = discount(categories=['books', 'office'])
+E        +  and   Decimal('33.20') = Decimal('33.20')
+
+_unwritten/feature/test_discount_eligibility.py:47: AssertionError
+___________________ test_no_eligible_lines_means_no_discount ___________________
+
+    def test_no_eligible_lines_means_no_discount():
+        cart = cart_of((NOVEL, 2), (MUG, 1))
+>       assert cart.total(discount(categories=["garden"])) == Decimal("33.00")
+E       AssertionError: assert Decimal('29.70') == Decimal('33.00')
+E        +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'garden'}))))
+E        +    where total = <shopcart.cart.Cart object at 0x7fae60da6690>.total
+E        +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'garden'}))) = discount(categories=['garden'])
+E        +  and   Decimal('33.00') = Decimal('33.00')
+
+_unwritten/feature/test_discount_eligibility.py:52: AssertionError
+____________________ test_category_match_is_case_sensitive _____________________
+
+    def test_category_match_is_case_sensitive():
+        cart = cart_of((NOVEL, 2))
+>       assert cart.total(discount(categories=["Books"])) == Decimal("25.00")
+E       AssertionError: assert Decimal('22.50') == Decimal('25.00')
+E        +  where Decimal('22.50') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'Books'}))))
+E        +    where total = <shopcart.cart.Cart object at 0x7fae60da79e0>.total
+E        +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'Books'}))) = discount(categories=['Books'])
+E        +  and   Decimal('25.00') = Decimal('25.00')
+
+_unwritten/feature/test_discount_eligibility.py:57: AssertionError
+_____________ test_min_subtotal_is_measured_on_eligible_lines_only _____________
+
+    def test_min_subtotal_is_measured_on_eligible_lines_only():
+        cart = cart_of((NOVEL, 2), (MUG, 2))  # books 25.00, whole cart 41.00
+>       assert cart.total(discount(min_subtotal="30.00", categories=["books"])) == Decimal("41.00")
+E       AssertionError: assert Decimal('36.90') == Decimal('41.00')
+E        +  where Decimal('36.90') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('30.00'), categories=frozenset({'books'}))))
+E        +    where total = <shopcart.cart.Cart object at 0x7fae60dab680>.total
+E        +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('30.00'), categories=frozenset({'books'}))) = discount(min_subtotal='30.00', categories=['books'])
+E        +  and   Decimal('41.00') = Decimal('41.00')
+
+_unwritten/feature/test_discount_eligibility.py:62: AssertionError
+___________ test_amount_is_rounded_half_up_on_the_eligible_subtotal ____________
+
+    def test_amount_is_rounded_half_up_on_the_eligible_subtotal():
+        cart = cart_of((PEN, 1), (MUG, 1))  # 15% of 0.30 is 0.045
+        restricted = discount(percent=15, categories=["office"])
+>       assert restricted.amount_for(cart) == Decimal("0.05")
+E       AssertionError: assert Decimal('1.25') == Decimal('0.05')
+E        +  where Decimal('1.25') = amount_for(<shopcart.cart.Cart object at 0x7fae60da9df0>)
+E        +    where amount_for = Discount(code='TEST', percent=Decimal('15'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'office'}))).amount_for
+E        +  and   Decimal('0.05') = Decimal('0.05')
+
+_unwritten/feature/test_discount_eligibility.py:68: AssertionError
+=========================== short test summary info ============================
+FAILED _unwritten/feature/test_discount_eligibility.py::test_discount_is_not_applied_below_min_subtotal
+FAILED _unwritten/feature/test_discount_eligibility.py::test_min_subtotal_boundary_is_inclusive
+FAILED _unwritten/feature/test_discount_eligibility.py::test_ineligible_discount_amount_is_zero
+FAILED _unwritten/feature/test_discount_eligibility.py::test_category_restricts_discount_to_matching_lines
+FAILED _unwritten/feature/test_discount_eligibility.py::test_several_categories_are_all_eligible
+FAILED _unwritten/feature/test_discount_eligibility.py::test_no_eligible_lines_means_no_discount
+FAILED _unwritten/feature/test_discount_eligibility.py::test_category_match_is_case_sensitive
+FAILED _unwritten/feature/test_discount_eligibility.py::test_min_subtotal_is_measured_on_eligible_lines_only
+FAILED _unwritten/feature/test_discount_eligibility.py::test_amount_is_rounded_half_up_on_the_eligible_subtotal
+9 failed, 16 passed in 0.07s

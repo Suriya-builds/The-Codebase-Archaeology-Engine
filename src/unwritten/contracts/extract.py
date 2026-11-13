@@ -9,8 +9,19 @@ A contract becomes *verified* only through execution:
   a baseline-passing test fail. Those tests become its probes.
 
 Everything else stays a hypothesis (or is refuted, when its probe fails by
-assertion). Guards that no test defends are reported as such: they are the
-repository's unwritten rules.
+assertion).
+
+Every injected fault ends as killed, survived, equivalent or unexecutable. A
+surviving fault is reported as exactly that. It may be a rule nobody tests, or
+a change with no observable effect; nothing here decides which, and only a
+fault that compiles to identical bytecode is ever called equivalent.
+
+Contract ids are stable for a given commit and safe to reference from
+packages:
+
+    test:<test file>::<test function>
+    guard:<source file>:<symbol>:<digest of condition and exception>
+    hyp:<id given by the proposer>
 """
 import hashlib
 import json
@@ -33,6 +44,7 @@ MAP_FILE = "contract-map.json"
 MAP_SCHEMA = "0.1"
 PROBE_DIR = f"{PACKAGE_TESTS_DIR}/probes"
 _PROBE_LIMIT = 12
+_CONTRACT_ID = re.compile(r"(test|guard|hyp):[A-Za-z0-9_.:/<>\-]+")
 
 
 def _now():
@@ -142,20 +154,25 @@ def extract_contracts(repo, profile, runner, out_dir, hypotheses_file=None, jobs
 
         # ---- fault injection: which tests notice which change
         def judge(mutant):
+            if mutant.equivalence:
+                return mutant.id, ("equivalent", [])
             results = execute("mutant-" + re.sub(r"[^A-Za-z0-9._-]+", "_", mutant.id), mutant)
             if any(suite.timed_out for suite in results.values()):
-                return mutant.id, None
+                return mutant.id, ("unexecutable", [])
             now = {(name, t.nodeid): t.outcome for name, suite in results.items() for t in suite.tests}
-            return mutant.id, sorted(key for key in stable_pass if now.get(key) != "passed")
+            detecting = sorted(key for key in stable_pass if now.get(key) != "passed")
+            return mutant.id, ("killed" if detecting else "survived", detecting)
 
         with ThreadPoolExecutor(max_workers=max(1, jobs)) as pool:
-            killers = dict(pool.map(judge, mutants))
-        progress("mutants", len(mutants), sum(bool(k) for k in killers.values()))
+            verdicts = dict(pool.map(judge, mutants))
+        progress("mutants", len(mutants), sum(v[0] == "killed" for v in verdicts.values()))
 
     mutant_by_id = {m.id: m for m in mutants}
+    fault_status = {mutant_id: verdict[0] for mutant_id, verdict in verdicts.items()}
+    killers = {mutant_id: verdict[1] for mutant_id, verdict in verdicts.items()}
     kills = {}
     for mutant_id, tests in killers.items():
-        for key in tests or ():
+        for key in tests:
             kills.setdefault(key, []).append(mutant_id)
 
     def related(test_keys):
@@ -189,7 +206,8 @@ def extract_contracts(repo, profile, runner, out_dir, hypotheses_file=None, jobs
             "validation": {"method": "the repository's own test, run at the pinned commit twice "
                                      "and against every injected fault",
                            "probes": probe_list, "probe_count": probe_count,
-                           "faults_detected": len(killed)},
+                           "faults_detected": len(killed),
+                           "detected_faults": killed[:_PROBE_LIMIT]},
         }
         if any(key in flaky for key in keys):
             _set(contract, "hypothesis", "low", "flaky", "the test gave different results in two runs")
@@ -207,34 +225,39 @@ def extract_contracts(repo, profile, runner, out_dir, hypotheses_file=None, jobs
     # ---- contracts read from guard clauses
     for guard in guards:
         mutant_id = adapter.guard_mutant_id(guard)
-        detecting = killers.get(mutant_id)
+        status = fault_status.get(mutant_id)
         text = f"`{guard.symbol}` raises `{guard.exception}` when `{guard.condition}`"
         if guard.message:
             text += f' ("{guard.message}")'
-        probe_list, probe_count = probes(detecting or ())
+        probe_list, probe_count = probes(killers.get(mutant_id, ()))
         contract = {
-            "id": f"guard:{guard.file}:{guard.symbol}:{guard.index}", "description": text,
+            "id": f"guard:{guard.file}:{guard.symbol}:{guard.key}", "description": text,
             "category": guard.category, "origin": "static_analysis",
             "evidence_type": "guard_clause",
             "source": {"file": guard.file, "symbol": guard.symbol, "line": guard.line},
             "related": [{"file": guard.file, "symbol": guard.symbol}],
-            "guard": {"file": guard.file, "symbol": guard.symbol, "index": guard.index,
+            "guard": {"file": guard.file, "symbol": guard.symbol, "key": guard.key,
                       "condition": guard.condition, "exception": guard.exception},
             "validation": {"method": "remove the guard and see whether a baseline-passing test fails",
-                           "fault": mutant_id if mutant_id in mutant_by_id else None,
-                           "probes": probe_list, "probe_count": probe_count},
+                           "fault": mutant_id if status else None, "fault_status": status,
+                           "probes": probe_list, "probe_count": probe_count,
+                           "faults_detected": 1 if status == "killed" else 0,
+                           "detected_faults": [mutant_id] if status == "killed" else []},
         }
-        if mutant_id not in mutant_by_id:
-            _set(contract, "hypothesis", "medium", "not_measurable",
-                 "the guard could not be removed mechanically")
-        elif detecting is None:
-            _set(contract, "hypothesis", "medium", "not_measurable",
-                 "removing the guard made the tests time out")
-        elif not detecting:
-            _set(contract, "hypothesis", "medium", "unprotected",
-                 "the code enforces this, but no test fails when the check is removed")
-        else:
+        if status == "killed":
             _set(contract, "verified", "high", "guard_removal_detected", None)
+        elif status == "survived":
+            _set(contract, "hypothesis", "medium", "guard_removal_undetected",
+                 "the code contains this check, and no test fails when it is removed. Whether "
+                 "the check is untested or has no observable effect has not been established")
+        elif status == "equivalent":
+            _set(contract, "hypothesis", "medium", "guard_removal_equivalent",
+                 "removing the check " + mutant_by_id[mutant_id].equivalence
+                 + ", so the check has no effect and no test could verify it")
+        else:
+            _set(contract, "hypothesis", "medium", "not_measurable",
+                 "removing the guard made the tests time out" if status == "unexecutable"
+                 else "the guard could not be removed mechanically")
         contracts.append(contract)
 
     # ---- supplied hypotheses
@@ -257,7 +280,8 @@ def extract_contracts(repo, profile, runner, out_dir, hypotheses_file=None, jobs
                                      "every injected fault",
                            "probe_file": f"probes/{file}" if file else None,
                            "probes": probe_list, "probe_count": probe_count,
-                           "faults_detected": len(killed)},
+                           "faults_detected": len(killed),
+                           "detected_faults": killed[:_PROBE_LIMIT]},
         }
         failed = [r for r in results if r.outcome not in ("passed",)]
         if not file:
@@ -284,16 +308,30 @@ def extract_contracts(repo, profile, runner, out_dir, hypotheses_file=None, jobs
             _set(contract, "verified", "high", "passes_and_detects_faults", None)
         contracts.append(contract)
 
-    unprotected = [
-        {"fault": m.id, "file": m.file, "line": m.line, "description": m.description,
-         "symbol": _symbol_at(symbols, m.file, m.line)}
-        for m in mutants if killers[m.id] == []]
+    ids = [c["id"] for c in contracts]
+    bad_ids = sorted({i for i in ids if ids.count(i) > 1 or not _CONTRACT_ID.fullmatch(i)})
+    if bad_ids:
+        raise HarnessError(f"contract ids are not unique or not referenceable: {bad_ids}")
+
+    faults = []
+    for mutant in mutants:
+        fault = {"id": mutant.id, "status": fault_status[mutant.id], "file": mutant.file,
+                 "line": mutant.line, "symbol": _symbol_at(symbols, mutant.file, mutant.line),
+                 "operator": mutant.operator, "description": mutant.description,
+                 "detected_by": len(killers[mutant.id])}
+        if mutant.equivalence:
+            fault["equivalence_evidence"] = mutant.equivalence
+        if fault["status"] not in ("equivalent",):
+            fault["logs"] = "logs/mutant-" + re.sub(r"[^A-Za-z0-9._-]+", "_", mutant.id)
+        faults.append(fault)
+    count = {state: sum(f["status"] == state for f in faults)
+             for state in ("killed", "survived", "equivalent", "unexecutable")}
     by_status = {}
     for contract in contracts:
         by_status[contract["status"]] = by_status.get(contract["status"], 0) + 1
     fingerprint = hashlib.sha256(json.dumps(
         [[c["id"], c["status"], c["validation"]["result"], c["validation"]["probes"]] for c in contracts]
-        + [u["fault"] for u in unprotected], sort_keys=True).encode()).hexdigest()
+        + [[f["id"], f["status"]] for f in faults], sort_keys=True).encode()).hexdigest()
 
     contract_map = {
         "contract_map_schema": MAP_SCHEMA,
@@ -311,13 +349,21 @@ def extract_contracts(repo, profile, runner, out_dir, hypotheses_file=None, jobs
             "contracts": len(contracts), **dict(sorted(by_status.items())),
             "baseline_tests": len(outcomes[0]), "baseline_runs": 2,
             "faults_injected": len(mutants),
-            "faults_detected": sum(bool(k) for k in killers.values()),
-            "faults_undetected": len(unprotected),
-            "faults_timed_out": sum(k is None for k in killers.values()),
+            "faults_killed": count["killed"],
+            "faults_survived": count["survived"],
+            "faults_equivalent": count["equivalent"],
+            "faults_unexecutable": count["unexecutable"],
         },
         "fingerprint": fingerprint,
         "contracts": contracts,
-        "unprotected_behaviour": unprotected,
+        "faults": faults,
+        "fault_states": {
+            "killed": "at least one baseline-passing test fails with the fault in place",
+            "survived": "the fault ran and every test still passed; this does not show whether "
+                        "the behaviour is untested or the change has no observable effect",
+            "equivalent": "the fault compiles to identical bytecode, so it cannot change behaviour",
+            "unexecutable": "the tests timed out with the fault in place; no verdict",
+        },
         "timing": {"started_at": started, "finished_at": _now(),
                    "duration_seconds": round(time.monotonic() - clock, 2)},
     }

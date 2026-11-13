@@ -26,6 +26,7 @@ class Guard:
     file: str
     symbol: str       # enclosing symbol, "<module>" at top level
     index: int        # position among the guards of that symbol, from 1
+    key: str          # digest of condition and exception: survives reordering
     line: int         # where the condition starts
     col: int
     condition: str

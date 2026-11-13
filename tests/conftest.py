@@ -107,3 +107,33 @@ def contract_map(pilot_repo, tmp_path_factory):
         return cache[key]
 
     return run
+
+
+REFERENCE_KEYS = ("log", "logs", "diff", "probe_file")
+
+
+def referenced_files(document):
+    """Every file or directory a piece of evidence points to."""
+    found = []
+
+    def walk(node):
+        if isinstance(node, dict):
+            for key, value in node.items():
+                if key in REFERENCE_KEYS and isinstance(value, str):
+                    found.append(value)
+                else:
+                    walk(value)
+        elif isinstance(node, list):
+            for item in node:
+                walk(item)
+
+    walk(document)
+    return found
+
+
+def guard_id(contracts, symbol, condition):
+    """Find a guard contract by what it says, the way a reader would."""
+    (match,) = [c["id"] for c in contracts
+                if c["evidence_type"] == "guard_clause" and c["guard"]["symbol"] == symbol
+                and condition in c["guard"]["condition"]]
+    return match

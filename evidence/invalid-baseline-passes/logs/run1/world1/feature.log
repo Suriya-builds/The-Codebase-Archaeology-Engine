@@ -1,0 +1,299 @@
+$ pytest -p unwritten_probe -p no:cacheprovider --rootdir . -q --continue-on-collection-errors _unwritten/feature
+FFFFFFFFFFFFFFFFFFFFFFFFF.                                               [100%]
+=================================== FAILURES ===================================
+_______________ test_discount_is_not_applied_below_min_subtotal ________________
+
+    def test_discount_is_not_applied_below_min_subtotal():
+        cart = cart_of((NOVEL, 2), (MUG, 1))  # 33.00
+>       assert cart.total(discount(min_subtotal="50.00")) == Decimal("33.00")
+E       AssertionError: assert Decimal('29.70') == Decimal('33.00')
+E        +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10')))
+E        +    where total = <shopcart.cart.Cart object at 0x7fcf54589c10>.total
+E        +    and   Discount(code='TEST', percent=Decimal('10')) = discount(min_subtotal='50.00')
+E        +  and   Decimal('33.00') = Decimal('33.00')
+
+_unwritten/feature/test_discount_eligibility.py:26: AssertionError
+___________________ test_min_subtotal_boundary_is_inclusive ____________________
+
+    def test_min_subtotal_boundary_is_inclusive():
+        cart = cart_of((NOVEL, 2), (MUG, 1))  # 33.00
+        assert cart.total(discount(min_subtotal="33.00")) == Decimal("29.70")
+>       assert cart.total(discount(min_subtotal="33.01")) == Decimal("33.00")
+E       AssertionError: assert Decimal('29.70') == Decimal('33.00')
+E        +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10')))
+E        +    where total = <shopcart.cart.Cart object at 0x7fcf5459e120>.total
+E        +    and   Discount(code='TEST', percent=Decimal('10')) = discount(min_subtotal='33.01')
+E        +  and   Decimal('33.00') = Decimal('33.00')
+
+_unwritten/feature/test_discount_eligibility.py:32: AssertionError
+___________________ test_ineligible_discount_amount_is_zero ____________________
+
+    def test_ineligible_discount_amount_is_zero():
+        cart = cart_of((MUG, 1))
+>       assert discount(min_subtotal="8.01").amount_for(cart) == Decimal("0.00")
+E       AssertionError: assert Decimal('0.80') == Decimal('0.00')
+E        +  where Decimal('0.80') = amount_for(<shopcart.cart.Cart object at 0x7fcf545c5910>)
+E        +    where amount_for = Discount(code='TEST', percent=Decimal('10')).amount_for
+E        +      where Discount(code='TEST', percent=Decimal('10')) = discount(min_subtotal='8.01')
+E        +  and   Decimal('0.00') = Decimal('0.00')
+
+_unwritten/feature/test_discount_eligibility.py:37: AssertionError
+______________ test_category_restricts_discount_to_matching_lines ______________
+
+    def test_category_restricts_discount_to_matching_lines():
+        cart = cart_of((NOVEL, 2), (MUG, 1))  # books 25.00, home 8.00
+>       assert cart.total(discount(categories=["books"])) == Decimal("30.50")
+E       AssertionError: assert Decimal('29.70') == Decimal('30.50')
+E        +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10')))
+E        +    where total = <shopcart.cart.Cart object at 0x7fcf545c5b20>.total
+E        +    and   Discount(code='TEST', percent=Decimal('10')) = discount(categories=['books'])
+E        +  and   Decimal('30.50') = Decimal('30.50')
+
+_unwritten/feature/test_discount_eligibility.py:42: AssertionError
+___________________ test_several_categories_are_all_eligible ___________________
+
+    def test_several_categories_are_all_eligible():
+        cart = cart_of((NOVEL, 2), (MUG, 1), (PEN, 10))  # 25.00 + 8.00 + 3.00
+>       assert cart.total(discount(categories=["books", "office"])) == Decimal("33.20")
+E       AssertionError: assert Decimal('32.40') == Decimal('33.20')
+E        +  where Decimal('32.40') = total(Discount(code='TEST', percent=Decimal('10')))
+E        +    where total = <shopcart.cart.Cart object at 0x7fcf545c64e0>.total
+E        +    and   Discount(code='TEST', percent=Decimal('10')) = discount(categories=['books', 'office'])
+E        +  and   Decimal('33.20') = Decimal('33.20')
+
+_unwritten/feature/test_discount_eligibility.py:47: AssertionError
+___________________ test_no_eligible_lines_means_no_discount ___________________
+
+    def test_no_eligible_lines_means_no_discount():
+        cart = cart_of((NOVEL, 2), (MUG, 1))
+>       assert cart.total(discount(categories=["garden"])) == Decimal("33.00")
+E       AssertionError: assert Decimal('29.70') == Decimal('33.00')
+E        +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10')))
+E        +    where total = <shopcart.cart.Cart object at 0x7fcf545c71a0>.total
+E        +    and   Discount(code='TEST', percent=Decimal('10')) = discount(categories=['garden'])
+E        +  and   Decimal('33.00') = Decimal('33.00')
+
+_unwritten/feature/test_discount_eligibility.py:52: AssertionError
+____________________ test_category_match_is_case_sensitive _____________________
+
+    def test_category_match_is_case_sensitive():
+        cart = cart_of((NOVEL, 2))
+>       assert cart.total(discount(categories=["Books"])) == Decimal("25.00")
+E       AssertionError: assert Decimal('22.50') == Decimal('25.00')
+E        +  where Decimal('22.50') = total(Discount(code='TEST', percent=Decimal('10')))
+E        +    where total = <shopcart.cart.Cart object at 0x7fcf545c98e0>.total
+E        +    and   Discount(code='TEST', percent=Decimal('10')) = discount(categories=['Books'])
+E        +  and   Decimal('25.00') = Decimal('25.00')
+
+_unwritten/feature/test_discount_eligibility.py:57: AssertionError
+_____________ test_min_subtotal_is_measured_on_eligible_lines_only _____________
+
+    def test_min_subtotal_is_measured_on_eligible_lines_only():
+        cart = cart_of((NOVEL, 2), (MUG, 2))  # books 25.00, whole cart 41.00
+>       assert cart.total(discount(min_subtotal="30.00", categories=["books"])) == Decimal("41.00")
+E       AssertionError: assert Decimal('36.90') == Decimal('41.00')
+E        +  where Decimal('36.90') = total(Discount(code='TEST', percent=Decimal('10')))
+E        +    where total = <shopcart.cart.Cart object at 0x7fcf545cacc0>.total
+E        +    and   Discount(code='TEST', percent=Decimal('10')) = discount(min_subtotal='30.00', categories=['books'])
+E        +  and   Decimal('41.00') = Decimal('41.00')
+
+_unwritten/feature/test_discount_eligibility.py:62: AssertionError
+___________ test_amount_is_rounded_half_up_on_the_eligible_subtotal ____________
+
+    def test_amount_is_rounded_half_up_on_the_eligible_subtotal():
+        cart = cart_of((PEN, 1), (MUG, 1))  # 15% of 0.30 is 0.045
+        restricted = discount(percent=15, categories=["office"])
+>       assert restricted.amount_for(cart) == Decimal("0.05")
+E       AssertionError: assert Decimal('1.25') == Decimal('0.05')
+E        +  where Decimal('1.25') = amount_for(<shopcart.cart.Cart object at 0x7fcf545ca6c0>)
+E        +    where amount_for = Discount(code='TEST', percent=Decimal('15')).amount_for
+E        +  and   Decimal('0.05') = Decimal('0.05')
+
+_unwritten/feature/test_discount_eligibility.py:68: AssertionError
+__________________ test_eligibility_must_be_a_mapping[books] ___________________
+
+eligibility = 'books'
+
+    @pytest.mark.parametrize("eligibility", ["books", ["books"], 5, True])
+    def test_eligibility_must_be_a_mapping(eligibility):
+>       with pytest.raises(InvalidDiscountError):
+E       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>
+
+_unwritten/feature/test_discount_eligibility.py:74: Failed
+_______________ test_eligibility_must_be_a_mapping[eligibility1] _______________
+
+eligibility = ['books']
+
+    @pytest.mark.parametrize("eligibility", ["books", ["books"], 5, True])
+    def test_eligibility_must_be_a_mapping(eligibility):
+>       with pytest.raises(InvalidDiscountError):
+E       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>
+
+_unwritten/feature/test_discount_eligibility.py:74: Failed
+____________________ test_eligibility_must_be_a_mapping[5] _____________________
+
+eligibility = 5
+
+    @pytest.mark.parametrize("eligibility", ["books", ["books"], 5, True])
+    def test_eligibility_must_be_a_mapping(eligibility):
+>       with pytest.raises(InvalidDiscountError):
+E       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>
+
+_unwritten/feature/test_discount_eligibility.py:74: Failed
+___________________ test_eligibility_must_be_a_mapping[True] ___________________
+
+eligibility = True
+
+    @pytest.mark.parametrize("eligibility", ["books", ["books"], 5, True])
+    def test_eligibility_must_be_a_mapping(eligibility):
+>       with pytest.raises(InvalidDiscountError):
+E       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>
+
+_unwritten/feature/test_discount_eligibility.py:74: Failed
+_________________ test_invalid_min_subtotal_is_rejected[-0.01] _________________
+
+min_subtotal = '-0.01'
+
+    @pytest.mark.parametrize("min_subtotal", ["-0.01", -5, "abc", 1.5, None, True])
+    def test_invalid_min_subtotal_is_rejected(min_subtotal):
+>       with pytest.raises(InvalidDiscountError):
+E       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>
+
+_unwritten/feature/test_discount_eligibility.py:80: Failed
+__________________ test_invalid_min_subtotal_is_rejected[-5] ___________________
+
+min_subtotal = -5
+
+    @pytest.mark.parametrize("min_subtotal", ["-0.01", -5, "abc", 1.5, None, True])
+    def test_invalid_min_subtotal_is_rejected(min_subtotal):
+>       with pytest.raises(InvalidDiscountError):
+E       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>
+
+_unwritten/feature/test_discount_eligibility.py:80: Failed
+__________________ test_invalid_min_subtotal_is_rejected[abc] __________________
+
+min_subtotal = 'abc'
+
+    @pytest.mark.parametrize("min_subtotal", ["-0.01", -5, "abc", 1.5, None, True])
+    def test_invalid_min_subtotal_is_rejected(min_subtotal):
+>       with pytest.raises(InvalidDiscountError):
+E       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>
+
+_unwritten/feature/test_discount_eligibility.py:80: Failed
+__________________ test_invalid_min_subtotal_is_rejected[1.5] __________________
+
+min_subtotal = 1.5
+
+    @pytest.mark.parametrize("min_subtotal", ["-0.01", -5, "abc", 1.5, None, True])
+    def test_invalid_min_subtotal_is_rejected(min_subtotal):
+>       with pytest.raises(InvalidDiscountError):
+E       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>
+
+_unwritten/feature/test_discount_eligibility.py:80: Failed
+_________________ test_invalid_min_subtotal_is_rejected[None] __________________
+
+min_subtotal = None
+
+    @pytest.mark.parametrize("min_subtotal", ["-0.01", -5, "abc", 1.5, None, True])
+    def test_invalid_min_subtotal_is_rejected(min_subtotal):
+>       with pytest.raises(InvalidDiscountError):
+E       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>
+
+_unwritten/feature/test_discount_eligibility.py:80: Failed
+_________________ test_invalid_min_subtotal_is_rejected[True] __________________
+
+min_subtotal = True
+
+    @pytest.mark.parametrize("min_subtotal", ["-0.01", -5, "abc", 1.5, None, True])
+    def test_invalid_min_subtotal_is_rejected(min_subtotal):
+>       with pytest.raises(InvalidDiscountError):
+E       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>
+
+_unwritten/feature/test_discount_eligibility.py:80: Failed
+______________ test_invalid_categories_are_rejected[categories0] _______________
+
+categories = []
+
+    @pytest.mark.parametrize("categories", [[], "books", ("books",), [7], ["books", "  "], [""]])
+    def test_invalid_categories_are_rejected(categories):
+>       with pytest.raises(InvalidDiscountError):
+E       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>
+
+_unwritten/feature/test_discount_eligibility.py:86: Failed
+_________________ test_invalid_categories_are_rejected[books] __________________
+
+categories = 'books'
+
+    @pytest.mark.parametrize("categories", [[], "books", ("books",), [7], ["books", "  "], [""]])
+    def test_invalid_categories_are_rejected(categories):
+>       with pytest.raises(InvalidDiscountError):
+E       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>
+
+_unwritten/feature/test_discount_eligibility.py:86: Failed
+______________ test_invalid_categories_are_rejected[categories2] _______________
+
+categories = ('books',)
+
+    @pytest.mark.parametrize("categories", [[], "books", ("books",), [7], ["books", "  "], [""]])
+    def test_invalid_categories_are_rejected(categories):
+>       with pytest.raises(InvalidDiscountError):
+E       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>
+
+_unwritten/feature/test_discount_eligibility.py:86: Failed
+______________ test_invalid_categories_are_rejected[categories3] _______________
+
+categories = [7]
+
+    @pytest.mark.parametrize("categories", [[], "books", ("books",), [7], ["books", "  "], [""]])
+    def test_invalid_categories_are_rejected(categories):
+>       with pytest.raises(InvalidDiscountError):
+E       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>
+
+_unwritten/feature/test_discount_eligibility.py:86: Failed
+______________ test_invalid_categories_are_rejected[categories4] _______________
+
+categories = ['books', '  ']
+
+    @pytest.mark.parametrize("categories", [[], "books", ("books",), [7], ["books", "  "], [""]])
+    def test_invalid_categories_are_rejected(categories):
+>       with pytest.raises(InvalidDiscountError):
+E       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>
+
+_unwritten/feature/test_discount_eligibility.py:86: Failed
+______________ test_invalid_categories_are_rejected[categories5] _______________
+
+categories = ['']
+
+    @pytest.mark.parametrize("categories", [[], "books", ("books",), [7], ["books", "  "], [""]])
+    def test_invalid_categories_are_rejected(categories):
+>       with pytest.raises(InvalidDiscountError):
+E       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>
+
+_unwritten/feature/test_discount_eligibility.py:86: Failed
+=========================== short test summary info ============================
+FAILED _unwritten/feature/test_discount_eligibility.py::test_discount_is_not_applied_below_min_subtotal
+FAILED _unwritten/feature/test_discount_eligibility.py::test_min_subtotal_boundary_is_inclusive
+FAILED _unwritten/feature/test_discount_eligibility.py::test_ineligible_discount_amount_is_zero
+FAILED _unwritten/feature/test_discount_eligibility.py::test_category_restricts_discount_to_matching_lines
+FAILED _unwritten/feature/test_discount_eligibility.py::test_several_categories_are_all_eligible
+FAILED _unwritten/feature/test_discount_eligibility.py::test_no_eligible_lines_means_no_discount
+FAILED _unwritten/feature/test_discount_eligibility.py::test_category_match_is_case_sensitive
+FAILED _unwritten/feature/test_discount_eligibility.py::test_min_subtotal_is_measured_on_eligible_lines_only
+FAILED _unwritten/feature/test_discount_eligibility.py::test_amount_is_rounded_half_up_on_the_eligible_subtotal
+FAILED _unwritten/feature/test_discount_eligibility.py::test_eligibility_must_be_a_mapping[books]
+FAILED _unwritten/feature/test_discount_eligibility.py::test_eligibility_must_be_a_mapping[eligibility1]
+FAILED _unwritten/feature/test_discount_eligibility.py::test_eligibility_must_be_a_mapping[5]
+FAILED _unwritten/feature/test_discount_eligibility.py::test_eligibility_must_be_a_mapping[True]
+FAILED _unwritten/feature/test_discount_eligibility.py::test_invalid_min_subtotal_is_rejected[-0.01]
+FAILED _unwritten/feature/test_discount_eligibility.py::test_invalid_min_subtotal_is_rejected[-5]
+FAILED _unwritten/feature/test_discount_eligibility.py::test_invalid_min_subtotal_is_rejected[abc]
+FAILED _unwritten/feature/test_discount_eligibility.py::test_invalid_min_subtotal_is_rejected[1.5]
+FAILED _unwritten/feature/test_discount_eligibility.py::test_invalid_min_subtotal_is_rejected[None]
+FAILED _unwritten/feature/test_discount_eligibility.py::test_invalid_min_subtotal_is_rejected[True]
+FAILED _unwritten/feature/test_discount_eligibility.py::test_invalid_categories_are_rejected[categories0]
+FAILED _unwritten/feature/test_discount_eligibility.py::test_invalid_categories_are_rejected[books]
+FAILED _unwritten/feature/test_discount_eligibility.py::test_invalid_categories_are_rejected[categories2]
+FAILED _unwritten/feature/test_discount_eligibility.py::test_invalid_categories_are_rejected[categories3]
+FAILED _unwritten/feature/test_discount_eligibility.py::test_invalid_categories_are_rejected[categories4]
+FAILED _unwritten/feature/test_discount_eligibility.py::test_invalid_categories_are_rejected[categories5]
+25 failed, 1 passed in 0.10s

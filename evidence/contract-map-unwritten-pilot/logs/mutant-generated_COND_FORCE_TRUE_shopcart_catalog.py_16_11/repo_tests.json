@@ -1,0 +1,15 @@
+{
+ "pytest_version": "8.3.4",
+ "exit_status": 1,
+ "tests": [],
+ "collection_errors": [
+  {
+   "nodeid": "tests/test_cart.py",
+   "detail": "tests/test_cart.py:7: in <module>\n    NOVEL = Product(\"BK-1\", \"Novel\", \"12.50\", \"books\")\n<string>:7: in __init__\n    ???\nshopcart/catalog.py:17: in __post_init__\n    raise ValueError(\"price must not be negative\")\nE   ValueError: price must not be negative"
+  },
+  {
+   "nodeid": "tests/test_discounts.py",
+   "detail": "tests/test_discounts.py:7: in <module>\n    NOVEL = Product(\"BK-1\", \"Novel\", \"12.50\", \"books\")\n<string>:7: in __init__\n    ???\nshopcart/catalog.py:17: in __post_init__\n    raise ValueError(\"price must not be negative\")\nE   ValueError: price must not be negative"
+  }
+ ]
+}

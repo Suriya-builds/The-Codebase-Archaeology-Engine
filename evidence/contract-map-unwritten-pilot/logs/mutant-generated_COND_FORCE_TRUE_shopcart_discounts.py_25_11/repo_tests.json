@@ -1,0 +1,452 @@
+{
+ "pytest_version": "8.3.4",
+ "exit_status": 1,
+ "tests": [
+  {
+   "nodeid": "tests/test_cart.py::test_empty_cart_totals_zero",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_cart.py::test_subtotal_sums_line_totals",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_cart.py::test_adding_same_product_merges_quantities",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_cart.py::test_lines_keep_insertion_order",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_cart.py::test_remove_deletes_line",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_cart.py::test_remove_unknown_sku_raises_key_error",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[0]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[-1]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[1.5]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[2]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[True]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_cart.py::test_product_price_is_normalised_to_cents",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_cart.py::test_float_prices_are_rejected",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_discounts.py::test_percentage_discount_applies_to_whole_subtotal",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "def test_percentage_discount_applies_to_whole_subtotal():\n>       discount = Discount.from_config({\"code\": \"TEN\", \"percent\": 10})\n\ntests/test_discounts.py:19: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\ncls = <class 'shopcart.discounts.Discount'>\nconfig = {'code': 'TEN', 'percent': 10}\n\n    @classmethod\n    def from_config(cls, config):\n        \"\"\"Build a discount from a plain mapping, e.g. parsed JSON.\n    \n        Keys this version does not understand are ignored, so that newer\n        configuration files keep loading.\n        \"\"\"\n        if not isinstance(config, dict):\n            raise InvalidDiscountError(\"discount config must be a mapping\")\n        code = config.get(\"code\")\n        if True:\n>           raise InvalidDiscountError(\"discount code must be a non-empty string\")\nE           shopcart.errors.InvalidDiscountError: discount code must be a non-empty string\n\nshopcart/discounts.py:26: InvalidDiscountError",
+     "exc_type": "shopcart.errors.InvalidDiscountError",
+     "raised_in": "shopcart/discounts.py",
+     "assertion_level": false,
+     "message": "discount code must be a non-empty string"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_discounts.py::test_discount_amount_rounds_half_up",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "def test_discount_amount_rounds_half_up():\n>       discount = Discount.from_config({\"code\": \"ODD\", \"percent\": \"15\"})\n\ntests/test_discounts.py:24: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\ncls = <class 'shopcart.discounts.Discount'>\nconfig = {'code': 'ODD', 'percent': '15'}\n\n    @classmethod\n    def from_config(cls, config):\n        \"\"\"Build a discount from a plain mapping, e.g. parsed JSON.\n    \n        Keys this version does not understand are ignored, so that newer\n        configuration files keep loading.\n        \"\"\"\n        if not isinstance(config, dict):\n            raise InvalidDiscountError(\"discount config must be a mapping\")\n        code = config.get(\"code\")\n        if True:\n>           raise InvalidDiscountError(\"discount code must be a non-empty string\")\nE           shopcart.errors.InvalidDiscountError: discount code must be a non-empty string\n\nshopcart/discounts.py:26: InvalidDiscountError",
+     "exc_type": "shopcart.errors.InvalidDiscountError",
+     "raised_in": "shopcart/discounts.py",
+     "assertion_level": false,
+     "message": "discount code must be a non-empty string"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_discounts.py::test_full_discount_makes_cart_free",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "def test_full_discount_makes_cart_free():\n>       discount = Discount.from_config({\"code\": \"FREE\", \"percent\": 100})\n\ntests/test_discounts.py:31: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\ncls = <class 'shopcart.discounts.Discount'>\nconfig = {'code': 'FREE', 'percent': 100}\n\n    @classmethod\n    def from_config(cls, config):\n        \"\"\"Build a discount from a plain mapping, e.g. parsed JSON.\n    \n        Keys this version does not understand are ignored, so that newer\n        configuration files keep loading.\n        \"\"\"\n        if not isinstance(config, dict):\n            raise InvalidDiscountError(\"discount config must be a mapping\")\n        code = config.get(\"code\")\n        if True:\n>           raise InvalidDiscountError(\"discount code must be a non-empty string\")\nE           shopcart.errors.InvalidDiscountError: discount code must be a non-empty string\n\nshopcart/discounts.py:26: InvalidDiscountError",
+     "exc_type": "shopcart.errors.InvalidDiscountError",
+     "raised_in": "shopcart/discounts.py",
+     "assertion_level": false,
+     "message": "discount code must be a non-empty string"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_discounts.py::test_code_is_trimmed_and_uppercased",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "def test_code_is_trimmed_and_uppercased():\n>       assert Discount.from_config({\"code\": \"  ten \", \"percent\": 10}).code == \"TEN\"\n\ntests/test_discounts.py:36: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\ncls = <class 'shopcart.discounts.Discount'>\nconfig = {'code': '  ten ', 'percent': 10}\n\n    @classmethod\n    def from_config(cls, config):\n        \"\"\"Build a discount from a plain mapping, e.g. parsed JSON.\n    \n        Keys this version does not understand are ignored, so that newer\n        configuration files keep loading.\n        \"\"\"\n        if not isinstance(config, dict):\n            raise InvalidDiscountError(\"discount config must be a mapping\")\n        code = config.get(\"code\")\n        if True:\n>           raise InvalidDiscountError(\"discount code must be a non-empty string\")\nE           shopcart.errors.InvalidDiscountError: discount code must be a non-empty string\n\nshopcart/discounts.py:26: InvalidDiscountError",
+     "exc_type": "shopcart.errors.InvalidDiscountError",
+     "raised_in": "shopcart/discounts.py",
+     "assertion_level": false,
+     "message": "discount code must be a non-empty string"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_discounts.py::test_unknown_config_keys_are_ignored",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "def test_unknown_config_keys_are_ignored():\n>       discount = Discount.from_config({\"code\": \"TEN\", \"percent\": 10, \"campaign\": \"spring\"})\n\ntests/test_discounts.py:40: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\ncls = <class 'shopcart.discounts.Discount'>\nconfig = {'campaign': 'spring', 'code': 'TEN', 'percent': 10}\n\n    @classmethod\n    def from_config(cls, config):\n        \"\"\"Build a discount from a plain mapping, e.g. parsed JSON.\n    \n        Keys this version does not understand are ignored, so that newer\n        configuration files keep loading.\n        \"\"\"\n        if not isinstance(config, dict):\n            raise InvalidDiscountError(\"discount config must be a mapping\")\n        code = config.get(\"code\")\n        if True:\n>           raise InvalidDiscountError(\"discount code must be a non-empty string\")\nE           shopcart.errors.InvalidDiscountError: discount code must be a non-empty string\n\nshopcart/discounts.py:26: InvalidDiscountError",
+     "exc_type": "shopcart.errors.InvalidDiscountError",
+     "raised_in": "shopcart/discounts.py",
+     "assertion_level": false,
+     "message": "discount code must be a non-empty string"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[0]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[-5]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[101]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[abc]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[None]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[True]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[2.5]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_discounts.py::test_invalid_code_is_rejected[None]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_discounts.py::test_invalid_code_is_rejected[]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_discounts.py::test_invalid_code_is_rejected[   ]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_discounts.py::test_invalid_code_is_rejected[7]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_discounts.py::test_config_must_be_a_mapping",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  }
+ ],
+ "collection_errors": []
+}

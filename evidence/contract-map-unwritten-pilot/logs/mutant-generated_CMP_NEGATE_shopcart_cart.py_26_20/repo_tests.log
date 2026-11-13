@@ -1,0 +1,168 @@
+$ pytest -p unwritten_probe -p no:cacheprovider --rootdir . -q --continue-on-collection-errors tests
+.FFFF........FFF..............                                           [100%]
+=================================== FAILURES ===================================
+________________________ test_subtotal_sums_line_totals ________________________
+
+    def test_subtotal_sums_line_totals():
+        cart = Cart()
+>       cart.add(NOVEL, 2)
+
+tests/test_cart.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <shopcart.cart.Cart object at 0x7f4acc356b10>
+product = Product(sku='BK-1', name='Novel', price=Decimal('12.50'), category='books')
+quantity = 2
+
+    def add(self, product, quantity=1):
+        _check_quantity(quantity)
+        existing = self._lines.get(product.sku)
+        if existing is None:
+>           quantity += existing.quantity
+E           AttributeError: 'NoneType' object has no attribute 'quantity'
+
+shopcart/cart.py:27: AttributeError
+__________________ test_adding_same_product_merges_quantities __________________
+
+    def test_adding_same_product_merges_quantities():
+        cart = Cart()
+>       cart.add(NOVEL)
+
+tests/test_cart.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <shopcart.cart.Cart object at 0x7f4acc564410>
+product = Product(sku='BK-1', name='Novel', price=Decimal('12.50'), category='books')
+quantity = 1
+
+    def add(self, product, quantity=1):
+        _check_quantity(quantity)
+        existing = self._lines.get(product.sku)
+        if existing is None:
+>           quantity += existing.quantity
+E           AttributeError: 'NoneType' object has no attribute 'quantity'
+
+shopcart/cart.py:27: AttributeError
+_______________________ test_lines_keep_insertion_order ________________________
+
+    def test_lines_keep_insertion_order():
+        cart = Cart()
+>       cart.add(MUG)
+
+tests/test_cart.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <shopcart.cart.Cart object at 0x7f4acc340e30>
+product = Product(sku='HM-1', name='Mug', price=Decimal('8.00'), category='home')
+quantity = 1
+
+    def add(self, product, quantity=1):
+        _check_quantity(quantity)
+        existing = self._lines.get(product.sku)
+        if existing is None:
+>           quantity += existing.quantity
+E           AttributeError: 'NoneType' object has no attribute 'quantity'
+
+shopcart/cart.py:27: AttributeError
+___________________________ test_remove_deletes_line ___________________________
+
+    def test_remove_deletes_line():
+        cart = Cart()
+>       cart.add(NOVEL)
+
+tests/test_cart.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <shopcart.cart.Cart object at 0x7f4acc37dac0>
+product = Product(sku='BK-1', name='Novel', price=Decimal('12.50'), category='books')
+quantity = 1
+
+    def add(self, product, quantity=1):
+        _check_quantity(quantity)
+        existing = self._lines.get(product.sku)
+        if existing is None:
+>           quantity += existing.quantity
+E           AttributeError: 'NoneType' object has no attribute 'quantity'
+
+shopcart/cart.py:27: AttributeError
+______________ test_percentage_discount_applies_to_whole_subtotal ______________
+
+    def test_percentage_discount_applies_to_whole_subtotal():
+        discount = Discount.from_config({"code": "TEN", "percent": 10})
+>       assert cart_of((NOVEL, 2), (MUG, 1)).total(discount) == Decimal("29.70")
+
+tests/test_discounts.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_discounts.py:14: in cart_of
+    cart.add(product, quantity)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <shopcart.cart.Cart object at 0x7f4acc37e510>
+product = Product(sku='BK-1', name='Novel', price=Decimal('12.50'), category='books')
+quantity = 2
+
+    def add(self, product, quantity=1):
+        _check_quantity(quantity)
+        existing = self._lines.get(product.sku)
+        if existing is None:
+>           quantity += existing.quantity
+E           AttributeError: 'NoneType' object has no attribute 'quantity'
+
+shopcart/cart.py:27: AttributeError
+_____________________ test_discount_amount_rounds_half_up ______________________
+
+    def test_discount_amount_rounds_half_up():
+        discount = Discount.from_config({"code": "ODD", "percent": "15"})
+>       cart = cart_of((Product("P", "Pen", "0.30", "office"), 1))
+
+tests/test_discounts.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_discounts.py:14: in cart_of
+    cart.add(product, quantity)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <shopcart.cart.Cart object at 0x7f4acc37faa0>
+product = Product(sku='P', name='Pen', price=Decimal('0.30'), category='office')
+quantity = 1
+
+    def add(self, product, quantity=1):
+        _check_quantity(quantity)
+        existing = self._lines.get(product.sku)
+        if existing is None:
+>           quantity += existing.quantity
+E           AttributeError: 'NoneType' object has no attribute 'quantity'
+
+shopcart/cart.py:27: AttributeError
+______________________ test_full_discount_makes_cart_free ______________________
+
+    def test_full_discount_makes_cart_free():
+        discount = Discount.from_config({"code": "FREE", "percent": 100})
+>       assert cart_of((MUG, 3)).total(discount) == Decimal("0.00")
+
+tests/test_discounts.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_discounts.py:14: in cart_of
+    cart.add(product, quantity)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <shopcart.cart.Cart object at 0x7f4acc3809e0>
+product = Product(sku='HM-1', name='Mug', price=Decimal('8.00'), category='home')
+quantity = 3
+
+    def add(self, product, quantity=1):
+        _check_quantity(quantity)
+        existing = self._lines.get(product.sku)
+        if existing is None:
+>           quantity += existing.quantity
+E           AttributeError: 'NoneType' object has no attribute 'quantity'
+
+shopcart/cart.py:27: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_cart.py::test_subtotal_sums_line_totals - AttributeError: '...
+FAILED tests/test_cart.py::test_adding_same_product_merges_quantities - Attri...
+FAILED tests/test_cart.py::test_lines_keep_insertion_order - AttributeError: ...
+FAILED tests/test_cart.py::test_remove_deletes_line - AttributeError: 'NoneTy...
+FAILED tests/test_discounts.py::test_percentage_discount_applies_to_whole_subtotal
+FAILED tests/test_discounts.py::test_discount_amount_rounds_half_up - Attribu...
+FAILED tests/test_discounts.py::test_full_discount_makes_cart_free - Attribut...
+7 failed, 23 passed in 0.08s

@@ -1,0 +1,27 @@
+$ pytest -p unwritten_probe -p no:cacheprovider --rootdir . -q --continue-on-collection-errors tests
+
+==================================== ERRORS ====================================
+_____________________ ERROR collecting tests/test_cart.py ______________________
+tests/test_cart.py:7: in <module>
+    NOVEL = Product("BK-1", "Novel", "12.50", "books")
+<string>:7: in __init__
+    ???
+shopcart/catalog.py:15: in __post_init__
+    price = to_money(self.price)
+shopcart/money.py:19: in to_money
+    raise ValueError(f"not a money value: {value!r}")
+E   ValueError: not a money value: '12.50'
+___________________ ERROR collecting tests/test_discounts.py ___________________
+tests/test_discounts.py:7: in <module>
+    NOVEL = Product("BK-1", "Novel", "12.50", "books")
+<string>:7: in __init__
+    ???
+shopcart/catalog.py:15: in __post_init__
+    price = to_money(self.price)
+shopcart/money.py:19: in to_money
+    raise ValueError(f"not a money value: {value!r}")
+E   ValueError: not a money value: '12.50'
+=========================== short test summary info ============================
+ERROR tests/test_cart.py - ValueError: not a money value: '12.50'
+ERROR tests/test_discounts.py - ValueError: not a money value: '12.50'
+2 errors in 0.03s

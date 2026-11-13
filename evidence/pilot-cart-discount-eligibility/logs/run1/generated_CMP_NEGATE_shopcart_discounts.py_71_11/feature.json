@@ -1,0 +1,482 @@
+{
+ "pytest_version": "8.3.4",
+ "exit_status": 1,
+ "tests": [
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_discount_is_not_applied_below_min_subtotal",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "def test_discount_is_not_applied_below_min_subtotal():\n        cart = cart_of((NOVEL, 2), (MUG, 1))  # 33.00\n>       assert cart.total(discount(min_subtotal=\"50.00\")) == Decimal(\"33.00\")\nE       AssertionError: assert Decimal('29.70') == Decimal('33.00')\nE        +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=None))\nE        +    where total = <shopcart.cart.Cart object at 0x7f5f8ee6d790>.total\nE        +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=None) = discount(min_subtotal='50.00')\nE        +  and   Decimal('33.00') = Decimal('33.00')\n\n_unwritten/feature/test_discount_eligibility.py:26: AssertionError",
+     "exc_type": "builtins.AssertionError",
+     "raised_in": "_unwritten/feature/test_discount_eligibility.py",
+     "assertion_level": true,
+     "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=None))\n +    where total = <shopcart.cart.Cart object at 0x7f5f8ee6d790>.total\n +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=None) = discount(min_subtotal='50.00')\n +  and   Decimal('33.00') = Decimal('33.00')"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_min_subtotal_boundary_is_inclusive",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "def test_min_subtotal_boundary_is_inclusive():\n        cart = cart_of((NOVEL, 2), (MUG, 1))  # 33.00\n        assert cart.total(discount(min_subtotal=\"33.00\")) == Decimal(\"29.70\")\n>       assert cart.total(discount(min_subtotal=\"33.01\")) == Decimal(\"33.00\")\nE       AssertionError: assert Decimal('29.70') == Decimal('33.00')\nE        +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=None))\nE        +    where total = <shopcart.cart.Cart object at 0x7f5f8ee6d340>.total\nE        +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=None) = discount(min_subtotal='33.01')\nE        +  and   Decimal('33.00') = Decimal('33.00')\n\n_unwritten/feature/test_discount_eligibility.py:32: AssertionError",
+     "exc_type": "builtins.AssertionError",
+     "raised_in": "_unwritten/feature/test_discount_eligibility.py",
+     "assertion_level": true,
+     "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=None))\n +    where total = <shopcart.cart.Cart object at 0x7f5f8ee6d340>.total\n +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=None) = discount(min_subtotal='33.01')\n +  and   Decimal('33.00') = Decimal('33.00')"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_ineligible_discount_amount_is_zero",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "def test_ineligible_discount_amount_is_zero():\n        cart = cart_of((MUG, 1))\n>       assert discount(min_subtotal=\"8.01\").amount_for(cart) == Decimal(\"0.00\")\nE       AssertionError: assert Decimal('0.80') == Decimal('0.00')\nE        +  where Decimal('0.80') = amount_for(<shopcart.cart.Cart object at 0x7f5f8ee6f110>)\nE        +    where amount_for = Discount(code='TEST', percent=Decimal('10'), eligibility=None).amount_for\nE        +      where Discount(code='TEST', percent=Decimal('10'), eligibility=None) = discount(min_subtotal='8.01')\nE        +  and   Decimal('0.00') = Decimal('0.00')\n\n_unwritten/feature/test_discount_eligibility.py:37: AssertionError",
+     "exc_type": "builtins.AssertionError",
+     "raised_in": "_unwritten/feature/test_discount_eligibility.py",
+     "assertion_level": true,
+     "message": "assert Decimal('0.80') == Decimal('0.00')\n +  where Decimal('0.80') = amount_for(<shopcart.cart.Cart object at 0x7f5f8ee6f110>)\n +    where amount_for = Discount(code='TEST', percent=Decimal('10'), eligibility=None).amount_for\n +      where Discount(code='TEST', percent=Decimal('10'), eligibility=None) = discount(min_subtotal='8.01')\n +  and   Decimal('0.00') = Decimal('0.00')"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_category_restricts_discount_to_matching_lines",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "def test_category_restricts_discount_to_matching_lines():\n        cart = cart_of((NOVEL, 2), (MUG, 1))  # books 25.00, home 8.00\n>       assert cart.total(discount(categories=[\"books\"])) == Decimal(\"30.50\")\nE       AssertionError: assert Decimal('29.70') == Decimal('30.50')\nE        +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=None))\nE        +    where total = <shopcart.cart.Cart object at 0x7f5f8ee94170>.total\nE        +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=None) = discount(categories=['books'])\nE        +  and   Decimal('30.50') = Decimal('30.50')\n\n_unwritten/feature/test_discount_eligibility.py:42: AssertionError",
+     "exc_type": "builtins.AssertionError",
+     "raised_in": "_unwritten/feature/test_discount_eligibility.py",
+     "assertion_level": true,
+     "message": "assert Decimal('29.70') == Decimal('30.50')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=None))\n +    where total = <shopcart.cart.Cart object at 0x7f5f8ee94170>.total\n +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=None) = discount(categories=['books'])\n +  and   Decimal('30.50') = Decimal('30.50')"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_several_categories_are_all_eligible",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "def test_several_categories_are_all_eligible():\n        cart = cart_of((NOVEL, 2), (MUG, 1), (PEN, 10))  # 25.00 + 8.00 + 3.00\n>       assert cart.total(discount(categories=[\"books\", \"office\"])) == Decimal(\"33.20\")\nE       AssertionError: assert Decimal('32.40') == Decimal('33.20')\nE        +  where Decimal('32.40') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=None))\nE        +    where total = <shopcart.cart.Cart object at 0x7f5f8ee950a0>.total\nE        +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=None) = discount(categories=['books', 'office'])\nE        +  and   Decimal('33.20') = Decimal('33.20')\n\n_unwritten/feature/test_discount_eligibility.py:47: AssertionError",
+     "exc_type": "builtins.AssertionError",
+     "raised_in": "_unwritten/feature/test_discount_eligibility.py",
+     "assertion_level": true,
+     "message": "assert Decimal('32.40') == Decimal('33.20')\n +  where Decimal('32.40') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=None))\n +    where total = <shopcart.cart.Cart object at 0x7f5f8ee950a0>.total\n +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=None) = discount(categories=['books', 'office'])\n +  and   Decimal('33.20') = Decimal('33.20')"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_no_eligible_lines_means_no_discount",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "def test_no_eligible_lines_means_no_discount():\n        cart = cart_of((NOVEL, 2), (MUG, 1))\n>       assert cart.total(discount(categories=[\"garden\"])) == Decimal(\"33.00\")\nE       AssertionError: assert Decimal('29.70') == Decimal('33.00')\nE        +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=None))\nE        +    where total = <shopcart.cart.Cart object at 0x7f5f8ee95fa0>.total\nE        +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=None) = discount(categories=['garden'])\nE        +  and   Decimal('33.00') = Decimal('33.00')\n\n_unwritten/feature/test_discount_eligibility.py:52: AssertionError",
+     "exc_type": "builtins.AssertionError",
+     "raised_in": "_unwritten/feature/test_discount_eligibility.py",
+     "assertion_level": true,
+     "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=None))\n +    where total = <shopcart.cart.Cart object at 0x7f5f8ee95fa0>.total\n +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=None) = discount(categories=['garden'])\n +  and   Decimal('33.00') = Decimal('33.00')"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_category_match_is_case_sensitive",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "def test_category_match_is_case_sensitive():\n        cart = cart_of((NOVEL, 2))\n>       assert cart.total(discount(categories=[\"Books\"])) == Decimal(\"25.00\")\nE       AssertionError: assert Decimal('22.50') == Decimal('25.00')\nE        +  where Decimal('22.50') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=None))\nE        +    where total = <shopcart.cart.Cart object at 0x7f5f8ee971a0>.total\nE        +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=None) = discount(categories=['Books'])\nE        +  and   Decimal('25.00') = Decimal('25.00')\n\n_unwritten/feature/test_discount_eligibility.py:57: AssertionError",
+     "exc_type": "builtins.AssertionError",
+     "raised_in": "_unwritten/feature/test_discount_eligibility.py",
+     "assertion_level": true,
+     "message": "assert Decimal('22.50') == Decimal('25.00')\n +  where Decimal('22.50') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=None))\n +    where total = <shopcart.cart.Cart object at 0x7f5f8ee971a0>.total\n +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=None) = discount(categories=['Books'])\n +  and   Decimal('25.00') = Decimal('25.00')"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_min_subtotal_is_measured_on_eligible_lines_only",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "def test_min_subtotal_is_measured_on_eligible_lines_only():\n        cart = cart_of((NOVEL, 2), (MUG, 2))  # books 25.00, whole cart 41.00\n>       assert cart.total(discount(min_subtotal=\"30.00\", categories=[\"books\"])) == Decimal(\"41.00\")\nE       AssertionError: assert Decimal('36.90') == Decimal('41.00')\nE        +  where Decimal('36.90') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=None))\nE        +    where total = <shopcart.cart.Cart object at 0x7f5f8ee9a960>.total\nE        +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=None) = discount(min_subtotal='30.00', categories=['books'])\nE        +  and   Decimal('41.00') = Decimal('41.00')\n\n_unwritten/feature/test_discount_eligibility.py:62: AssertionError",
+     "exc_type": "builtins.AssertionError",
+     "raised_in": "_unwritten/feature/test_discount_eligibility.py",
+     "assertion_level": true,
+     "message": "assert Decimal('36.90') == Decimal('41.00')\n +  where Decimal('36.90') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=None))\n +    where total = <shopcart.cart.Cart object at 0x7f5f8ee9a960>.total\n +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=None) = discount(min_subtotal='30.00', categories=['books'])\n +  and   Decimal('41.00') = Decimal('41.00')"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_amount_is_rounded_half_up_on_the_eligible_subtotal",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "def test_amount_is_rounded_half_up_on_the_eligible_subtotal():\n        cart = cart_of((PEN, 1), (MUG, 1))  # 15% of 0.30 is 0.045\n        restricted = discount(percent=15, categories=[\"office\"])\n>       assert restricted.amount_for(cart) == Decimal(\"0.05\")\nE       AssertionError: assert Decimal('1.25') == Decimal('0.05')\nE        +  where Decimal('1.25') = amount_for(<shopcart.cart.Cart object at 0x7f5f8ee9b140>)\nE        +    where amount_for = Discount(code='TEST', percent=Decimal('15'), eligibility=None).amount_for\nE        +  and   Decimal('0.05') = Decimal('0.05')\n\n_unwritten/feature/test_discount_eligibility.py:68: AssertionError",
+     "exc_type": "builtins.AssertionError",
+     "raised_in": "_unwritten/feature/test_discount_eligibility.py",
+     "assertion_level": true,
+     "message": "assert Decimal('1.25') == Decimal('0.05')\n +  where Decimal('1.25') = amount_for(<shopcart.cart.Cart object at 0x7f5f8ee9b140>)\n +    where amount_for = Discount(code='TEST', percent=Decimal('15'), eligibility=None).amount_for\n +  and   Decimal('0.05') = Decimal('0.05')"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_eligibility_must_be_a_mapping[books]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "eligibility = 'books'\n\n    @pytest.mark.parametrize(\"eligibility\", [\"books\", [\"books\"], 5, True])\n    def test_eligibility_must_be_a_mapping(eligibility):\n>       with pytest.raises(InvalidDiscountError):\nE       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>\n\n_unwritten/feature/test_discount_eligibility.py:74: Failed",
+     "exc_type": "builtins.Failed",
+     "raised_in": "_unwritten/feature/test_discount_eligibility.py",
+     "assertion_level": true,
+     "message": "DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_eligibility_must_be_a_mapping[eligibility1]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "eligibility = ['books']\n\n    @pytest.mark.parametrize(\"eligibility\", [\"books\", [\"books\"], 5, True])\n    def test_eligibility_must_be_a_mapping(eligibility):\n>       with pytest.raises(InvalidDiscountError):\nE       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>\n\n_unwritten/feature/test_discount_eligibility.py:74: Failed",
+     "exc_type": "builtins.Failed",
+     "raised_in": "_unwritten/feature/test_discount_eligibility.py",
+     "assertion_level": true,
+     "message": "DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_eligibility_must_be_a_mapping[5]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "eligibility = 5\n\n    @pytest.mark.parametrize(\"eligibility\", [\"books\", [\"books\"], 5, True])\n    def test_eligibility_must_be_a_mapping(eligibility):\n>       with pytest.raises(InvalidDiscountError):\nE       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>\n\n_unwritten/feature/test_discount_eligibility.py:74: Failed",
+     "exc_type": "builtins.Failed",
+     "raised_in": "_unwritten/feature/test_discount_eligibility.py",
+     "assertion_level": true,
+     "message": "DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_eligibility_must_be_a_mapping[True]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "eligibility = True\n\n    @pytest.mark.parametrize(\"eligibility\", [\"books\", [\"books\"], 5, True])\n    def test_eligibility_must_be_a_mapping(eligibility):\n>       with pytest.raises(InvalidDiscountError):\nE       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>\n\n_unwritten/feature/test_discount_eligibility.py:74: Failed",
+     "exc_type": "builtins.Failed",
+     "raised_in": "_unwritten/feature/test_discount_eligibility.py",
+     "assertion_level": true,
+     "message": "DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_invalid_min_subtotal_is_rejected[-0.01]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "min_subtotal = '-0.01'\n\n    @pytest.mark.parametrize(\"min_subtotal\", [\"-0.01\", -5, \"abc\", 1.5, None, True])\n    def test_invalid_min_subtotal_is_rejected(min_subtotal):\n>       with pytest.raises(InvalidDiscountError):\nE       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>\n\n_unwritten/feature/test_discount_eligibility.py:80: Failed",
+     "exc_type": "builtins.Failed",
+     "raised_in": "_unwritten/feature/test_discount_eligibility.py",
+     "assertion_level": true,
+     "message": "DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_invalid_min_subtotal_is_rejected[-5]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "min_subtotal = -5\n\n    @pytest.mark.parametrize(\"min_subtotal\", [\"-0.01\", -5, \"abc\", 1.5, None, True])\n    def test_invalid_min_subtotal_is_rejected(min_subtotal):\n>       with pytest.raises(InvalidDiscountError):\nE       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>\n\n_unwritten/feature/test_discount_eligibility.py:80: Failed",
+     "exc_type": "builtins.Failed",
+     "raised_in": "_unwritten/feature/test_discount_eligibility.py",
+     "assertion_level": true,
+     "message": "DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_invalid_min_subtotal_is_rejected[abc]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "min_subtotal = 'abc'\n\n    @pytest.mark.parametrize(\"min_subtotal\", [\"-0.01\", -5, \"abc\", 1.5, None, True])\n    def test_invalid_min_subtotal_is_rejected(min_subtotal):\n>       with pytest.raises(InvalidDiscountError):\nE       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>\n\n_unwritten/feature/test_discount_eligibility.py:80: Failed",
+     "exc_type": "builtins.Failed",
+     "raised_in": "_unwritten/feature/test_discount_eligibility.py",
+     "assertion_level": true,
+     "message": "DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_invalid_min_subtotal_is_rejected[1.5]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "min_subtotal = 1.5\n\n    @pytest.mark.parametrize(\"min_subtotal\", [\"-0.01\", -5, \"abc\", 1.5, None, True])\n    def test_invalid_min_subtotal_is_rejected(min_subtotal):\n>       with pytest.raises(InvalidDiscountError):\nE       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>\n\n_unwritten/feature/test_discount_eligibility.py:80: Failed",
+     "exc_type": "builtins.Failed",
+     "raised_in": "_unwritten/feature/test_discount_eligibility.py",
+     "assertion_level": true,
+     "message": "DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_invalid_min_subtotal_is_rejected[None]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "min_subtotal = None\n\n    @pytest.mark.parametrize(\"min_subtotal\", [\"-0.01\", -5, \"abc\", 1.5, None, True])\n    def test_invalid_min_subtotal_is_rejected(min_subtotal):\n>       with pytest.raises(InvalidDiscountError):\nE       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>\n\n_unwritten/feature/test_discount_eligibility.py:80: Failed",
+     "exc_type": "builtins.Failed",
+     "raised_in": "_unwritten/feature/test_discount_eligibility.py",
+     "assertion_level": true,
+     "message": "DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_invalid_min_subtotal_is_rejected[True]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "min_subtotal = True\n\n    @pytest.mark.parametrize(\"min_subtotal\", [\"-0.01\", -5, \"abc\", 1.5, None, True])\n    def test_invalid_min_subtotal_is_rejected(min_subtotal):\n>       with pytest.raises(InvalidDiscountError):\nE       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>\n\n_unwritten/feature/test_discount_eligibility.py:80: Failed",
+     "exc_type": "builtins.Failed",
+     "raised_in": "_unwritten/feature/test_discount_eligibility.py",
+     "assertion_level": true,
+     "message": "DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_invalid_categories_are_rejected[categories0]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "categories = []\n\n    @pytest.mark.parametrize(\"categories\", [[], \"books\", (\"books\",), [7], [\"books\", \"  \"], [\"\"]])\n    def test_invalid_categories_are_rejected(categories):\n>       with pytest.raises(InvalidDiscountError):\nE       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>\n\n_unwritten/feature/test_discount_eligibility.py:86: Failed",
+     "exc_type": "builtins.Failed",
+     "raised_in": "_unwritten/feature/test_discount_eligibility.py",
+     "assertion_level": true,
+     "message": "DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_invalid_categories_are_rejected[books]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "categories = 'books'\n\n    @pytest.mark.parametrize(\"categories\", [[], \"books\", (\"books\",), [7], [\"books\", \"  \"], [\"\"]])\n    def test_invalid_categories_are_rejected(categories):\n>       with pytest.raises(InvalidDiscountError):\nE       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>\n\n_unwritten/feature/test_discount_eligibility.py:86: Failed",
+     "exc_type": "builtins.Failed",
+     "raised_in": "_unwritten/feature/test_discount_eligibility.py",
+     "assertion_level": true,
+     "message": "DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_invalid_categories_are_rejected[categories2]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "categories = ('books',)\n\n    @pytest.mark.parametrize(\"categories\", [[], \"books\", (\"books\",), [7], [\"books\", \"  \"], [\"\"]])\n    def test_invalid_categories_are_rejected(categories):\n>       with pytest.raises(InvalidDiscountError):\nE       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>\n\n_unwritten/feature/test_discount_eligibility.py:86: Failed",
+     "exc_type": "builtins.Failed",
+     "raised_in": "_unwritten/feature/test_discount_eligibility.py",
+     "assertion_level": true,
+     "message": "DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_invalid_categories_are_rejected[categories3]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "categories = [7]\n\n    @pytest.mark.parametrize(\"categories\", [[], \"books\", (\"books\",), [7], [\"books\", \"  \"], [\"\"]])\n    def test_invalid_categories_are_rejected(categories):\n>       with pytest.raises(InvalidDiscountError):\nE       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>\n\n_unwritten/feature/test_discount_eligibility.py:86: Failed",
+     "exc_type": "builtins.Failed",
+     "raised_in": "_unwritten/feature/test_discount_eligibility.py",
+     "assertion_level": true,
+     "message": "DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_invalid_categories_are_rejected[categories4]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "categories = ['books', '  ']\n\n    @pytest.mark.parametrize(\"categories\", [[], \"books\", (\"books\",), [7], [\"books\", \"  \"], [\"\"]])\n    def test_invalid_categories_are_rejected(categories):\n>       with pytest.raises(InvalidDiscountError):\nE       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>\n\n_unwritten/feature/test_discount_eligibility.py:86: Failed",
+     "exc_type": "builtins.Failed",
+     "raised_in": "_unwritten/feature/test_discount_eligibility.py",
+     "assertion_level": true,
+     "message": "DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_invalid_categories_are_rejected[categories5]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "categories = ['']\n\n    @pytest.mark.parametrize(\"categories\", [[], \"books\", (\"books\",), [7], [\"books\", \"  \"], [\"\"]])\n    def test_invalid_categories_are_rejected(categories):\n>       with pytest.raises(InvalidDiscountError):\nE       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>\n\n_unwritten/feature/test_discount_eligibility.py:86: Failed",
+     "exc_type": "builtins.Failed",
+     "raised_in": "_unwritten/feature/test_discount_eligibility.py",
+     "assertion_level": true,
+     "message": "DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  }
+ ],
+ "collection_errors": []
+}

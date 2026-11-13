@@ -1,0 +1,472 @@
+{
+ "pytest_version": "8.3.4",
+ "exit_status": 1,
+ "tests": [
+  {
+   "nodeid": "tests/test_cart.py::test_empty_cart_totals_zero",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_cart.py::test_subtotal_sums_line_totals",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "def test_subtotal_sums_line_totals():\n        cart = Cart()\n>       cart.add(NOVEL, 2)\n\ntests/test_cart.py:20: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \nshopcart/cart.py:24: in add\n    _check_quantity(quantity)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nquantity = 2\n\n    def _check_quantity(quantity):\n        if isinstance(quantity, bool) or isinstance(quantity, int):\n>           raise InvalidQuantityError(\"quantity must be an integer\")\nE           shopcart.errors.InvalidQuantityError: quantity must be an integer\n\nshopcart/cart.py:55: InvalidQuantityError",
+     "exc_type": "shopcart.errors.InvalidQuantityError",
+     "raised_in": "shopcart/cart.py",
+     "assertion_level": false,
+     "message": "quantity must be an integer"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_cart.py::test_adding_same_product_merges_quantities",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "def test_adding_same_product_merges_quantities():\n        cart = Cart()\n>       cart.add(NOVEL)\n\ntests/test_cart.py:27: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \nshopcart/cart.py:24: in add\n    _check_quantity(quantity)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nquantity = 1\n\n    def _check_quantity(quantity):\n        if isinstance(quantity, bool) or isinstance(quantity, int):\n>           raise InvalidQuantityError(\"quantity must be an integer\")\nE           shopcart.errors.InvalidQuantityError: quantity must be an integer\n\nshopcart/cart.py:55: InvalidQuantityError",
+     "exc_type": "shopcart.errors.InvalidQuantityError",
+     "raised_in": "shopcart/cart.py",
+     "assertion_level": false,
+     "message": "quantity must be an integer"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_cart.py::test_lines_keep_insertion_order",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "def test_lines_keep_insertion_order():\n        cart = Cart()\n>       cart.add(MUG)\n\ntests/test_cart.py:34: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \nshopcart/cart.py:24: in add\n    _check_quantity(quantity)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nquantity = 1\n\n    def _check_quantity(quantity):\n        if isinstance(quantity, bool) or isinstance(quantity, int):\n>           raise InvalidQuantityError(\"quantity must be an integer\")\nE           shopcart.errors.InvalidQuantityError: quantity must be an integer\n\nshopcart/cart.py:55: InvalidQuantityError",
+     "exc_type": "shopcart.errors.InvalidQuantityError",
+     "raised_in": "shopcart/cart.py",
+     "assertion_level": false,
+     "message": "quantity must be an integer"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_cart.py::test_remove_deletes_line",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "def test_remove_deletes_line():\n        cart = Cart()\n>       cart.add(NOVEL)\n\ntests/test_cart.py:41: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \nshopcart/cart.py:24: in add\n    _check_quantity(quantity)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nquantity = 1\n\n    def _check_quantity(quantity):\n        if isinstance(quantity, bool) or isinstance(quantity, int):\n>           raise InvalidQuantityError(\"quantity must be an integer\")\nE           shopcart.errors.InvalidQuantityError: quantity must be an integer\n\nshopcart/cart.py:55: InvalidQuantityError",
+     "exc_type": "shopcart.errors.InvalidQuantityError",
+     "raised_in": "shopcart/cart.py",
+     "assertion_level": false,
+     "message": "quantity must be an integer"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_cart.py::test_remove_unknown_sku_raises_key_error",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[0]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[-1]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[1.5]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "quantity = 1.5\n\n    @pytest.mark.parametrize(\"quantity\", [0, -1, 1.5, \"2\", True])\n    def test_invalid_quantity_is_rejected(quantity):\n>       with pytest.raises(InvalidQuantityError):\nE       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidQuantityError'>\n\ntests/test_cart.py:54: Failed",
+     "exc_type": "builtins.Failed",
+     "raised_in": "tests/test_cart.py",
+     "assertion_level": true,
+     "message": "DID NOT RAISE <class 'shopcart.errors.InvalidQuantityError'>"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[2]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "quantity = '2'\n\n    @pytest.mark.parametrize(\"quantity\", [0, -1, 1.5, \"2\", True])\n    def test_invalid_quantity_is_rejected(quantity):\n        with pytest.raises(InvalidQuantityError):\n>           Cart().add(NOVEL, quantity)\n\ntests/test_cart.py:55: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \nshopcart/cart.py:24: in add\n    _check_quantity(quantity)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nquantity = '2'\n\n    def _check_quantity(quantity):\n        if isinstance(quantity, bool) or isinstance(quantity, int):\n            raise InvalidQuantityError(\"quantity must be an integer\")\n>       if quantity < 1:\nE       TypeError: '<' not supported between instances of 'str' and 'int'\n\nshopcart/cart.py:56: TypeError",
+     "exc_type": "builtins.TypeError",
+     "raised_in": "shopcart/cart.py",
+     "assertion_level": false,
+     "message": "'<' not supported between instances of 'str' and 'int'"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[True]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_cart.py::test_product_price_is_normalised_to_cents",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_cart.py::test_float_prices_are_rejected",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_discounts.py::test_percentage_discount_applies_to_whole_subtotal",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "def test_percentage_discount_applies_to_whole_subtotal():\n        discount = Discount.from_config({\"code\": \"TEN\", \"percent\": 10})\n>       assert cart_of((NOVEL, 2), (MUG, 1)).total(discount) == Decimal(\"29.70\")\n\ntests/test_discounts.py:20: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \ntests/test_discounts.py:14: in cart_of\n    cart.add(product, quantity)\nshopcart/cart.py:24: in add\n    _check_quantity(quantity)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nquantity = 2\n\n    def _check_quantity(quantity):\n        if isinstance(quantity, bool) or isinstance(quantity, int):\n>           raise InvalidQuantityError(\"quantity must be an integer\")\nE           shopcart.errors.InvalidQuantityError: quantity must be an integer\n\nshopcart/cart.py:55: InvalidQuantityError",
+     "exc_type": "shopcart.errors.InvalidQuantityError",
+     "raised_in": "shopcart/cart.py",
+     "assertion_level": false,
+     "message": "quantity must be an integer"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_discounts.py::test_discount_amount_rounds_half_up",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "def test_discount_amount_rounds_half_up():\n        discount = Discount.from_config({\"code\": \"ODD\", \"percent\": \"15\"})\n>       cart = cart_of((Product(\"P\", \"Pen\", \"0.30\", \"office\"), 1))\n\ntests/test_discounts.py:25: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \ntests/test_discounts.py:14: in cart_of\n    cart.add(product, quantity)\nshopcart/cart.py:24: in add\n    _check_quantity(quantity)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nquantity = 1\n\n    def _check_quantity(quantity):\n        if isinstance(quantity, bool) or isinstance(quantity, int):\n>           raise InvalidQuantityError(\"quantity must be an integer\")\nE           shopcart.errors.InvalidQuantityError: quantity must be an integer\n\nshopcart/cart.py:55: InvalidQuantityError",
+     "exc_type": "shopcart.errors.InvalidQuantityError",
+     "raised_in": "shopcart/cart.py",
+     "assertion_level": false,
+     "message": "quantity must be an integer"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_discounts.py::test_full_discount_makes_cart_free",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "def test_full_discount_makes_cart_free():\n        discount = Discount.from_config({\"code\": \"FREE\", \"percent\": 100})\n>       assert cart_of((MUG, 3)).total(discount) == Decimal(\"0.00\")\n\ntests/test_discounts.py:32: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \ntests/test_discounts.py:14: in cart_of\n    cart.add(product, quantity)\nshopcart/cart.py:24: in add\n    _check_quantity(quantity)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nquantity = 3\n\n    def _check_quantity(quantity):\n        if isinstance(quantity, bool) or isinstance(quantity, int):\n>           raise InvalidQuantityError(\"quantity must be an integer\")\nE           shopcart.errors.InvalidQuantityError: quantity must be an integer\n\nshopcart/cart.py:55: InvalidQuantityError",
+     "exc_type": "shopcart.errors.InvalidQuantityError",
+     "raised_in": "shopcart/cart.py",
+     "assertion_level": false,
+     "message": "quantity must be an integer"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_discounts.py::test_code_is_trimmed_and_uppercased",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_discounts.py::test_unknown_config_keys_are_ignored",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[0]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[-5]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[101]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[abc]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[None]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[True]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[2.5]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_discounts.py::test_invalid_code_is_rejected[None]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_discounts.py::test_invalid_code_is_rejected[]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_discounts.py::test_invalid_code_is_rejected[   ]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_discounts.py::test_invalid_code_is_rejected[7]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "tests/test_discounts.py::test_config_must_be_a_mapping",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  }
+ ],
+ "collection_errors": []
+}

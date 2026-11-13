@@ -1,0 +1,38 @@
+$ pytest -p unwritten_probe -p no:cacheprovider --rootdir . -q --continue-on-collection-errors _unwritten/feature
+...................FFF...                                                [100%]
+=================================== FAILURES ===================================
+______________ test_invalid_categories_are_rejected[categories0] _______________
+
+categories = []
+
+    @pytest.mark.parametrize("categories", [[], "books", ("books",), [7], ["books", "  "], [""]])
+    def test_invalid_categories_are_rejected(categories):
+>       with pytest.raises(InvalidDiscountError):
+E       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>
+
+_unwritten/feature/test_discount_eligibility.py:86: Failed
+_________________ test_invalid_categories_are_rejected[books] __________________
+
+categories = 'books'
+
+    @pytest.mark.parametrize("categories", [[], "books", ("books",), [7], ["books", "  "], [""]])
+    def test_invalid_categories_are_rejected(categories):
+>       with pytest.raises(InvalidDiscountError):
+E       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>
+
+_unwritten/feature/test_discount_eligibility.py:86: Failed
+______________ test_invalid_categories_are_rejected[categories2] _______________
+
+categories = ('books',)
+
+    @pytest.mark.parametrize("categories", [[], "books", ("books",), [7], ["books", "  "], [""]])
+    def test_invalid_categories_are_rejected(categories):
+>       with pytest.raises(InvalidDiscountError):
+E       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>
+
+_unwritten/feature/test_discount_eligibility.py:86: Failed
+=========================== short test summary info ============================
+FAILED _unwritten/feature/test_discount_eligibility.py::test_invalid_categories_are_rejected[categories0]
+FAILED _unwritten/feature/test_discount_eligibility.py::test_invalid_categories_are_rejected[books]
+FAILED _unwritten/feature/test_discount_eligibility.py::test_invalid_categories_are_rejected[categories2]
+3 failed, 22 passed in 0.08s

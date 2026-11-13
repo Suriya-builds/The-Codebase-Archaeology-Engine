@@ -1,0 +1,28 @@
+$ pytest -p unwritten_probe -p no:cacheprovider --rootdir . -q --continue-on-collection-errors tests
+F.............................                                           [100%]
+=================================== FAILURES ===================================
+_________________________ test_empty_cart_totals_zero __________________________
+
+    def test_empty_cart_totals_zero():
+        cart = Cart()
+        assert cart.is_empty()
+        assert cart.subtotal() == Decimal("0.00")
+>       assert cart.total() == Decimal("0.00")
+
+tests/test_cart.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <shopcart.cart.Cart object at 0x7f7126206210>, discount = None
+
+    def total(self, discount=None):
+        """Subtotal minus the discount amount, never below zero."""
+        subtotal = self.subtotal()
+        if False:
+            return subtotal
+>       return max(subtotal - discount.amount_for(self), ZERO)
+E       AttributeError: 'NoneType' object has no attribute 'amount_for'
+
+shopcart/cart.py:50: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_cart.py::test_empty_cart_totals_zero - AttributeError: 'Non...
+1 failed, 29 passed in 0.05s

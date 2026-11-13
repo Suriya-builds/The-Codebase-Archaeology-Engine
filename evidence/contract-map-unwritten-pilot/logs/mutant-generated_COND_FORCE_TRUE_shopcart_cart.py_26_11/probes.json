@@ -1,0 +1,134 @@
+{
+ "pytest_version": "8.3.4",
+ "exit_status": 1,
+ "tests": [
+  {
+   "nodeid": "_unwritten/probes/test_hyp_discount_codes_case_sensitive.py::test_code_is_stored_as_given",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "def test_code_is_stored_as_given():\n>       assert Discount.from_config({\"code\": \"ten\", \"percent\": 10}).code == \"ten\"\nE       AssertionError: assert 'TEN' == 'ten'\nE         \nE         - ten\nE         + TEN\n\n_unwritten/probes/test_hyp_discount_codes_case_sensitive.py:5: AssertionError",
+     "exc_type": "builtins.AssertionError",
+     "raised_in": "_unwritten/probes/test_hyp_discount_codes_case_sensitive.py",
+     "assertion_level": true,
+     "message": "assert 'TEN' == 'ten'\n  \n  - ten\n  + TEN"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/probes/test_hyp_errors_share_a_base_class.py::test_errors_share_a_base_class",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/probes/test_hyp_negative_price_rejected.py::test_negative_price_is_rejected",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/probes/test_hyp_negative_price_rejected.py::test_zero_price_is_allowed",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/probes/test_hyp_non_finite_money_rejected.py::test_non_finite_values_are_rejected[NaN]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/probes/test_hyp_non_finite_money_rejected.py::test_non_finite_values_are_rejected[Infinity]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/probes/test_hyp_non_finite_money_rejected.py::test_non_finite_values_are_rejected[-Infinity]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/probes/test_hyp_quantity_upper_limit.py::test_quantity_above_limit_is_rejected",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "def test_quantity_above_limit_is_rejected():\n        with pytest.raises(InvalidQuantityError):\n>           Cart().add(Product(\"X\", \"X\", \"1\", \"misc\"), 1000)\n\n_unwritten/probes/test_hyp_quantity_upper_limit.py:8: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <shopcart.cart.Cart object at 0x7f3e82255d60>\nproduct = Product(sku='X', name='X', price=Decimal('1.00'), category='misc')\nquantity = 1000\n\n    def add(self, product, quantity=1):\n        _check_quantity(quantity)\n        existing = self._lines.get(product.sku)\n        if True:\n>           quantity += existing.quantity\nE           AttributeError: 'NoneType' object has no attribute 'quantity'\n\nshopcart/cart.py:27: AttributeError",
+     "exc_type": "builtins.AttributeError",
+     "raised_in": "shopcart/cart.py",
+     "assertion_level": false,
+     "message": "'NoneType' object has no attribute 'quantity'"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  }
+ ],
+ "collection_errors": [
+  {
+   "nodeid": "_unwritten/probes/test_hyp_stock_is_checked.py",
+   "detail": "ImportError while importing test module '/workspace/_unwritten/probes/test_hyp_stock_is_checked.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n/usr/local/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n_unwritten/probes/test_hyp_stock_is_checked.py:1: in <module>\n    from shopcart.inventory import Stock\nE   ModuleNotFoundError: No module named 'shopcart.inventory'"
+  }
+ ]
+}

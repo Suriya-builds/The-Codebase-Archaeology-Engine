@@ -18,7 +18,7 @@ from unwritten.execution import run_in_sandbox
 from unwritten.adapters import detect_adapter
 from unwritten.mutation import declared_mutants, generate_mutants
 from unwritten.patches import PatchDoesNotApply, apply_patch, is_under, touched_paths
-from unwritten.workspace import export_commit, install_package_tests
+from unwritten.workspace import PACKAGE_TESTS_DIR, export_commit, install_package_tests
 
 REGRESSION_SUITES = ("regression_package", "regression_contracts", "regression_repo")
 
@@ -116,11 +116,25 @@ def _timeouts(world, suites):
                      "suites exceeded the package's time limit", timed_out)
 
 
-def _failing_contracts(package, suites):
+def _overridden(package):
+    """Ids of attached contracts the task declares it changes on purpose."""
+    return {o.contract_id for o in package.contract_overrides}
+
+
+def _override_exempt(package):
+    """Probes of overridden contracts: allowed, and expected, to fail in World 2."""
+    ids = _overridden(package)
+    return {(p["suite"], p["nodeid"]) for c in package.contracts if c["id"] in ids
+            for p in c["probes"]}
+
+
+def _failing_contracts(package, suites, skip=()):
     """Attached contracts with a probe that is missing or not passing in ``suites``."""
     outcomes = {(name, t.nodeid): t.outcome for name, suite in suites.items() for t in suite.tests}
     failing = []
     for contract in package.contracts:
+        if contract["id"] in skip:
+            continue
         bad = [p["nodeid"] for p in contract["probes"]
                if outcomes.get((p["suite"], p["nodeid"])) != "passed"]
         if bad:
@@ -135,7 +149,8 @@ def _contract_mutants(package, reference_workspace):
     The guard is located again in the patched source, because the reference
     patch may have moved it. Returns (mutants, ids of guards no longer found).
     """
-    guarded = [c for c in package.contracts if "guard" in c]
+    guarded = [c for c in package.contracts
+               if "guard" in c and c["id"] not in _overridden(package)]
     if not guarded:
         return [], []
     adapter = detect_adapter(reference_workspace)
@@ -262,17 +277,18 @@ class CorrectWorld:
 
         before = prior.get("world1")
         regression = _regression_tests(world.suites)
+        exempt = _override_exempt(package)
         broken = [f"{suite}::{e['nodeid']} [collection error]"
                   for suite in REGRESSION_SUITES if suite in world.suites
                   for e in world.suites[suite].collection_errors]
-        broken += [f"{nodeid} [{t.outcome}]" for (_, nodeid), t in regression.items()
-                   if t.outcome not in BENIGN]
+        broken += [f"{key[1]} [{t.outcome}]" for key, t in regression.items()
+                   if t.outcome not in BENIGN and key not in exempt]
         if before is not None and before.suites:
             earlier = _regression_tests(before.suites)
             broken += [f"{key[1]} [was {earlier[key].outcome}, now {regression[key].outcome}]"
                        for key in sorted(set(earlier) & set(regression))
                        if earlier[key].outcome != regression[key].outcome
-                       and regression[key].outcome in BENIGN]
+                       and regression[key].outcome in BENIGN and key not in exempt]
             broken += [f"{key[1]} [no longer collected]" for key in sorted(set(earlier) - set(regression))]
             earlier_feature = {t.nodeid for t in before.suites["feature"].tests}
             now_feature = {t.nodeid for t in feature.tests}
@@ -283,11 +299,12 @@ class CorrectWorld:
         if broken:
             world.reject("W2_REGRESSION_BROKEN",
                          "the reference implementation changes existing behaviour", broken)
-        violated = _failing_contracts(package, world.suites)
+        violated = _failing_contracts(package, world.suites, skip=_overridden(package))
         if violated:
             world.reject("W2_CONTRACT_VIOLATED",
                          "the reference implementation breaks contracts that were verified at "
                          "the base commit", violated)
+        self._check_overrides(world, package)
 
         world.summary = {
             "feature_tests": len(feature.tests),
@@ -296,6 +313,37 @@ class CorrectWorld:
             "regression_passing": sum(t.outcome == "passed" for t in regression.values()),
         }
         return world
+
+
+    @staticmethod
+    def _check_overrides(world, package):
+        """An override is a claim like any other: each part has to be backed by a result."""
+        attached = {c["id"]: c for c in package.contracts}
+        outcomes = {(name, t.nodeid): t.outcome
+                    for name, suite in world.suites.items() for t in suite.tests}
+        unknown, unneeded, unreplaced = [], [], []
+        for override in package.contract_overrides:
+            contract = attached.get(override.contract_id)
+            if contract is None:
+                unknown.append(override.contract_id)
+                continue
+            if all(outcomes.get((p["suite"], p["nodeid"])) == "passed" for p in contract["probes"]):
+                unneeded.append(override.contract_id)
+            for test in override.replacement_tests:
+                nodeid = test.replace("tests/feature/", f"{PACKAGE_TESTS_DIR}/feature/", 1)
+                if outcomes.get(("feature", nodeid)) != "passed":
+                    unreplaced.append(f"{override.contract_id}: {test}")
+        if unknown:
+            world.reject("OVERRIDE_UNKNOWN_CONTRACT",
+                         "overrides name contracts that are not attached to this package", unknown)
+        if unneeded:
+            world.reject("OVERRIDE_NOT_NEEDED",
+                         "these contracts still hold with the reference implementation, so "
+                         "nothing justifies exempting them", unneeded)
+        if unreplaced:
+            world.reject("OVERRIDE_REPLACEMENT_MISSING",
+                         "replacement tests must be feature tests that pass with the reference "
+                         "implementation", unreplaced)
 
 
 class DeceptionWorld:
@@ -325,11 +373,6 @@ class DeceptionWorld:
             contract_mutants, guards_not_found = _contract_mutants(package, reference)
             mutants += contract_mutants
             shutil.rmtree(reference, ignore_errors=True)
-        if not mutants:
-            world.reject("W3_NO_MUTANTS",
-                         "no mutant was executed, so nothing shows the tests can detect a wrong "
-                         "implementation")
-
         waivers = {w.mutant_id: w for w in package.waivers}
         unknown = sorted(set(waivers) - {m.id for m in mutants})
         if unknown:
@@ -353,10 +396,17 @@ class DeceptionWorld:
             if waiver:
                 record["waiver"] = {"justification": waiver.justification,
                                     "approved_by": waiver.approved_by}
+            if mutant.equivalence:
+                # Shown to change nothing: executing it could prove nothing more.
+                record.update(status="equivalent", evidence=mutant.equivalence, logs=None)
+                return record
             try:
                 suites = ctx.execute(slug, [package.reference_patch], mutant)
             except PatchDoesNotApply as exc:
-                record.update(status="invalid", error=str(exc), logs=None)
+                record.update(status="invalid", error=f"does not apply: {exc}", logs=None)
+                return record
+            if any(suite.timed_out for suite in suites.values()):
+                record.update(status="invalid", error="the tests timed out and gave no verdict")
                 return record
             record["killed_by"] = _killers(baseline, suites)
             if not record["killed_by"]:
@@ -366,30 +416,42 @@ class DeceptionWorld:
         # Mutants are independent, each in its own workspace; results keep mutant order.
         with ThreadPoolExecutor(max_workers=max(1, ctx.jobs)) as pool:
             world.mutants = list(pool.map(judge, mutants))
-        invalid = [m["id"] for m in world.mutants if m["status"] == "invalid"]
+        # A declared mutant that gives no verdict is a defect of the package. A generated
+        # one (say, a loop condition forced true) is reported and left out of the score.
+        invalid = [m["id"] for m in world.mutants
+                   if m["status"] == "invalid" and m["origin"] == "declared"]
         survived = [m["id"] for m in world.mutants
                     if m["status"] == "survived" and "waiver" not in m]
 
+        judged = [m for m in world.mutants if m["status"] in ("killed", "survived")]
+        if not judged:
+            world.reject("W3_NO_MUTANTS",
+                         "no mutant reached a verdict, so nothing shows the tests can detect a "
+                         "wrong implementation")
         if invalid:
             world.reject("W3_MUTANT_INVALID",
-                         "declared mutants do not apply on top of the reference implementation",
-                         invalid)
+                         "declared mutants gave no verdict: they do not apply on top of the "
+                         "reference implementation, or the tests timed out", invalid)
         if survived:
             world.reject("W3_MUTANT_SURVIVED",
                          "wrong implementations pass every test, so the tests would accept them",
                          survived)
-        executed = [m for m in world.mutants if m["status"] != "invalid"]
-        killed = sum(m["status"] == "killed" for m in executed)
+        killed = sum(m["status"] == "killed" for m in judged)
         world.summary = {
-            "mutants_executed": len(executed),
-            "declared": sum(m["origin"] == "declared" for m in executed),
-            "generated": sum(m["origin"] == "generated" for m in executed),
-            "contract": sum(m["origin"] == "contract" for m in executed),
+            "mutants": len(world.mutants),
+            "mutants_executed": len(judged),
+            "declared": sum(m["origin"] == "declared" for m in judged),
+            "generated": sum(m["origin"] == "generated" for m in judged),
+            "contract": sum(m["origin"] == "contract" for m in judged),
             "contract_guards_not_found": guards_not_found,
             "killed": killed,
-            "survived": len(executed) - killed,
-            "survived_waived": sum(m["status"] == "survived" and "waiver" in m for m in executed),
-            "mutation_score": round(killed / len(executed), 4) if executed else None,
+            "survived": len(judged) - killed,
+            "survived_waived": sum(m["status"] == "survived" and "waiver" in m for m in judged),
+            "equivalent": sum(m["status"] == "equivalent" for m in world.mutants),
+            "invalid": sum(m["status"] == "invalid" for m in world.mutants),
+            "mutation_score": round(killed / len(judged), 4) if judged else None,
+            "mutation_score_basis": "killed / (killed + survived); equivalent and invalid "
+                                    "mutants are excluded",
         }
         return world
 
@@ -398,8 +460,6 @@ def _killers(baseline, suites):
     """Tests that passed in World 2 and no longer pass under this mutant."""
     killers = []
     for name, suite in sorted(suites.items()):
-        if suite.timed_out:
-            killers.append({"suite": name, "test": "<suite timed out>", "outcome": "timeout"})
         for error in suite.collection_errors:
             killers.append({"suite": name, "test": error["nodeid"], "outcome": "collection_error"})
         for test in suite.tests:

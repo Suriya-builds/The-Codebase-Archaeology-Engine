@@ -1,0 +1,64 @@
+{
+ "pytest_version": "8.3.4",
+ "exit_status": 1,
+ "tests": [
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_discount_is_not_applied_below_min_subtotal",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "def test_discount_is_not_applied_below_min_subtotal():\n        cart = cart_of((NOVEL, 2), (MUG, 1))  # 33.00\n>       assert cart.total(discount(min_subtotal=\"50.00\")) == Decimal(\"33.00\")\n\n_unwritten/feature/test_discount_eligibility.py:28: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n_unwritten/feature/test_discount_eligibility.py:23: in discount\n    return Discount.from_config({\"code\": \"TEST\", \"percent\": 10, \"eligibility\": eligibility})\nshopcart/discounts.py:45: in from_config\n    eligibility = _parse_eligibility(config.get(\"eligibility\"))\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nraw = {'min_subtotal': '50.00'}\n\n    def _parse_eligibility(raw):\n        if raw is None:\n            return None\n        if True:\n>           raise InvalidDiscountError(\"eligibility must be a mapping\")\nE           shopcart.errors.InvalidDiscountError: eligibility must be a mapping\n\nshopcart/discounts.py:74: InvalidDiscountError",
+     "exc_type": "shopcart.errors.InvalidDiscountError",
+     "raised_in": "shopcart/discounts.py",
+     "assertion_level": false,
+     "message": "eligibility must be a mapping"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_category_restricts_discount_to_matching_lines",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "def test_category_restricts_discount_to_matching_lines():\n        cart = cart_of((NOVEL, 2), (MUG, 1))  # books 25.00, home 8.00\n>       assert cart.total(discount(categories=[\"books\"])) == Decimal(\"30.50\")\n\n_unwritten/feature/test_discount_eligibility.py:33: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n_unwritten/feature/test_discount_eligibility.py:23: in discount\n    return Discount.from_config({\"code\": \"TEST\", \"percent\": 10, \"eligibility\": eligibility})\nshopcart/discounts.py:45: in from_config\n    eligibility = _parse_eligibility(config.get(\"eligibility\"))\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nraw = {'categories': ['books']}\n\n    def _parse_eligibility(raw):\n        if raw is None:\n            return None\n        if True:\n>           raise InvalidDiscountError(\"eligibility must be a mapping\")\nE           shopcart.errors.InvalidDiscountError: eligibility must be a mapping\n\nshopcart/discounts.py:74: InvalidDiscountError",
+     "exc_type": "shopcart.errors.InvalidDiscountError",
+     "raised_in": "shopcart/discounts.py",
+     "assertion_level": false,
+     "message": "eligibility must be a mapping"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_no_eligible_lines_means_no_discount",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "def test_no_eligible_lines_means_no_discount():\n        cart = cart_of((NOVEL, 2), (MUG, 1))\n>       assert cart.total(discount(categories=[\"garden\"])) == Decimal(\"33.00\")\n\n_unwritten/feature/test_discount_eligibility.py:38: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n_unwritten/feature/test_discount_eligibility.py:23: in discount\n    return Discount.from_config({\"code\": \"TEST\", \"percent\": 10, \"eligibility\": eligibility})\nshopcart/discounts.py:45: in from_config\n    eligibility = _parse_eligibility(config.get(\"eligibility\"))\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nraw = {'categories': ['garden']}\n\n    def _parse_eligibility(raw):\n        if raw is None:\n            return None\n        if True:\n>           raise InvalidDiscountError(\"eligibility must be a mapping\")\nE           shopcart.errors.InvalidDiscountError: eligibility must be a mapping\n\nshopcart/discounts.py:74: InvalidDiscountError",
+     "exc_type": "shopcart.errors.InvalidDiscountError",
+     "raised_in": "shopcart/discounts.py",
+     "assertion_level": false,
+     "message": "eligibility must be a mapping"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  }
+ ],
+ "collection_errors": []
+}

@@ -1,0 +1,86 @@
+$ pytest -p unwritten_probe -p no:cacheprovider --rootdir . -q --continue-on-collection-errors tests
+.........................FFFF.                                           [100%]
+=================================== FAILURES ===================================
+_____________________ test_invalid_code_is_rejected[None] ______________________
+
+code = None
+
+    @pytest.mark.parametrize("code", [None, "", "   ", 7])
+    def test_invalid_code_is_rejected(code):
+        with pytest.raises(InvalidDiscountError):
+>           Discount.from_config({"code": code, "percent": 10})
+
+tests/test_discounts.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+cls = <class 'shopcart.discounts.Discount'>
+config = {'code': None, 'percent': 10}
+
+    @classmethod
+    def from_config(cls, config):
+        """Build a discount from a plain mapping, e.g. parsed JSON.
+    
+        Keys this version does not understand are ignored, so that newer
+        configuration files keep loading.
+        """
+        if not isinstance(config, dict):
+            raise InvalidDiscountError("discount config must be a mapping")
+        code = config.get("code")
+>       if not isinstance(code, str) and not code.strip():
+E       AttributeError: 'NoneType' object has no attribute 'strip'
+
+shopcart/discounts.py:25: AttributeError
+_______________________ test_invalid_code_is_rejected[] ________________________
+
+code = ''
+
+    @pytest.mark.parametrize("code", [None, "", "   ", 7])
+    def test_invalid_code_is_rejected(code):
+>       with pytest.raises(InvalidDiscountError):
+E       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>
+
+tests/test_discounts.py:52: Failed
+______________________ test_invalid_code_is_rejected[   ] ______________________
+
+code = '   '
+
+    @pytest.mark.parametrize("code", [None, "", "   ", 7])
+    def test_invalid_code_is_rejected(code):
+>       with pytest.raises(InvalidDiscountError):
+E       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>
+
+tests/test_discounts.py:52: Failed
+_______________________ test_invalid_code_is_rejected[7] _______________________
+
+code = 7
+
+    @pytest.mark.parametrize("code", [None, "", "   ", 7])
+    def test_invalid_code_is_rejected(code):
+        with pytest.raises(InvalidDiscountError):
+>           Discount.from_config({"code": code, "percent": 10})
+
+tests/test_discounts.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+cls = <class 'shopcart.discounts.Discount'>, config = {'code': 7, 'percent': 10}
+
+    @classmethod
+    def from_config(cls, config):
+        """Build a discount from a plain mapping, e.g. parsed JSON.
+    
+        Keys this version does not understand are ignored, so that newer
+        configuration files keep loading.
+        """
+        if not isinstance(config, dict):
+            raise InvalidDiscountError("discount config must be a mapping")
+        code = config.get("code")
+>       if not isinstance(code, str) and not code.strip():
+E       AttributeError: 'int' object has no attribute 'strip'
+
+shopcart/discounts.py:25: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_discounts.py::test_invalid_code_is_rejected[None] - Attribu...
+FAILED tests/test_discounts.py::test_invalid_code_is_rejected[] - Failed: DID...
+FAILED tests/test_discounts.py::test_invalid_code_is_rejected[   ] - Failed: ...
+FAILED tests/test_discounts.py::test_invalid_code_is_rejected[7] - AttributeE...
+4 failed, 26 passed in 0.08s

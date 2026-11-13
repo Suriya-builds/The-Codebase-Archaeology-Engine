@@ -1,0 +1,148 @@
+$ pytest -p unwritten_probe -p no:cacheprovider --rootdir . -q --continue-on-collection-errors tests
+.FFFF........FF...............                                           [100%]
+=================================== FAILURES ===================================
+________________________ test_subtotal_sums_line_totals ________________________
+
+    def test_subtotal_sums_line_totals():
+        cart = Cart()
+        cart.add(NOVEL, 2)
+>       cart.add(MUG)
+
+tests/test_cart.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+shopcart/cart.py:24: in add
+    _check_quantity(quantity)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+quantity = 1
+
+    def _check_quantity(quantity):
+        if isinstance(quantity, bool) or not isinstance(quantity, int):
+            raise InvalidQuantityError("quantity must be an integer")
+        if quantity <= 1:
+>           raise InvalidQuantityError("quantity must be at least 1")
+E           shopcart.errors.InvalidQuantityError: quantity must be at least 1
+
+shopcart/cart.py:57: InvalidQuantityError
+__________________ test_adding_same_product_merges_quantities __________________
+
+    def test_adding_same_product_merges_quantities():
+        cart = Cart()
+>       cart.add(NOVEL)
+
+tests/test_cart.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+shopcart/cart.py:24: in add
+    _check_quantity(quantity)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+quantity = 1
+
+    def _check_quantity(quantity):
+        if isinstance(quantity, bool) or not isinstance(quantity, int):
+            raise InvalidQuantityError("quantity must be an integer")
+        if quantity <= 1:
+>           raise InvalidQuantityError("quantity must be at least 1")
+E           shopcart.errors.InvalidQuantityError: quantity must be at least 1
+
+shopcart/cart.py:57: InvalidQuantityError
+_______________________ test_lines_keep_insertion_order ________________________
+
+    def test_lines_keep_insertion_order():
+        cart = Cart()
+>       cart.add(MUG)
+
+tests/test_cart.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+shopcart/cart.py:24: in add
+    _check_quantity(quantity)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+quantity = 1
+
+    def _check_quantity(quantity):
+        if isinstance(quantity, bool) or not isinstance(quantity, int):
+            raise InvalidQuantityError("quantity must be an integer")
+        if quantity <= 1:
+>           raise InvalidQuantityError("quantity must be at least 1")
+E           shopcart.errors.InvalidQuantityError: quantity must be at least 1
+
+shopcart/cart.py:57: InvalidQuantityError
+___________________________ test_remove_deletes_line ___________________________
+
+    def test_remove_deletes_line():
+        cart = Cart()
+>       cart.add(NOVEL)
+
+tests/test_cart.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+shopcart/cart.py:24: in add
+    _check_quantity(quantity)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+quantity = 1
+
+    def _check_quantity(quantity):
+        if isinstance(quantity, bool) or not isinstance(quantity, int):
+            raise InvalidQuantityError("quantity must be an integer")
+        if quantity <= 1:
+>           raise InvalidQuantityError("quantity must be at least 1")
+E           shopcart.errors.InvalidQuantityError: quantity must be at least 1
+
+shopcart/cart.py:57: InvalidQuantityError
+______________ test_percentage_discount_applies_to_whole_subtotal ______________
+
+    def test_percentage_discount_applies_to_whole_subtotal():
+        discount = Discount.from_config({"code": "TEN", "percent": 10})
+>       assert cart_of((NOVEL, 2), (MUG, 1)).total(discount) == Decimal("29.70")
+
+tests/test_discounts.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_discounts.py:14: in cart_of
+    cart.add(product, quantity)
+shopcart/cart.py:24: in add
+    _check_quantity(quantity)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+quantity = 1
+
+    def _check_quantity(quantity):
+        if isinstance(quantity, bool) or not isinstance(quantity, int):
+            raise InvalidQuantityError("quantity must be an integer")
+        if quantity <= 1:
+>           raise InvalidQuantityError("quantity must be at least 1")
+E           shopcart.errors.InvalidQuantityError: quantity must be at least 1
+
+shopcart/cart.py:57: InvalidQuantityError
+_____________________ test_discount_amount_rounds_half_up ______________________
+
+    def test_discount_amount_rounds_half_up():
+        discount = Discount.from_config({"code": "ODD", "percent": "15"})
+>       cart = cart_of((Product("P", "Pen", "0.30", "office"), 1))
+
+tests/test_discounts.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_discounts.py:14: in cart_of
+    cart.add(product, quantity)
+shopcart/cart.py:24: in add
+    _check_quantity(quantity)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+quantity = 1
+
+    def _check_quantity(quantity):
+        if isinstance(quantity, bool) or not isinstance(quantity, int):
+            raise InvalidQuantityError("quantity must be an integer")
+        if quantity <= 1:
+>           raise InvalidQuantityError("quantity must be at least 1")
+E           shopcart.errors.InvalidQuantityError: quantity must be at least 1
+
+shopcart/cart.py:57: InvalidQuantityError
+=========================== short test summary info ============================
+FAILED tests/test_cart.py::test_subtotal_sums_line_totals - shopcart.errors.I...
+FAILED tests/test_cart.py::test_adding_same_product_merges_quantities - shopc...
+FAILED tests/test_cart.py::test_lines_keep_insertion_order - shopcart.errors....
+FAILED tests/test_cart.py::test_remove_deletes_line - shopcart.errors.Invalid...
+FAILED tests/test_discounts.py::test_percentage_discount_applies_to_whole_subtotal
+FAILED tests/test_discounts.py::test_discount_amount_rounds_half_up - shopcar...
+6 failed, 24 passed in 0.07s

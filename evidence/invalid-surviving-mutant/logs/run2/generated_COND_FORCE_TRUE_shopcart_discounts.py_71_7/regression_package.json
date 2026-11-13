@@ -1,0 +1,91 @@
+{
+ "pytest_version": "8.3.4",
+ "exit_status": 0,
+ "tests": [
+  {
+   "nodeid": "_unwritten/regression/test_discount_compatibility.py::test_discount_without_eligibility_applies_to_whole_cart",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/regression/test_discount_compatibility.py::test_empty_eligibility_places_no_restriction",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/regression/test_discount_compatibility.py::test_zero_min_subtotal_is_valid_and_always_met",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/regression/test_discount_compatibility.py::test_min_subtotal_only_keeps_every_line_eligible",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/regression/test_discount_compatibility.py::test_unknown_eligibility_keys_are_ignored",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/regression/test_discount_compatibility.py::test_cart_whose_lines_are_all_eligible_gets_the_full_discount",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  }
+ ],
+ "collection_errors": []
+}

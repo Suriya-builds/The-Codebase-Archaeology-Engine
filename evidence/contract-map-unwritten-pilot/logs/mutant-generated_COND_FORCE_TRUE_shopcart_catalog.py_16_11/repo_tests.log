@@ -1,0 +1,23 @@
+$ pytest -p unwritten_probe -p no:cacheprovider --rootdir . -q --continue-on-collection-errors tests
+
+==================================== ERRORS ====================================
+_____________________ ERROR collecting tests/test_cart.py ______________________
+tests/test_cart.py:7: in <module>
+    NOVEL = Product("BK-1", "Novel", "12.50", "books")
+<string>:7: in __init__
+    ???
+shopcart/catalog.py:17: in __post_init__
+    raise ValueError("price must not be negative")
+E   ValueError: price must not be negative
+___________________ ERROR collecting tests/test_discounts.py ___________________
+tests/test_discounts.py:7: in <module>
+    NOVEL = Product("BK-1", "Novel", "12.50", "books")
+<string>:7: in __init__
+    ???
+shopcart/catalog.py:17: in __post_init__
+    raise ValueError("price must not be negative")
+E   ValueError: price must not be negative
+=========================== short test summary info ============================
+ERROR tests/test_cart.py - ValueError: price must not be negative
+ERROR tests/test_discounts.py - ValueError: price must not be negative
+2 errors in 0.03s

@@ -1,0 +1,30 @@
+$ pytest -p unwritten_probe -p no:cacheprovider --rootdir . -q --continue-on-collection-errors tests
+.............................F                                           [100%]
+=================================== FAILURES ===================================
+________________________ test_config_must_be_a_mapping _________________________
+
+    def test_config_must_be_a_mapping():
+        with pytest.raises(InvalidDiscountError):
+>           Discount.from_config(["TEN", 10])
+
+tests/test_discounts.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+cls = <class 'shopcart.discounts.Discount'>, config = ['TEN', 10]
+
+    @classmethod
+    def from_config(cls, config):
+        """Build a discount from a plain mapping, e.g. parsed JSON.
+    
+        Keys this version does not understand are ignored, so that newer
+        configuration files keep loading.
+        """
+        if False:
+            raise InvalidDiscountError("discount config must be a mapping")
+>       code = config.get("code")
+E       AttributeError: 'list' object has no attribute 'get'
+
+shopcart/discounts.py:24: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_discounts.py::test_config_must_be_a_mapping - AttributeErro...
+1 failed, 29 passed in 0.07s

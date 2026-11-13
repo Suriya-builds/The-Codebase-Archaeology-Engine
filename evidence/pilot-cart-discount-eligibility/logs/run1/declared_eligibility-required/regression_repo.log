@@ -1,0 +1,44 @@
+$ pytest -p unwritten_probe -p no:cacheprovider --rootdir . -q --continue-on-collection-errors tests
+.............FFF..............                                           [100%]
+=================================== FAILURES ===================================
+______________ test_percentage_discount_applies_to_whole_subtotal ______________
+
+    def test_percentage_discount_applies_to_whole_subtotal():
+        discount = Discount.from_config({"code": "TEN", "percent": 10})
+>       assert cart_of((NOVEL, 2), (MUG, 1)).total(discount) == Decimal("29.70")
+E       AssertionError: assert Decimal('33.00') == Decimal('29.70')
+E        +  where Decimal('33.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=None))
+E        +    where total = <shopcart.cart.Cart object at 0x7f066a338d70>.total
+E        +      where <shopcart.cart.Cart object at 0x7f066a338d70> = cart_of((Product(sku='BK-1', name='Novel', price=Decimal('12.50'), category='books'), 2), (Product(sku='HM-1', name='Mug', price=Decimal('8.00'), category='home'), 1))
+E        +  and   Decimal('29.70') = Decimal('29.70')
+
+tests/test_discounts.py:20: AssertionError
+_____________________ test_discount_amount_rounds_half_up ______________________
+
+    def test_discount_amount_rounds_half_up():
+        discount = Discount.from_config({"code": "ODD", "percent": "15"})
+        cart = cart_of((Product("P", "Pen", "0.30", "office"), 1))
+>       assert discount.amount_for(cart) == Decimal("0.05")
+E       AssertionError: assert Decimal('0.00') == Decimal('0.05')
+E        +  where Decimal('0.00') = amount_for(<shopcart.cart.Cart object at 0x7f066a361790>)
+E        +    where amount_for = Discount(code='ODD', percent=Decimal('15'), eligibility=None).amount_for
+E        +  and   Decimal('0.05') = Decimal('0.05')
+
+tests/test_discounts.py:26: AssertionError
+______________________ test_full_discount_makes_cart_free ______________________
+
+    def test_full_discount_makes_cart_free():
+        discount = Discount.from_config({"code": "FREE", "percent": 100})
+>       assert cart_of((MUG, 3)).total(discount) == Decimal("0.00")
+E       AssertionError: assert Decimal('24.00') == Decimal('0.00')
+E        +  where Decimal('24.00') = total(Discount(code='FREE', percent=Decimal('100'), eligibility=None))
+E        +    where total = <shopcart.cart.Cart object at 0x7f066a361af0>.total
+E        +      where <shopcart.cart.Cart object at 0x7f066a361af0> = cart_of((Product(sku='HM-1', name='Mug', price=Decimal('8.00'), category='home'), 3))
+E        +  and   Decimal('0.00') = Decimal('0.00')
+
+tests/test_discounts.py:32: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_discounts.py::test_percentage_discount_applies_to_whole_subtotal
+FAILED tests/test_discounts.py::test_discount_amount_rounds_half_up - Asserti...
+FAILED tests/test_discounts.py::test_full_discount_makes_cart_free - Assertio...
+3 failed, 27 passed in 0.08s

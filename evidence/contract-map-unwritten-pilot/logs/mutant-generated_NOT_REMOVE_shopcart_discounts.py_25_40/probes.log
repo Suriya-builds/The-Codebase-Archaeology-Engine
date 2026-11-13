@@ -1,0 +1,51 @@
+$ pytest -p unwritten_probe -p no:cacheprovider --rootdir . -q --continue-on-collection-errors _unwritten/probes
+F......F                                                                 [100%]
+==================================== ERRORS ====================================
+_______ ERROR collecting _unwritten/probes/test_hyp_stock_is_checked.py ________
+ImportError while importing test module '/workspace/_unwritten/probes/test_hyp_stock_is_checked.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+_unwritten/probes/test_hyp_stock_is_checked.py:1: in <module>
+    from shopcart.inventory import Stock
+E   ModuleNotFoundError: No module named 'shopcart.inventory'
+=================================== FAILURES ===================================
+_________________________ test_code_is_stored_as_given _________________________
+
+    def test_code_is_stored_as_given():
+>       assert Discount.from_config({"code": "ten", "percent": 10}).code == "ten"
+
+_unwritten/probes/test_hyp_discount_codes_case_sensitive.py:5: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+cls = <class 'shopcart.discounts.Discount'>
+config = {'code': 'ten', 'percent': 10}
+
+    @classmethod
+    def from_config(cls, config):
+        """Build a discount from a plain mapping, e.g. parsed JSON.
+    
+        Keys this version does not understand are ignored, so that newer
+        configuration files keep loading.
+        """
+        if not isinstance(config, dict):
+            raise InvalidDiscountError("discount config must be a mapping")
+        code = config.get("code")
+        if not isinstance(code, str) or code.strip():
+>           raise InvalidDiscountError("discount code must be a non-empty string")
+E           shopcart.errors.InvalidDiscountError: discount code must be a non-empty string
+
+shopcart/discounts.py:26: InvalidDiscountError
+____________________ test_quantity_above_limit_is_rejected _____________________
+
+    def test_quantity_above_limit_is_rejected():
+>       with pytest.raises(InvalidQuantityError):
+E       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidQuantityError'>
+
+_unwritten/probes/test_hyp_quantity_upper_limit.py:7: Failed
+=========================== short test summary info ============================
+FAILED _unwritten/probes/test_hyp_discount_codes_case_sensitive.py::test_code_is_stored_as_given
+FAILED _unwritten/probes/test_hyp_quantity_upper_limit.py::test_quantity_above_limit_is_rejected
+ERROR _unwritten/probes/test_hyp_stock_is_checked.py
+2 failed, 6 passed, 1 error in 0.06s

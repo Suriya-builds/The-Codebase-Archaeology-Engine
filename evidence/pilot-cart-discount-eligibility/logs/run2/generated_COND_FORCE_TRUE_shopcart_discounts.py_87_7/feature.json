@@ -1,0 +1,402 @@
+{
+ "pytest_version": "8.3.4",
+ "exit_status": 1,
+ "tests": [
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_discount_is_not_applied_below_min_subtotal",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "def test_discount_is_not_applied_below_min_subtotal():\n        cart = cart_of((NOVEL, 2), (MUG, 1))  # 33.00\n>       assert cart.total(discount(min_subtotal=\"50.00\")) == Decimal(\"33.00\")\n\n_unwritten/feature/test_discount_eligibility.py:26: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n_unwritten/feature/test_discount_eligibility.py:21: in discount\n    return Discount.from_config({\"code\": \"TEST\", \"percent\": percent, \"eligibility\": eligibility})\nshopcart/discounts.py:45: in from_config\n    eligibility = _parse_eligibility(config.get(\"eligibility\"))\nshopcart/discounts.py:75: in _parse_eligibility\n    min_subtotal = _parse_min_subtotal(raw.get(\"min_subtotal\", \"0\"))\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nraw = '50.00'\n\n    def _parse_min_subtotal(raw):\n        try:\n            amount = to_money(raw)\n        except (TypeError, ValueError) as exc:\n            raise InvalidDiscountError(\"eligibility.min_subtotal must be a money value\") from exc\n        if True:\n>           raise InvalidDiscountError(\"eligibility.min_subtotal must not be negative\")\nE           shopcart.errors.InvalidDiscountError: eligibility.min_subtotal must not be negative\n\nshopcart/discounts.py:88: InvalidDiscountError",
+     "exc_type": "shopcart.errors.InvalidDiscountError",
+     "raised_in": "shopcart/discounts.py",
+     "assertion_level": false,
+     "message": "eligibility.min_subtotal must not be negative"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_min_subtotal_boundary_is_inclusive",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "def test_min_subtotal_boundary_is_inclusive():\n        cart = cart_of((NOVEL, 2), (MUG, 1))  # 33.00\n>       assert cart.total(discount(min_subtotal=\"33.00\")) == Decimal(\"29.70\")\n\n_unwritten/feature/test_discount_eligibility.py:31: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n_unwritten/feature/test_discount_eligibility.py:21: in discount\n    return Discount.from_config({\"code\": \"TEST\", \"percent\": percent, \"eligibility\": eligibility})\nshopcart/discounts.py:45: in from_config\n    eligibility = _parse_eligibility(config.get(\"eligibility\"))\nshopcart/discounts.py:75: in _parse_eligibility\n    min_subtotal = _parse_min_subtotal(raw.get(\"min_subtotal\", \"0\"))\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nraw = '33.00'\n\n    def _parse_min_subtotal(raw):\n        try:\n            amount = to_money(raw)\n        except (TypeError, ValueError) as exc:\n            raise InvalidDiscountError(\"eligibility.min_subtotal must be a money value\") from exc\n        if True:\n>           raise InvalidDiscountError(\"eligibility.min_subtotal must not be negative\")\nE           shopcart.errors.InvalidDiscountError: eligibility.min_subtotal must not be negative\n\nshopcart/discounts.py:88: InvalidDiscountError",
+     "exc_type": "shopcart.errors.InvalidDiscountError",
+     "raised_in": "shopcart/discounts.py",
+     "assertion_level": false,
+     "message": "eligibility.min_subtotal must not be negative"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_ineligible_discount_amount_is_zero",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "def test_ineligible_discount_amount_is_zero():\n        cart = cart_of((MUG, 1))\n>       assert discount(min_subtotal=\"8.01\").amount_for(cart) == Decimal(\"0.00\")\n\n_unwritten/feature/test_discount_eligibility.py:37: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n_unwritten/feature/test_discount_eligibility.py:21: in discount\n    return Discount.from_config({\"code\": \"TEST\", \"percent\": percent, \"eligibility\": eligibility})\nshopcart/discounts.py:45: in from_config\n    eligibility = _parse_eligibility(config.get(\"eligibility\"))\nshopcart/discounts.py:75: in _parse_eligibility\n    min_subtotal = _parse_min_subtotal(raw.get(\"min_subtotal\", \"0\"))\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nraw = '8.01'\n\n    def _parse_min_subtotal(raw):\n        try:\n            amount = to_money(raw)\n        except (TypeError, ValueError) as exc:\n            raise InvalidDiscountError(\"eligibility.min_subtotal must be a money value\") from exc\n        if True:\n>           raise InvalidDiscountError(\"eligibility.min_subtotal must not be negative\")\nE           shopcart.errors.InvalidDiscountError: eligibility.min_subtotal must not be negative\n\nshopcart/discounts.py:88: InvalidDiscountError",
+     "exc_type": "shopcart.errors.InvalidDiscountError",
+     "raised_in": "shopcart/discounts.py",
+     "assertion_level": false,
+     "message": "eligibility.min_subtotal must not be negative"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_category_restricts_discount_to_matching_lines",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "def test_category_restricts_discount_to_matching_lines():\n        cart = cart_of((NOVEL, 2), (MUG, 1))  # books 25.00, home 8.00\n>       assert cart.total(discount(categories=[\"books\"])) == Decimal(\"30.50\")\n\n_unwritten/feature/test_discount_eligibility.py:42: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n_unwritten/feature/test_discount_eligibility.py:21: in discount\n    return Discount.from_config({\"code\": \"TEST\", \"percent\": percent, \"eligibility\": eligibility})\nshopcart/discounts.py:45: in from_config\n    eligibility = _parse_eligibility(config.get(\"eligibility\"))\nshopcart/discounts.py:75: in _parse_eligibility\n    min_subtotal = _parse_min_subtotal(raw.get(\"min_subtotal\", \"0\"))\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nraw = '0'\n\n    def _parse_min_subtotal(raw):\n        try:\n            amount = to_money(raw)\n        except (TypeError, ValueError) as exc:\n            raise InvalidDiscountError(\"eligibility.min_subtotal must be a money value\") from exc\n        if True:\n>           raise InvalidDiscountError(\"eligibility.min_subtotal must not be negative\")\nE           shopcart.errors.InvalidDiscountError: eligibility.min_subtotal must not be negative\n\nshopcart/discounts.py:88: InvalidDiscountError",
+     "exc_type": "shopcart.errors.InvalidDiscountError",
+     "raised_in": "shopcart/discounts.py",
+     "assertion_level": false,
+     "message": "eligibility.min_subtotal must not be negative"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_several_categories_are_all_eligible",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "def test_several_categories_are_all_eligible():\n        cart = cart_of((NOVEL, 2), (MUG, 1), (PEN, 10))  # 25.00 + 8.00 + 3.00\n>       assert cart.total(discount(categories=[\"books\", \"office\"])) == Decimal(\"33.20\")\n\n_unwritten/feature/test_discount_eligibility.py:47: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n_unwritten/feature/test_discount_eligibility.py:21: in discount\n    return Discount.from_config({\"code\": \"TEST\", \"percent\": percent, \"eligibility\": eligibility})\nshopcart/discounts.py:45: in from_config\n    eligibility = _parse_eligibility(config.get(\"eligibility\"))\nshopcart/discounts.py:75: in _parse_eligibility\n    min_subtotal = _parse_min_subtotal(raw.get(\"min_subtotal\", \"0\"))\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nraw = '0'\n\n    def _parse_min_subtotal(raw):\n        try:\n            amount = to_money(raw)\n        except (TypeError, ValueError) as exc:\n            raise InvalidDiscountError(\"eligibility.min_subtotal must be a money value\") from exc\n        if True:\n>           raise InvalidDiscountError(\"eligibility.min_subtotal must not be negative\")\nE           shopcart.errors.InvalidDiscountError: eligibility.min_subtotal must not be negative\n\nshopcart/discounts.py:88: InvalidDiscountError",
+     "exc_type": "shopcart.errors.InvalidDiscountError",
+     "raised_in": "shopcart/discounts.py",
+     "assertion_level": false,
+     "message": "eligibility.min_subtotal must not be negative"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_no_eligible_lines_means_no_discount",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "def test_no_eligible_lines_means_no_discount():\n        cart = cart_of((NOVEL, 2), (MUG, 1))\n>       assert cart.total(discount(categories=[\"garden\"])) == Decimal(\"33.00\")\n\n_unwritten/feature/test_discount_eligibility.py:52: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n_unwritten/feature/test_discount_eligibility.py:21: in discount\n    return Discount.from_config({\"code\": \"TEST\", \"percent\": percent, \"eligibility\": eligibility})\nshopcart/discounts.py:45: in from_config\n    eligibility = _parse_eligibility(config.get(\"eligibility\"))\nshopcart/discounts.py:75: in _parse_eligibility\n    min_subtotal = _parse_min_subtotal(raw.get(\"min_subtotal\", \"0\"))\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nraw = '0'\n\n    def _parse_min_subtotal(raw):\n        try:\n            amount = to_money(raw)\n        except (TypeError, ValueError) as exc:\n            raise InvalidDiscountError(\"eligibility.min_subtotal must be a money value\") from exc\n        if True:\n>           raise InvalidDiscountError(\"eligibility.min_subtotal must not be negative\")\nE           shopcart.errors.InvalidDiscountError: eligibility.min_subtotal must not be negative\n\nshopcart/discounts.py:88: InvalidDiscountError",
+     "exc_type": "shopcart.errors.InvalidDiscountError",
+     "raised_in": "shopcart/discounts.py",
+     "assertion_level": false,
+     "message": "eligibility.min_subtotal must not be negative"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_category_match_is_case_sensitive",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "def test_category_match_is_case_sensitive():\n        cart = cart_of((NOVEL, 2))\n>       assert cart.total(discount(categories=[\"Books\"])) == Decimal(\"25.00\")\n\n_unwritten/feature/test_discount_eligibility.py:57: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n_unwritten/feature/test_discount_eligibility.py:21: in discount\n    return Discount.from_config({\"code\": \"TEST\", \"percent\": percent, \"eligibility\": eligibility})\nshopcart/discounts.py:45: in from_config\n    eligibility = _parse_eligibility(config.get(\"eligibility\"))\nshopcart/discounts.py:75: in _parse_eligibility\n    min_subtotal = _parse_min_subtotal(raw.get(\"min_subtotal\", \"0\"))\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nraw = '0'\n\n    def _parse_min_subtotal(raw):\n        try:\n            amount = to_money(raw)\n        except (TypeError, ValueError) as exc:\n            raise InvalidDiscountError(\"eligibility.min_subtotal must be a money value\") from exc\n        if True:\n>           raise InvalidDiscountError(\"eligibility.min_subtotal must not be negative\")\nE           shopcart.errors.InvalidDiscountError: eligibility.min_subtotal must not be negative\n\nshopcart/discounts.py:88: InvalidDiscountError",
+     "exc_type": "shopcart.errors.InvalidDiscountError",
+     "raised_in": "shopcart/discounts.py",
+     "assertion_level": false,
+     "message": "eligibility.min_subtotal must not be negative"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_min_subtotal_is_measured_on_eligible_lines_only",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "def test_min_subtotal_is_measured_on_eligible_lines_only():\n        cart = cart_of((NOVEL, 2), (MUG, 2))  # books 25.00, whole cart 41.00\n>       assert cart.total(discount(min_subtotal=\"30.00\", categories=[\"books\"])) == Decimal(\"41.00\")\n\n_unwritten/feature/test_discount_eligibility.py:62: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n_unwritten/feature/test_discount_eligibility.py:21: in discount\n    return Discount.from_config({\"code\": \"TEST\", \"percent\": percent, \"eligibility\": eligibility})\nshopcart/discounts.py:45: in from_config\n    eligibility = _parse_eligibility(config.get(\"eligibility\"))\nshopcart/discounts.py:75: in _parse_eligibility\n    min_subtotal = _parse_min_subtotal(raw.get(\"min_subtotal\", \"0\"))\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nraw = '30.00'\n\n    def _parse_min_subtotal(raw):\n        try:\n            amount = to_money(raw)\n        except (TypeError, ValueError) as exc:\n            raise InvalidDiscountError(\"eligibility.min_subtotal must be a money value\") from exc\n        if True:\n>           raise InvalidDiscountError(\"eligibility.min_subtotal must not be negative\")\nE           shopcart.errors.InvalidDiscountError: eligibility.min_subtotal must not be negative\n\nshopcart/discounts.py:88: InvalidDiscountError",
+     "exc_type": "shopcart.errors.InvalidDiscountError",
+     "raised_in": "shopcart/discounts.py",
+     "assertion_level": false,
+     "message": "eligibility.min_subtotal must not be negative"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_amount_is_rounded_half_up_on_the_eligible_subtotal",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "def test_amount_is_rounded_half_up_on_the_eligible_subtotal():\n        cart = cart_of((PEN, 1), (MUG, 1))  # 15% of 0.30 is 0.045\n>       restricted = discount(percent=15, categories=[\"office\"])\n\n_unwritten/feature/test_discount_eligibility.py:67: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n_unwritten/feature/test_discount_eligibility.py:21: in discount\n    return Discount.from_config({\"code\": \"TEST\", \"percent\": percent, \"eligibility\": eligibility})\nshopcart/discounts.py:45: in from_config\n    eligibility = _parse_eligibility(config.get(\"eligibility\"))\nshopcart/discounts.py:75: in _parse_eligibility\n    min_subtotal = _parse_min_subtotal(raw.get(\"min_subtotal\", \"0\"))\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nraw = '0'\n\n    def _parse_min_subtotal(raw):\n        try:\n            amount = to_money(raw)\n        except (TypeError, ValueError) as exc:\n            raise InvalidDiscountError(\"eligibility.min_subtotal must be a money value\") from exc\n        if True:\n>           raise InvalidDiscountError(\"eligibility.min_subtotal must not be negative\")\nE           shopcart.errors.InvalidDiscountError: eligibility.min_subtotal must not be negative\n\nshopcart/discounts.py:88: InvalidDiscountError",
+     "exc_type": "shopcart.errors.InvalidDiscountError",
+     "raised_in": "shopcart/discounts.py",
+     "assertion_level": false,
+     "message": "eligibility.min_subtotal must not be negative"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_eligibility_must_be_a_mapping[books]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_eligibility_must_be_a_mapping[eligibility1]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_eligibility_must_be_a_mapping[5]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_eligibility_must_be_a_mapping[True]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_invalid_min_subtotal_is_rejected[-0.01]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_invalid_min_subtotal_is_rejected[-5]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_invalid_min_subtotal_is_rejected[abc]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_invalid_min_subtotal_is_rejected[1.5]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_invalid_min_subtotal_is_rejected[None]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_invalid_min_subtotal_is_rejected[True]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_invalid_categories_are_rejected[categories0]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_invalid_categories_are_rejected[books]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_invalid_categories_are_rejected[categories2]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_invalid_categories_are_rejected[categories3]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_invalid_categories_are_rejected[categories4]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_invalid_categories_are_rejected[categories5]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  }
+ ],
+ "collection_errors": []
+}

@@ -1,7 +1,11 @@
 """The three shipped packages, verified end to end on every available runner."""
 from pathlib import Path
 
-from conftest import PACKAGES, VALID, codes, reason
+import json
+
+import pytest
+
+from conftest import PACKAGES, ROOT, VALID, codes, reason, referenced_files
 from unwritten.cli import main
 from unwritten.verify import EVIDENCE_FILE
 
@@ -58,6 +62,39 @@ def test_evidence_on_disk_is_complete_and_inspectable(verified, runner_name):
         diff = (root / mutant["diff"]).read_text()
         assert diff.count("\n+") >= 1
         assert (root / mutant["logs"] / "feature.log").is_file()
+
+
+@pytest.mark.parametrize("package", [VALID, "invalid-baseline-passes", "invalid-surviving-mutant"])
+def test_every_reference_in_fresh_evidence_exists(verified, runner_name, package):
+    evidence = verified(package, runner_name)
+    root = Path(evidence["evidence_dir"])
+    on_disk = json.loads((root / EVIDENCE_FILE).read_text())
+    references = referenced_files(on_disk)
+    assert len(references) > 50
+    missing = [r for r in references if not (root / r).exists()]
+    assert missing == []
+
+
+def test_every_reference_in_committed_evidence_exists():
+    checked = 0
+    for document in sorted((ROOT / "evidence").glob("*/*.json")):
+        references = referenced_files(json.loads(document.read_text()))
+        missing = [r for r in references if not (document.parent / r).exists()]
+        assert missing == [], document
+        checked += len(references)
+    assert checked > 300
+
+
+def test_mutant_states_are_reported_separately(verified, runner_name):
+    for package in (VALID, "invalid-surviving-mutant"):
+        summary = verified(package, runner_name)["summary"]["world3"]
+        mutants = verified(package, runner_name)["runs"][0]["worlds"]["world3"]["mutants"]
+        assert {m["status"] for m in mutants} <= {"killed", "survived", "equivalent", "invalid"}
+        assert summary["killed"] + summary["survived"] + summary["equivalent"] + summary["invalid"] \
+            == summary["mutants"] == len(mutants)
+        # No mutant of these packages is demonstrably equivalent, and none is claimed to be.
+        assert summary["equivalent"] == 0 and summary["invalid"] == 0
+    assert verified("invalid-surviving-mutant", runner_name)["summary"]["world3"]["survived"] == 9
 
 
 def test_repeated_runs_are_equivalent(verified, runner_name):

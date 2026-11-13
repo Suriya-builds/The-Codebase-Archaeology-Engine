@@ -1,0 +1,96 @@
+{
+ "pytest_version": "8.3.4",
+ "exit_status": 1,
+ "tests": [
+  {
+   "nodeid": "_unwritten/regression/test_discount_compatibility.py::test_discount_without_eligibility_applies_to_whole_cart",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "def test_discount_without_eligibility_applies_to_whole_cart():\n        discount = Discount.from_config({\"code\": \"TEN\", \"percent\": 10})\n        cart = cart_of((NOVEL, 2), (MUG, 1))\n>       assert discount.amount_for(cart) == Decimal(\"3.30\")\n\n_unwritten/regression/test_discount_compatibility.py:23: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = Discount(code='TEN', percent=Decimal('10'), eligibility=None)\ncart = <shopcart.cart.Cart object at 0x7f704f9059d0>\n\n    def amount_for(self, cart):\n        \"\"\"The amount this discount takes off the given cart.\"\"\"\n        if self.eligibility is not None:\n            return round_money(cart.subtotal() * self.percent / 100)\n>       eligible = self.eligibility.eligible_subtotal(cart)\nE       AttributeError: 'NoneType' object has no attribute 'eligible_subtotal'\n\nshopcart/discounts.py:52: AttributeError",
+     "exc_type": "builtins.AttributeError",
+     "raised_in": "shopcart/discounts.py",
+     "assertion_level": false,
+     "message": "'NoneType' object has no attribute 'eligible_subtotal'"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/regression/test_discount_compatibility.py::test_empty_eligibility_places_no_restriction",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/regression/test_discount_compatibility.py::test_zero_min_subtotal_is_valid_and_always_met",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/regression/test_discount_compatibility.py::test_min_subtotal_only_keeps_every_line_eligible",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/regression/test_discount_compatibility.py::test_unknown_eligibility_keys_are_ignored",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/regression/test_discount_compatibility.py::test_cart_whose_lines_are_all_eligible_gets_the_full_discount",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  }
+ ],
+ "collection_errors": []
+}

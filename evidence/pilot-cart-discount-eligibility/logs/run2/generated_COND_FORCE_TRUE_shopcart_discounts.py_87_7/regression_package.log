@@ -1,0 +1,139 @@
+$ pytest -p unwritten_probe -p no:cacheprovider --rootdir . -q --continue-on-collection-errors _unwritten/regression
+.FFFFF                                                                   [100%]
+=================================== FAILURES ===================================
+_________________ test_empty_eligibility_places_no_restriction _________________
+
+    def test_empty_eligibility_places_no_restriction():
+>       discount = Discount.from_config({"code": "TEN", "percent": 10, "eligibility": {}})
+
+_unwritten/regression/test_discount_compatibility.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+shopcart/discounts.py:45: in from_config
+    eligibility = _parse_eligibility(config.get("eligibility"))
+shopcart/discounts.py:75: in _parse_eligibility
+    min_subtotal = _parse_min_subtotal(raw.get("min_subtotal", "0"))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+raw = '0'
+
+    def _parse_min_subtotal(raw):
+        try:
+            amount = to_money(raw)
+        except (TypeError, ValueError) as exc:
+            raise InvalidDiscountError("eligibility.min_subtotal must be a money value") from exc
+        if True:
+>           raise InvalidDiscountError("eligibility.min_subtotal must not be negative")
+E           shopcart.errors.InvalidDiscountError: eligibility.min_subtotal must not be negative
+
+shopcart/discounts.py:88: InvalidDiscountError
+________________ test_zero_min_subtotal_is_valid_and_always_met ________________
+
+    def test_zero_min_subtotal_is_valid_and_always_met():
+>       discount = Discount.from_config(
+            {"code": "TEN", "percent": 10, "eligibility": {"min_subtotal": 0}})
+
+_unwritten/regression/test_discount_compatibility.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+shopcart/discounts.py:45: in from_config
+    eligibility = _parse_eligibility(config.get("eligibility"))
+shopcart/discounts.py:75: in _parse_eligibility
+    min_subtotal = _parse_min_subtotal(raw.get("min_subtotal", "0"))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+raw = 0
+
+    def _parse_min_subtotal(raw):
+        try:
+            amount = to_money(raw)
+        except (TypeError, ValueError) as exc:
+            raise InvalidDiscountError("eligibility.min_subtotal must be a money value") from exc
+        if True:
+>           raise InvalidDiscountError("eligibility.min_subtotal must not be negative")
+E           shopcart.errors.InvalidDiscountError: eligibility.min_subtotal must not be negative
+
+shopcart/discounts.py:88: InvalidDiscountError
+_______________ test_min_subtotal_only_keeps_every_line_eligible _______________
+
+    def test_min_subtotal_only_keeps_every_line_eligible():
+>       discount = Discount.from_config(
+            {"code": "TEN", "percent": 10, "eligibility": {"min_subtotal": "10.00"}})
+
+_unwritten/regression/test_discount_compatibility.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+shopcart/discounts.py:45: in from_config
+    eligibility = _parse_eligibility(config.get("eligibility"))
+shopcart/discounts.py:75: in _parse_eligibility
+    min_subtotal = _parse_min_subtotal(raw.get("min_subtotal", "0"))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+raw = '10.00'
+
+    def _parse_min_subtotal(raw):
+        try:
+            amount = to_money(raw)
+        except (TypeError, ValueError) as exc:
+            raise InvalidDiscountError("eligibility.min_subtotal must be a money value") from exc
+        if True:
+>           raise InvalidDiscountError("eligibility.min_subtotal must not be negative")
+E           shopcart.errors.InvalidDiscountError: eligibility.min_subtotal must not be negative
+
+shopcart/discounts.py:88: InvalidDiscountError
+__________________ test_unknown_eligibility_keys_are_ignored ___________________
+
+    def test_unknown_eligibility_keys_are_ignored():
+>       discount = Discount.from_config(
+            {"code": "TEN", "percent": 10, "eligibility": {"weekday": "monday"}})
+
+_unwritten/regression/test_discount_compatibility.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+shopcart/discounts.py:45: in from_config
+    eligibility = _parse_eligibility(config.get("eligibility"))
+shopcart/discounts.py:75: in _parse_eligibility
+    min_subtotal = _parse_min_subtotal(raw.get("min_subtotal", "0"))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+raw = '0'
+
+    def _parse_min_subtotal(raw):
+        try:
+            amount = to_money(raw)
+        except (TypeError, ValueError) as exc:
+            raise InvalidDiscountError("eligibility.min_subtotal must be a money value") from exc
+        if True:
+>           raise InvalidDiscountError("eligibility.min_subtotal must not be negative")
+E           shopcart.errors.InvalidDiscountError: eligibility.min_subtotal must not be negative
+
+shopcart/discounts.py:88: InvalidDiscountError
+________ test_cart_whose_lines_are_all_eligible_gets_the_full_discount _________
+
+    def test_cart_whose_lines_are_all_eligible_gets_the_full_discount():
+>       discount = Discount.from_config(
+            {"code": "TEN", "percent": 10, "eligibility": {"categories": ["books", "home"]}})
+
+_unwritten/regression/test_discount_compatibility.py:51: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+shopcart/discounts.py:45: in from_config
+    eligibility = _parse_eligibility(config.get("eligibility"))
+shopcart/discounts.py:75: in _parse_eligibility
+    min_subtotal = _parse_min_subtotal(raw.get("min_subtotal", "0"))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+raw = '0'
+
+    def _parse_min_subtotal(raw):
+        try:
+            amount = to_money(raw)
+        except (TypeError, ValueError) as exc:
+            raise InvalidDiscountError("eligibility.min_subtotal must be a money value") from exc
+        if True:
+>           raise InvalidDiscountError("eligibility.min_subtotal must not be negative")
+E           shopcart.errors.InvalidDiscountError: eligibility.min_subtotal must not be negative
+
+shopcart/discounts.py:88: InvalidDiscountError
+=========================== short test summary info ============================
+FAILED _unwritten/regression/test_discount_compatibility.py::test_empty_eligibility_places_no_restriction
+FAILED _unwritten/regression/test_discount_compatibility.py::test_zero_min_subtotal_is_valid_and_always_met
+FAILED _unwritten/regression/test_discount_compatibility.py::test_min_subtotal_only_keeps_every_line_eligible
+FAILED _unwritten/regression/test_discount_compatibility.py::test_unknown_eligibility_keys_are_ignored
+FAILED _unwritten/regression/test_discount_compatibility.py::test_cart_whose_lines_are_all_eligible_gets_the_full_discount
+5 failed, 1 passed in 0.07s

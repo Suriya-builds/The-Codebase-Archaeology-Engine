@@ -41,11 +41,12 @@
     "baseline_tests": 38,
     "baseline_runs": 2,
     "faults_injected": 45,
-    "faults_detected": 44,
-    "faults_undetected": 1,
-    "faults_timed_out": 0
+    "faults_killed": 44,
+    "faults_survived": 1,
+    "faults_equivalent": 0,
+    "faults_unexecutable": 0
   },
-  "fingerprint": "e85e82db43c08951f57165dff9517fd7d59c4a60650c1f2e994bffda9a556d3e",
+  "fingerprint": "3e79e740f4bee2a0d27094ee3a7be9f2eb0a4029f946b37352085d007f437008",
   "contracts": [
     {
       "id": "test:tests/test_cart.py::test_adding_same_product_merges_quantities",
@@ -86,6 +87,19 @@
         ],
         "probe_count": 1,
         "faults_detected": 11,
+        "detected_faults": [
+          "generated:CMP_BOUNDARY:shopcart/cart.py:56:16",
+          "generated:CMP_NEGATE:shopcart/cart.py:26:20",
+          "generated:COND_FORCE_FALSE:shopcart/cart.py:26:11",
+          "generated:COND_FORCE_TRUE:shopcart/cart.py:26:11",
+          "generated:COND_FORCE_TRUE:shopcart/cart.py:54:7",
+          "generated:COND_FORCE_TRUE:shopcart/cart.py:56:7",
+          "generated:COND_FORCE_TRUE:shopcart/catalog.py:16:11",
+          "generated:COND_FORCE_TRUE:shopcart/money.py:12:7",
+          "generated:COND_FORCE_TRUE:shopcart/money.py:18:7",
+          "generated:NOT_REMOVE:shopcart/cart.py:54:37",
+          "generated:NOT_REMOVE:shopcart/money.py:18:7"
+        ],
         "result": "passes_and_detects_faults"
       },
       "status": "verified",
@@ -130,6 +144,15 @@
         ],
         "probe_count": 1,
         "faults_detected": 7,
+        "detected_faults": [
+          "generated:CMP_NEGATE:shopcart/cart.py:48:20",
+          "generated:COND_FORCE_FALSE:shopcart/cart.py:48:11",
+          "generated:COND_FORCE_TRUE:shopcart/catalog.py:16:11",
+          "generated:COND_FORCE_TRUE:shopcart/money.py:12:7",
+          "generated:COND_FORCE_TRUE:shopcart/money.py:18:7",
+          "generated:NOT_REMOVE:shopcart/cart.py:40:15",
+          "generated:NOT_REMOVE:shopcart/money.py:18:7"
+        ],
         "result": "passes_and_detects_faults"
       },
       "status": "verified",
@@ -166,6 +189,14 @@
         ],
         "probe_count": 1,
         "faults_detected": 6,
+        "detected_faults": [
+          "generated:BOOL_SWAP:shopcart/money.py:12:31",
+          "generated:COND_FORCE_FALSE:shopcart/money.py:12:7",
+          "generated:COND_FORCE_TRUE:shopcart/catalog.py:16:11",
+          "generated:COND_FORCE_TRUE:shopcart/money.py:12:7",
+          "generated:COND_FORCE_TRUE:shopcart/money.py:18:7",
+          "generated:NOT_REMOVE:shopcart/money.py:18:7"
+        ],
         "result": "passes_and_detects_faults"
       },
       "status": "verified",
@@ -222,6 +253,16 @@
         ],
         "probe_count": 5,
         "faults_detected": 8,
+        "detected_faults": [
+          "generated:BOOL_SWAP:shopcart/cart.py:54:34",
+          "generated:COND_FORCE_FALSE:shopcart/cart.py:54:7",
+          "generated:COND_FORCE_FALSE:shopcart/cart.py:56:7",
+          "generated:COND_FORCE_TRUE:shopcart/catalog.py:16:11",
+          "generated:COND_FORCE_TRUE:shopcart/money.py:12:7",
+          "generated:COND_FORCE_TRUE:shopcart/money.py:18:7",
+          "generated:NOT_REMOVE:shopcart/cart.py:54:37",
+          "generated:NOT_REMOVE:shopcart/money.py:18:7"
+        ],
         "result": "passes_and_detects_faults"
       },
       "status": "verified",
@@ -266,6 +307,18 @@
         ],
         "probe_count": 1,
         "faults_detected": 10,
+        "detected_faults": [
+          "generated:CMP_BOUNDARY:shopcart/cart.py:56:16",
+          "generated:CMP_NEGATE:shopcart/cart.py:26:20",
+          "generated:COND_FORCE_TRUE:shopcart/cart.py:26:11",
+          "generated:COND_FORCE_TRUE:shopcart/cart.py:54:7",
+          "generated:COND_FORCE_TRUE:shopcart/cart.py:56:7",
+          "generated:COND_FORCE_TRUE:shopcart/catalog.py:16:11",
+          "generated:COND_FORCE_TRUE:shopcart/money.py:12:7",
+          "generated:COND_FORCE_TRUE:shopcart/money.py:18:7",
+          "generated:NOT_REMOVE:shopcart/cart.py:54:37",
+          "generated:NOT_REMOVE:shopcart/money.py:18:7"
+        ],
         "result": "passes_and_detects_faults"
       },
       "status": "verified",
@@ -302,6 +355,12 @@
         ],
         "probe_count": 1,
         "faults_detected": 4,
+        "detected_faults": [
+          "generated:COND_FORCE_TRUE:shopcart/catalog.py:16:11",
+          "generated:COND_FORCE_TRUE:shopcart/money.py:12:7",
+          "generated:COND_FORCE_TRUE:shopcart/money.py:18:7",
+          "generated:NOT_REMOVE:shopcart/money.py:18:7"
+        ],
         "result": "passes_and_detects_faults"
       },
       "status": "verified",
@@ -350,6 +409,20 @@
         ],
         "probe_count": 1,
         "faults_detected": 12,
+        "detected_faults": [
+          "generated:CMP_BOUNDARY:shopcart/cart.py:56:16",
+          "generated:CMP_NEGATE:shopcart/cart.py:26:20",
+          "generated:CMP_NEGATE:shopcart/cart.py:31:15",
+          "generated:COND_FORCE_TRUE:shopcart/cart.py:26:11",
+          "generated:COND_FORCE_TRUE:shopcart/cart.py:31:11",
+          "generated:COND_FORCE_TRUE:shopcart/cart.py:54:7",
+          "generated:COND_FORCE_TRUE:shopcart/cart.py:56:7",
+          "generated:COND_FORCE_TRUE:shopcart/catalog.py:16:11",
+          "generated:COND_FORCE_TRUE:shopcart/money.py:12:7",
+          "generated:COND_FORCE_TRUE:shopcart/money.py:18:7",
+          "generated:NOT_REMOVE:shopcart/cart.py:54:37",
+          "generated:NOT_REMOVE:shopcart/money.py:18:7"
+        ],
         "result": "passes_and_detects_faults"
       },
       "status": "verified",
@@ -386,6 +459,12 @@
         ],
         "probe_count": 1,
         "faults_detected": 4,
+        "detected_faults": [
+          "generated:COND_FORCE_TRUE:shopcart/catalog.py:16:11",
+          "generated:COND_FORCE_TRUE:shopcart/money.py:12:7",
+          "generated:COND_FORCE_TRUE:shopcart/money.py:18:7",
+          "generated:NOT_REMOVE:shopcart/money.py:18:7"
+        ],
         "result": "passes_and_detects_faults"
       },
       "status": "verified",
@@ -430,6 +509,18 @@
         ],
         "probe_count": 1,
         "faults_detected": 10,
+        "detected_faults": [
+          "generated:CMP_BOUNDARY:shopcart/cart.py:56:16",
+          "generated:CMP_NEGATE:shopcart/cart.py:26:20",
+          "generated:COND_FORCE_TRUE:shopcart/cart.py:26:11",
+          "generated:COND_FORCE_TRUE:shopcart/cart.py:54:7",
+          "generated:COND_FORCE_TRUE:shopcart/cart.py:56:7",
+          "generated:COND_FORCE_TRUE:shopcart/catalog.py:16:11",
+          "generated:COND_FORCE_TRUE:shopcart/money.py:12:7",
+          "generated:COND_FORCE_TRUE:shopcart/money.py:18:7",
+          "generated:NOT_REMOVE:shopcart/cart.py:54:37",
+          "generated:NOT_REMOVE:shopcart/money.py:18:7"
+        ],
         "result": "passes_and_detects_faults"
       },
       "status": "verified",
@@ -474,6 +565,20 @@
         ],
         "probe_count": 1,
         "faults_detected": 13,
+        "detected_faults": [
+          "generated:COND_FORCE_TRUE:shopcart/catalog.py:16:11",
+          "generated:COND_FORCE_TRUE:shopcart/discounts.py:22:11",
+          "generated:COND_FORCE_TRUE:shopcart/discounts.py:25:11",
+          "generated:COND_FORCE_TRUE:shopcart/discounts.py:36:7",
+          "generated:COND_FORCE_TRUE:shopcart/discounts.py:42:7",
+          "generated:COND_FORCE_TRUE:shopcart/money.py:12:7",
+          "generated:COND_FORCE_TRUE:shopcart/money.py:18:7",
+          "generated:NOT_REMOVE:shopcart/discounts.py:22:11",
+          "generated:NOT_REMOVE:shopcart/discounts.py:25:11",
+          "generated:NOT_REMOVE:shopcart/discounts.py:25:40",
+          "generated:NOT_REMOVE:shopcart/discounts.py:36:32",
+          "generated:NOT_REMOVE:shopcart/discounts.py:42:7"
+        ],
         "result": "passes_and_detects_faults"
       },
       "status": "verified",
@@ -514,6 +619,14 @@
         ],
         "probe_count": 1,
         "faults_detected": 6,
+        "detected_faults": [
+          "generated:COND_FORCE_FALSE:shopcart/discounts.py:22:11",
+          "generated:COND_FORCE_TRUE:shopcart/catalog.py:16:11",
+          "generated:COND_FORCE_TRUE:shopcart/money.py:12:7",
+          "generated:COND_FORCE_TRUE:shopcart/money.py:18:7",
+          "generated:NOT_REMOVE:shopcart/discounts.py:22:11",
+          "generated:NOT_REMOVE:shopcart/money.py:18:7"
+        ],
         "result": "passes_and_detects_faults"
       },
       "status": "verified",
@@ -570,6 +683,20 @@
         ],
         "probe_count": 1,
         "faults_detected": 21,
+        "detected_faults": [
+          "generated:CMP_BOUNDARY:shopcart/cart.py:56:16",
+          "generated:CMP_NEGATE:shopcart/cart.py:26:20",
+          "generated:CMP_NEGATE:shopcart/cart.py:48:20",
+          "generated:COND_FORCE_TRUE:shopcart/cart.py:26:11",
+          "generated:COND_FORCE_TRUE:shopcart/cart.py:48:11",
+          "generated:COND_FORCE_TRUE:shopcart/cart.py:54:7",
+          "generated:COND_FORCE_TRUE:shopcart/cart.py:56:7",
+          "generated:COND_FORCE_TRUE:shopcart/catalog.py:16:11",
+          "generated:COND_FORCE_TRUE:shopcart/discounts.py:22:11",
+          "generated:COND_FORCE_TRUE:shopcart/discounts.py:25:11",
+          "generated:COND_FORCE_TRUE:shopcart/discounts.py:36:7",
+          "generated:COND_FORCE_TRUE:shopcart/discounts.py:42:7"
+        ],
         "result": "passes_and_detects_faults"
       },
       "status": "verified",
@@ -626,6 +753,20 @@
         ],
         "probe_count": 1,
         "faults_detected": 21,
+        "detected_faults": [
+          "generated:CMP_BOUNDARY:shopcart/discounts.py:42:58",
+          "generated:CMP_NEGATE:shopcart/cart.py:26:20",
+          "generated:CMP_NEGATE:shopcart/cart.py:48:20",
+          "generated:COND_FORCE_TRUE:shopcart/cart.py:26:11",
+          "generated:COND_FORCE_TRUE:shopcart/cart.py:48:11",
+          "generated:COND_FORCE_TRUE:shopcart/cart.py:54:7",
+          "generated:COND_FORCE_TRUE:shopcart/cart.py:56:7",
+          "generated:COND_FORCE_TRUE:shopcart/catalog.py:16:11",
+          "generated:COND_FORCE_TRUE:shopcart/discounts.py:22:11",
+          "generated:COND_FORCE_TRUE:shopcart/discounts.py:25:11",
+          "generated:COND_FORCE_TRUE:shopcart/discounts.py:36:7",
+          "generated:COND_FORCE_TRUE:shopcart/discounts.py:42:7"
+        ],
         "result": "passes_and_detects_faults"
       },
       "status": "verified",
@@ -678,6 +819,16 @@
         ],
         "probe_count": 4,
         "faults_detected": 8,
+        "detected_faults": [
+          "generated:BOOL_SWAP:shopcart/discounts.py:25:37",
+          "generated:COND_FORCE_FALSE:shopcart/discounts.py:25:11",
+          "generated:COND_FORCE_TRUE:shopcart/catalog.py:16:11",
+          "generated:COND_FORCE_TRUE:shopcart/money.py:12:7",
+          "generated:COND_FORCE_TRUE:shopcart/money.py:18:7",
+          "generated:NOT_REMOVE:shopcart/discounts.py:25:11",
+          "generated:NOT_REMOVE:shopcart/discounts.py:25:40",
+          "generated:NOT_REMOVE:shopcart/money.py:18:7"
+        ],
         "result": "passes_and_detects_faults"
       },
       "status": "verified",
@@ -742,6 +893,19 @@
         ],
         "probe_count": 7,
         "faults_detected": 11,
+        "detected_faults": [
+          "generated:BOOL_SWAP:shopcart/discounts.py:36:29",
+          "generated:BOOL_SWAP:shopcart/discounts.py:42:31",
+          "generated:BOOL_SWAP:shopcart/discounts.py:42:47",
+          "generated:CMP_BOUNDARY:shopcart/discounts.py:42:42",
+          "generated:COND_FORCE_FALSE:shopcart/discounts.py:36:7",
+          "generated:COND_FORCE_FALSE:shopcart/discounts.py:42:7",
+          "generated:COND_FORCE_TRUE:shopcart/catalog.py:16:11",
+          "generated:COND_FORCE_TRUE:shopcart/money.py:12:7",
+          "generated:COND_FORCE_TRUE:shopcart/money.py:18:7",
+          "generated:NOT_REMOVE:shopcart/discounts.py:36:32",
+          "generated:NOT_REMOVE:shopcart/money.py:18:7"
+        ],
         "result": "passes_and_detects_faults"
       },
       "status": "verified",
@@ -798,6 +962,20 @@
         ],
         "probe_count": 1,
         "faults_detected": 21,
+        "detected_faults": [
+          "generated:CMP_BOUNDARY:shopcart/cart.py:56:16",
+          "generated:CMP_NEGATE:shopcart/cart.py:26:20",
+          "generated:CMP_NEGATE:shopcart/cart.py:48:20",
+          "generated:COND_FORCE_TRUE:shopcart/cart.py:26:11",
+          "generated:COND_FORCE_TRUE:shopcart/cart.py:48:11",
+          "generated:COND_FORCE_TRUE:shopcart/cart.py:54:7",
+          "generated:COND_FORCE_TRUE:shopcart/cart.py:56:7",
+          "generated:COND_FORCE_TRUE:shopcart/catalog.py:16:11",
+          "generated:COND_FORCE_TRUE:shopcart/discounts.py:22:11",
+          "generated:COND_FORCE_TRUE:shopcart/discounts.py:25:11",
+          "generated:COND_FORCE_TRUE:shopcart/discounts.py:36:7",
+          "generated:COND_FORCE_TRUE:shopcart/discounts.py:42:7"
+        ],
         "result": "passes_and_detects_faults"
       },
       "status": "verified",
@@ -842,13 +1020,27 @@
         ],
         "probe_count": 1,
         "faults_detected": 13,
+        "detected_faults": [
+          "generated:COND_FORCE_TRUE:shopcart/catalog.py:16:11",
+          "generated:COND_FORCE_TRUE:shopcart/discounts.py:22:11",
+          "generated:COND_FORCE_TRUE:shopcart/discounts.py:25:11",
+          "generated:COND_FORCE_TRUE:shopcart/discounts.py:36:7",
+          "generated:COND_FORCE_TRUE:shopcart/discounts.py:42:7",
+          "generated:COND_FORCE_TRUE:shopcart/money.py:12:7",
+          "generated:COND_FORCE_TRUE:shopcart/money.py:18:7",
+          "generated:NOT_REMOVE:shopcart/discounts.py:22:11",
+          "generated:NOT_REMOVE:shopcart/discounts.py:25:11",
+          "generated:NOT_REMOVE:shopcart/discounts.py:25:40",
+          "generated:NOT_REMOVE:shopcart/discounts.py:36:32",
+          "generated:NOT_REMOVE:shopcart/discounts.py:42:7"
+        ],
         "result": "passes_and_detects_faults"
       },
       "status": "verified",
       "confidence": "high"
     },
     {
-      "id": "guard:shopcart/cart.py:Cart.remove:1",
+      "id": "guard:shopcart/cart.py:Cart.remove:590c07e9",
       "description": "`Cart.remove` raises `KeyError` when `sku not in self._lines`",
       "category": "error_handling",
       "origin": "static_analysis",
@@ -867,23 +1059,26 @@
       "guard": {
         "file": "shopcart/cart.py",
         "symbol": "Cart.remove",
-        "index": 1,
+        "key": "590c07e9",
         "condition": "sku not in self._lines",
         "exception": "KeyError"
       },
       "validation": {
         "method": "remove the guard and see whether a baseline-passing test fails",
         "fault": "generated:COND_FORCE_FALSE:shopcart/cart.py:31:11",
+        "fault_status": "survived",
         "probes": [],
         "probe_count": 0,
-        "result": "unprotected",
-        "note": "the code enforces this, but no test fails when the check is removed"
+        "faults_detected": 0,
+        "detected_faults": [],
+        "result": "guard_removal_undetected",
+        "note": "the code contains this check, and no test fails when it is removed. Whether the check is untested or has no observable effect has not been established"
       },
       "status": "hypothesis",
       "confidence": "medium"
     },
     {
-      "id": "guard:shopcart/cart.py:_check_quantity:1",
+      "id": "guard:shopcart/cart.py:_check_quantity:489e0964",
       "description": "`_check_quantity` raises `InvalidQuantityError` when `isinstance(quantity, bool) or not isinstance(quantity, int)` (\"quantity must be an integer\")",
       "category": "type_validation",
       "origin": "static_analysis",
@@ -902,13 +1097,14 @@
       "guard": {
         "file": "shopcart/cart.py",
         "symbol": "_check_quantity",
-        "index": 1,
+        "key": "489e0964",
         "condition": "isinstance(quantity, bool) or not isinstance(quantity, int)",
         "exception": "InvalidQuantityError"
       },
       "validation": {
         "method": "remove the guard and see whether a baseline-passing test fails",
         "fault": "generated:COND_FORCE_FALSE:shopcart/cart.py:54:7",
+        "fault_status": "killed",
         "probes": [
           {
             "suite": "repo_tests",
@@ -924,13 +1120,17 @@
           }
         ],
         "probe_count": 3,
+        "faults_detected": 1,
+        "detected_faults": [
+          "generated:COND_FORCE_FALSE:shopcart/cart.py:54:7"
+        ],
         "result": "guard_removal_detected"
       },
       "status": "verified",
       "confidence": "high"
     },
     {
-      "id": "guard:shopcart/cart.py:_check_quantity:2",
+      "id": "guard:shopcart/cart.py:_check_quantity:ce994315",
       "description": "`_check_quantity` raises `InvalidQuantityError` when `quantity < 1` (\"quantity must be at least 1\")",
       "category": "value_validation",
       "origin": "static_analysis",
@@ -949,13 +1149,14 @@
       "guard": {
         "file": "shopcart/cart.py",
         "symbol": "_check_quantity",
-        "index": 2,
+        "key": "ce994315",
         "condition": "quantity < 1",
         "exception": "InvalidQuantityError"
       },
       "validation": {
         "method": "remove the guard and see whether a baseline-passing test fails",
         "fault": "generated:COND_FORCE_FALSE:shopcart/cart.py:56:7",
+        "fault_status": "killed",
         "probes": [
           {
             "suite": "repo_tests",
@@ -967,13 +1168,17 @@
           }
         ],
         "probe_count": 2,
+        "faults_detected": 1,
+        "detected_faults": [
+          "generated:COND_FORCE_FALSE:shopcart/cart.py:56:7"
+        ],
         "result": "guard_removal_detected"
       },
       "status": "verified",
       "confidence": "high"
     },
     {
-      "id": "guard:shopcart/catalog.py:Product.__post_init__:1",
+      "id": "guard:shopcart/catalog.py:Product.__post_init__:c1c033fc",
       "description": "`Product.__post_init__` raises `ValueError` when `price < 0` (\"price must not be negative\")",
       "category": "value_validation",
       "origin": "static_analysis",
@@ -992,13 +1197,14 @@
       "guard": {
         "file": "shopcart/catalog.py",
         "symbol": "Product.__post_init__",
-        "index": 1,
+        "key": "c1c033fc",
         "condition": "price < 0",
         "exception": "ValueError"
       },
       "validation": {
         "method": "remove the guard and see whether a baseline-passing test fails",
         "fault": "generated:COND_FORCE_FALSE:shopcart/catalog.py:16:11",
+        "fault_status": "killed",
         "probes": [
           {
             "suite": "probes",
@@ -1006,13 +1212,17 @@
           }
         ],
         "probe_count": 1,
+        "faults_detected": 1,
+        "detected_faults": [
+          "generated:COND_FORCE_FALSE:shopcart/catalog.py:16:11"
+        ],
         "result": "guard_removal_detected"
       },
       "status": "verified",
       "confidence": "high"
     },
     {
-      "id": "guard:shopcart/discounts.py:Discount.from_config:1",
+      "id": "guard:shopcart/discounts.py:Discount.from_config:71304af5",
       "description": "`Discount.from_config` raises `InvalidDiscountError` when `not isinstance(config, dict)` (\"discount config must be a mapping\")",
       "category": "type_validation",
       "origin": "static_analysis",
@@ -1031,13 +1241,14 @@
       "guard": {
         "file": "shopcart/discounts.py",
         "symbol": "Discount.from_config",
-        "index": 1,
+        "key": "71304af5",
         "condition": "not isinstance(config, dict)",
         "exception": "InvalidDiscountError"
       },
       "validation": {
         "method": "remove the guard and see whether a baseline-passing test fails",
         "fault": "generated:COND_FORCE_FALSE:shopcart/discounts.py:22:11",
+        "fault_status": "killed",
         "probes": [
           {
             "suite": "repo_tests",
@@ -1045,13 +1256,17 @@
           }
         ],
         "probe_count": 1,
+        "faults_detected": 1,
+        "detected_faults": [
+          "generated:COND_FORCE_FALSE:shopcart/discounts.py:22:11"
+        ],
         "result": "guard_removal_detected"
       },
       "status": "verified",
       "confidence": "high"
     },
     {
-      "id": "guard:shopcart/discounts.py:Discount.from_config:2",
+      "id": "guard:shopcart/discounts.py:Discount.from_config:182744ac",
       "description": "`Discount.from_config` raises `InvalidDiscountError` when `not isinstance(code, str) or not code.strip()` (\"discount code must be a non-empty string\")",
       "category": "type_validation",
       "origin": "static_analysis",
@@ -1070,13 +1285,14 @@
       "guard": {
         "file": "shopcart/discounts.py",
         "symbol": "Discount.from_config",
-        "index": 2,
+        "key": "182744ac",
         "condition": "not isinstance(code, str) or not code.strip()",
         "exception": "InvalidDiscountError"
       },
       "validation": {
         "method": "remove the guard and see whether a baseline-passing test fails",
         "fault": "generated:COND_FORCE_FALSE:shopcart/discounts.py:25:11",
+        "fault_status": "killed",
         "probes": [
           {
             "suite": "repo_tests",
@@ -1096,13 +1312,17 @@
           }
         ],
         "probe_count": 4,
+        "faults_detected": 1,
+        "detected_faults": [
+          "generated:COND_FORCE_FALSE:shopcart/discounts.py:25:11"
+        ],
         "result": "guard_removal_detected"
       },
       "status": "verified",
       "confidence": "high"
     },
     {
-      "id": "guard:shopcart/discounts.py:_parse_percent:1",
+      "id": "guard:shopcart/discounts.py:_parse_percent:361f4679",
       "description": "`_parse_percent` raises `InvalidDiscountError` when `isinstance(raw, bool) or not isinstance(raw, (int, str, Decimal))` (\"percent must be a number\")",
       "category": "type_validation",
       "origin": "static_analysis",
@@ -1121,13 +1341,14 @@
       "guard": {
         "file": "shopcart/discounts.py",
         "symbol": "_parse_percent",
-        "index": 1,
+        "key": "361f4679",
         "condition": "isinstance(raw, bool) or not isinstance(raw, (int, str, Decimal))",
         "exception": "InvalidDiscountError"
       },
       "validation": {
         "method": "remove the guard and see whether a baseline-passing test fails",
         "fault": "generated:COND_FORCE_FALSE:shopcart/discounts.py:36:7",
+        "fault_status": "killed",
         "probes": [
           {
             "suite": "repo_tests",
@@ -1143,13 +1364,17 @@
           }
         ],
         "probe_count": 3,
+        "faults_detected": 1,
+        "detected_faults": [
+          "generated:COND_FORCE_FALSE:shopcart/discounts.py:36:7"
+        ],
         "result": "guard_removal_detected"
       },
       "status": "verified",
       "confidence": "high"
     },
     {
-      "id": "guard:shopcart/discounts.py:_parse_percent:2",
+      "id": "guard:shopcart/discounts.py:_parse_percent:30fcc400",
       "description": "`_parse_percent` raises `InvalidDiscountError` when `not percent.is_finite() or percent <= 0 or percent > 100` (\"percent must be greater than 0 and at most 100\")",
       "category": "value_validation",
       "origin": "static_analysis",
@@ -1168,13 +1393,14 @@
       "guard": {
         "file": "shopcart/discounts.py",
         "symbol": "_parse_percent",
-        "index": 2,
+        "key": "30fcc400",
         "condition": "not percent.is_finite() or percent <= 0 or percent > 100",
         "exception": "InvalidDiscountError"
       },
       "validation": {
         "method": "remove the guard and see whether a baseline-passing test fails",
         "fault": "generated:COND_FORCE_FALSE:shopcart/discounts.py:42:7",
+        "fault_status": "killed",
         "probes": [
           {
             "suite": "repo_tests",
@@ -1190,13 +1416,17 @@
           }
         ],
         "probe_count": 3,
+        "faults_detected": 1,
+        "detected_faults": [
+          "generated:COND_FORCE_FALSE:shopcart/discounts.py:42:7"
+        ],
         "result": "guard_removal_detected"
       },
       "status": "verified",
       "confidence": "high"
     },
     {
-      "id": "guard:shopcart/money.py:to_money:1",
+      "id": "guard:shopcart/money.py:to_money:446d0c2c",
       "description": "`to_money` raises `TypeError` when `isinstance(value, bool) or isinstance(value, float)` (\"money values must be str, int or Decimal\")",
       "category": "type_validation",
       "origin": "static_analysis",
@@ -1215,13 +1445,14 @@
       "guard": {
         "file": "shopcart/money.py",
         "symbol": "to_money",
-        "index": 1,
+        "key": "446d0c2c",
         "condition": "isinstance(value, bool) or isinstance(value, float)",
         "exception": "TypeError"
       },
       "validation": {
         "method": "remove the guard and see whether a baseline-passing test fails",
         "fault": "generated:COND_FORCE_FALSE:shopcart/money.py:12:7",
+        "fault_status": "killed",
         "probes": [
           {
             "suite": "repo_tests",
@@ -1229,13 +1460,17 @@
           }
         ],
         "probe_count": 1,
+        "faults_detected": 1,
+        "detected_faults": [
+          "generated:COND_FORCE_FALSE:shopcart/money.py:12:7"
+        ],
         "result": "guard_removal_detected"
       },
       "status": "verified",
       "confidence": "high"
     },
     {
-      "id": "guard:shopcart/money.py:to_money:2",
+      "id": "guard:shopcart/money.py:to_money:f0884b92",
       "description": "`to_money` raises `ValueError` when `not amount.is_finite()`",
       "category": "error_handling",
       "origin": "static_analysis",
@@ -1254,13 +1489,14 @@
       "guard": {
         "file": "shopcart/money.py",
         "symbol": "to_money",
-        "index": 2,
+        "key": "f0884b92",
         "condition": "not amount.is_finite()",
         "exception": "ValueError"
       },
       "validation": {
         "method": "remove the guard and see whether a baseline-passing test fails",
         "fault": "generated:COND_FORCE_FALSE:shopcart/money.py:18:7",
+        "fault_status": "killed",
         "probes": [
           {
             "suite": "probes",
@@ -1276,6 +1512,10 @@
           }
         ],
         "probe_count": 3,
+        "faults_detected": 1,
+        "detected_faults": [
+          "generated:COND_FORCE_FALSE:shopcart/money.py:18:7"
+        ],
         "result": "guard_removal_detected"
       },
       "status": "verified",
@@ -1318,6 +1558,14 @@
         ],
         "probe_count": 2,
         "faults_detected": 6,
+        "detected_faults": [
+          "generated:CMP_BOUNDARY:shopcart/catalog.py:16:17",
+          "generated:COND_FORCE_FALSE:shopcart/catalog.py:16:11",
+          "generated:COND_FORCE_TRUE:shopcart/catalog.py:16:11",
+          "generated:COND_FORCE_TRUE:shopcart/money.py:12:7",
+          "generated:COND_FORCE_TRUE:shopcart/money.py:18:7",
+          "generated:NOT_REMOVE:shopcart/money.py:18:7"
+        ],
         "result": "passes_and_detects_faults"
       },
       "status": "verified",
@@ -1360,6 +1608,11 @@
         ],
         "probe_count": 3,
         "faults_detected": 3,
+        "detected_faults": [
+          "generated:COND_FORCE_FALSE:shopcart/money.py:18:7",
+          "generated:COND_FORCE_TRUE:shopcart/money.py:12:7",
+          "generated:NOT_REMOVE:shopcart/money.py:18:7"
+        ],
         "result": "passes_and_detects_faults"
       },
       "status": "verified",
@@ -1389,6 +1642,7 @@
         ],
         "probe_count": 1,
         "faults_detected": 0,
+        "detected_faults": [],
         "result": "probe_assertion_failed",
         "note": "the pinned commit contradicts this claim: assert 'TEN' == 'ten'"
       },
@@ -1419,6 +1673,7 @@
         ],
         "probe_count": 1,
         "faults_detected": 0,
+        "detected_faults": [],
         "result": "probe_assertion_failed",
         "note": "the pinned commit contradicts this claim: DID NOT RAISE <class 'shopcart.errors.InvalidQuantityError'>"
       },
@@ -1444,6 +1699,7 @@
         "probes": [],
         "probe_count": 0,
         "faults_detected": 0,
+        "detected_faults": [],
         "result": "probe_collection_error",
         "note": "the probe could not be imported: E   ModuleNotFoundError: No module named 'shopcart.inventory'"
       },
@@ -1474,6 +1730,7 @@
         ],
         "probe_count": 1,
         "faults_detected": 0,
+        "detected_faults": [],
         "result": "passes_but_insensitive",
         "note": "the probe passes, but no injected fault changes its result; it may not test the code it claims to"
       },
@@ -1499,6 +1756,7 @@
         "probes": [],
         "probe_count": 0,
         "faults_detected": 0,
+        "detected_faults": [],
         "result": "no_probe",
         "note": "no probe was supplied"
       },
@@ -1506,18 +1764,512 @@
       "confidence": "low"
     }
   ],
-  "unprotected_behaviour": [
+  "faults": [
     {
-      "fault": "generated:COND_FORCE_FALSE:shopcart/cart.py:31:11",
+      "id": "generated:COND_FORCE_FALSE:shopcart/cart.py:26:11",
+      "status": "killed",
+      "file": "shopcart/cart.py",
+      "line": 26,
+      "symbol": "Cart.add",
+      "operator": "COND_FORCE_FALSE",
+      "description": "`if existing is not None` becomes `if False`",
+      "detected_by": 1,
+      "logs": "logs/mutant-generated_COND_FORCE_FALSE_shopcart_cart.py_26_11"
+    },
+    {
+      "id": "generated:COND_FORCE_TRUE:shopcart/cart.py:26:11",
+      "status": "killed",
+      "file": "shopcart/cart.py",
+      "line": 26,
+      "symbol": "Cart.add",
+      "operator": "COND_FORCE_TRUE",
+      "description": "`if existing is not None` becomes `if True`",
+      "detected_by": 7,
+      "logs": "logs/mutant-generated_COND_FORCE_TRUE_shopcart_cart.py_26_11"
+    },
+    {
+      "id": "generated:CMP_NEGATE:shopcart/cart.py:26:20",
+      "status": "killed",
+      "file": "shopcart/cart.py",
+      "line": 26,
+      "symbol": "Cart.add",
+      "operator": "CMP_NEGATE",
+      "description": "`is not` becomes `is` in `existing is not None`",
+      "detected_by": 7,
+      "logs": "logs/mutant-generated_CMP_NEGATE_shopcart_cart.py_26_20"
+    },
+    {
+      "id": "generated:COND_FORCE_FALSE:shopcart/cart.py:31:11",
+      "status": "survived",
       "file": "shopcart/cart.py",
       "line": 31,
+      "symbol": "Cart.remove",
+      "operator": "COND_FORCE_FALSE",
       "description": "`if sku not in self._lines` becomes `if False`",
-      "symbol": "Cart.remove"
+      "detected_by": 0,
+      "logs": "logs/mutant-generated_COND_FORCE_FALSE_shopcart_cart.py_31_11"
+    },
+    {
+      "id": "generated:COND_FORCE_TRUE:shopcart/cart.py:31:11",
+      "status": "killed",
+      "file": "shopcart/cart.py",
+      "line": 31,
+      "symbol": "Cart.remove",
+      "operator": "COND_FORCE_TRUE",
+      "description": "`if sku not in self._lines` becomes `if True`",
+      "detected_by": 1,
+      "logs": "logs/mutant-generated_COND_FORCE_TRUE_shopcart_cart.py_31_11"
+    },
+    {
+      "id": "generated:CMP_NEGATE:shopcart/cart.py:31:15",
+      "status": "killed",
+      "file": "shopcart/cart.py",
+      "line": 31,
+      "symbol": "Cart.remove",
+      "operator": "CMP_NEGATE",
+      "description": "`not in` becomes `in` in `sku not in self._lines`",
+      "detected_by": 1,
+      "logs": "logs/mutant-generated_CMP_NEGATE_shopcart_cart.py_31_15"
+    },
+    {
+      "id": "generated:NOT_REMOVE:shopcart/cart.py:40:15",
+      "status": "killed",
+      "file": "shopcart/cart.py",
+      "line": 40,
+      "symbol": "Cart.is_empty",
+      "operator": "NOT_REMOVE",
+      "description": "`not` removed from `not self._lines`",
+      "detected_by": 1,
+      "logs": "logs/mutant-generated_NOT_REMOVE_shopcart_cart.py_40_15"
+    },
+    {
+      "id": "generated:COND_FORCE_FALSE:shopcart/cart.py:48:11",
+      "status": "killed",
+      "file": "shopcart/cart.py",
+      "line": 48,
+      "symbol": "Cart.total",
+      "operator": "COND_FORCE_FALSE",
+      "description": "`if discount is None` becomes `if False`",
+      "detected_by": 1,
+      "logs": "logs/mutant-generated_COND_FORCE_FALSE_shopcart_cart.py_48_11"
+    },
+    {
+      "id": "generated:COND_FORCE_TRUE:shopcart/cart.py:48:11",
+      "status": "killed",
+      "file": "shopcart/cart.py",
+      "line": 48,
+      "symbol": "Cart.total",
+      "operator": "COND_FORCE_TRUE",
+      "description": "`if discount is None` becomes `if True`",
+      "detected_by": 3,
+      "logs": "logs/mutant-generated_COND_FORCE_TRUE_shopcart_cart.py_48_11"
+    },
+    {
+      "id": "generated:CMP_NEGATE:shopcart/cart.py:48:20",
+      "status": "killed",
+      "file": "shopcart/cart.py",
+      "line": 48,
+      "symbol": "Cart.total",
+      "operator": "CMP_NEGATE",
+      "description": "`is` becomes `is not` in `discount is None`",
+      "detected_by": 4,
+      "logs": "logs/mutant-generated_CMP_NEGATE_shopcart_cart.py_48_20"
+    },
+    {
+      "id": "generated:COND_FORCE_FALSE:shopcart/cart.py:54:7",
+      "status": "killed",
+      "file": "shopcart/cart.py",
+      "line": 54,
+      "symbol": "_check_quantity",
+      "operator": "COND_FORCE_FALSE",
+      "description": "`if isinstance(quantity, bool) or not isinstance(quantity, int)` becomes `if False`",
+      "detected_by": 3,
+      "logs": "logs/mutant-generated_COND_FORCE_FALSE_shopcart_cart.py_54_7"
+    },
+    {
+      "id": "generated:COND_FORCE_TRUE:shopcart/cart.py:54:7",
+      "status": "killed",
+      "file": "shopcart/cart.py",
+      "line": 54,
+      "symbol": "_check_quantity",
+      "operator": "COND_FORCE_TRUE",
+      "description": "`if isinstance(quantity, bool) or not isinstance(quantity, int)` becomes `if True`",
+      "detected_by": 7,
+      "logs": "logs/mutant-generated_COND_FORCE_TRUE_shopcart_cart.py_54_7"
+    },
+    {
+      "id": "generated:BOOL_SWAP:shopcart/cart.py:54:34",
+      "status": "killed",
+      "file": "shopcart/cart.py",
+      "line": 54,
+      "symbol": "_check_quantity",
+      "operator": "BOOL_SWAP",
+      "description": "`or` becomes `and` in `isinstance(quantity, bool) or not isinstance(quantity, int)`",
+      "detected_by": 3,
+      "logs": "logs/mutant-generated_BOOL_SWAP_shopcart_cart.py_54_34"
+    },
+    {
+      "id": "generated:NOT_REMOVE:shopcart/cart.py:54:37",
+      "status": "killed",
+      "file": "shopcart/cart.py",
+      "line": 54,
+      "symbol": "_check_quantity",
+      "operator": "NOT_REMOVE",
+      "description": "`not` removed from `not isinstance(quantity, int)`",
+      "detected_by": 9,
+      "logs": "logs/mutant-generated_NOT_REMOVE_shopcart_cart.py_54_37"
+    },
+    {
+      "id": "generated:COND_FORCE_FALSE:shopcart/cart.py:56:7",
+      "status": "killed",
+      "file": "shopcart/cart.py",
+      "line": 56,
+      "symbol": "_check_quantity",
+      "operator": "COND_FORCE_FALSE",
+      "description": "`if quantity < 1` becomes `if False`",
+      "detected_by": 2,
+      "logs": "logs/mutant-generated_COND_FORCE_FALSE_shopcart_cart.py_56_7"
+    },
+    {
+      "id": "generated:COND_FORCE_TRUE:shopcart/cart.py:56:7",
+      "status": "killed",
+      "file": "shopcart/cart.py",
+      "line": 56,
+      "symbol": "_check_quantity",
+      "operator": "COND_FORCE_TRUE",
+      "description": "`if quantity < 1` becomes `if True`",
+      "detected_by": 7,
+      "logs": "logs/mutant-generated_COND_FORCE_TRUE_shopcart_cart.py_56_7"
+    },
+    {
+      "id": "generated:CMP_BOUNDARY:shopcart/cart.py:56:16",
+      "status": "killed",
+      "file": "shopcart/cart.py",
+      "line": 56,
+      "symbol": "_check_quantity",
+      "operator": "CMP_BOUNDARY",
+      "description": "`<` becomes `<=` in `quantity < 1`",
+      "detected_by": 6,
+      "logs": "logs/mutant-generated_CMP_BOUNDARY_shopcart_cart.py_56_16"
+    },
+    {
+      "id": "generated:COND_FORCE_FALSE:shopcart/catalog.py:16:11",
+      "status": "killed",
+      "file": "shopcart/catalog.py",
+      "line": 16,
+      "symbol": "Product.__post_init__",
+      "operator": "COND_FORCE_FALSE",
+      "description": "`if price < 0` becomes `if False`",
+      "detected_by": 1,
+      "logs": "logs/mutant-generated_COND_FORCE_FALSE_shopcart_catalog.py_16_11"
+    },
+    {
+      "id": "generated:COND_FORCE_TRUE:shopcart/catalog.py:16:11",
+      "status": "killed",
+      "file": "shopcart/catalog.py",
+      "line": 16,
+      "symbol": "Product.__post_init__",
+      "operator": "COND_FORCE_TRUE",
+      "description": "`if price < 0` becomes `if True`",
+      "detected_by": 31,
+      "logs": "logs/mutant-generated_COND_FORCE_TRUE_shopcart_catalog.py_16_11"
+    },
+    {
+      "id": "generated:CMP_BOUNDARY:shopcart/catalog.py:16:17",
+      "status": "killed",
+      "file": "shopcart/catalog.py",
+      "line": 16,
+      "symbol": "Product.__post_init__",
+      "operator": "CMP_BOUNDARY",
+      "description": "`<` becomes `<=` in `price < 0`",
+      "detected_by": 1,
+      "logs": "logs/mutant-generated_CMP_BOUNDARY_shopcart_catalog.py_16_17"
+    },
+    {
+      "id": "generated:COND_FORCE_FALSE:shopcart/discounts.py:22:11",
+      "status": "killed",
+      "file": "shopcart/discounts.py",
+      "line": 22,
+      "symbol": "Discount.from_config",
+      "operator": "COND_FORCE_FALSE",
+      "description": "`if not isinstance(config, dict)` becomes `if False`",
+      "detected_by": 1,
+      "logs": "logs/mutant-generated_COND_FORCE_FALSE_shopcart_discounts.py_22_11"
+    },
+    {
+      "id": "generated:COND_FORCE_TRUE:shopcart/discounts.py:22:11",
+      "status": "killed",
+      "file": "shopcart/discounts.py",
+      "line": 22,
+      "symbol": "Discount.from_config",
+      "operator": "COND_FORCE_TRUE",
+      "description": "`if not isinstance(config, dict)` becomes `if True`",
+      "detected_by": 5,
+      "logs": "logs/mutant-generated_COND_FORCE_TRUE_shopcart_discounts.py_22_11"
+    },
+    {
+      "id": "generated:NOT_REMOVE:shopcart/discounts.py:22:11",
+      "status": "killed",
+      "file": "shopcart/discounts.py",
+      "line": 22,
+      "symbol": "Discount.from_config",
+      "operator": "NOT_REMOVE",
+      "description": "`not` removed from `not isinstance(config, dict)`",
+      "detected_by": 6,
+      "logs": "logs/mutant-generated_NOT_REMOVE_shopcart_discounts.py_22_11"
+    },
+    {
+      "id": "generated:COND_FORCE_FALSE:shopcart/discounts.py:25:11",
+      "status": "killed",
+      "file": "shopcart/discounts.py",
+      "line": 25,
+      "symbol": "Discount.from_config",
+      "operator": "COND_FORCE_FALSE",
+      "description": "`if not isinstance(code, str) or not code.strip()` becomes `if False`",
+      "detected_by": 4,
+      "logs": "logs/mutant-generated_COND_FORCE_FALSE_shopcart_discounts.py_25_11"
+    },
+    {
+      "id": "generated:COND_FORCE_TRUE:shopcart/discounts.py:25:11",
+      "status": "killed",
+      "file": "shopcart/discounts.py",
+      "line": 25,
+      "symbol": "Discount.from_config",
+      "operator": "COND_FORCE_TRUE",
+      "description": "`if not isinstance(code, str) or not code.strip()` becomes `if True`",
+      "detected_by": 5,
+      "logs": "logs/mutant-generated_COND_FORCE_TRUE_shopcart_discounts.py_25_11"
+    },
+    {
+      "id": "generated:NOT_REMOVE:shopcart/discounts.py:25:11",
+      "status": "killed",
+      "file": "shopcart/discounts.py",
+      "line": 25,
+      "symbol": "Discount.from_config",
+      "operator": "NOT_REMOVE",
+      "description": "`not` removed from `not isinstance(code, str)`",
+      "detected_by": 7,
+      "logs": "logs/mutant-generated_NOT_REMOVE_shopcart_discounts.py_25_11"
+    },
+    {
+      "id": "generated:BOOL_SWAP:shopcart/discounts.py:25:37",
+      "status": "killed",
+      "file": "shopcart/discounts.py",
+      "line": 25,
+      "symbol": "Discount.from_config",
+      "operator": "BOOL_SWAP",
+      "description": "`or` becomes `and` in `not isinstance(code, str) or not code.strip()`",
+      "detected_by": 4,
+      "logs": "logs/mutant-generated_BOOL_SWAP_shopcart_discounts.py_25_37"
+    },
+    {
+      "id": "generated:NOT_REMOVE:shopcart/discounts.py:25:40",
+      "status": "killed",
+      "file": "shopcart/discounts.py",
+      "line": 25,
+      "symbol": "Discount.from_config",
+      "operator": "NOT_REMOVE",
+      "description": "`not` removed from `not code.strip()`",
+      "detected_by": 7,
+      "logs": "logs/mutant-generated_NOT_REMOVE_shopcart_discounts.py_25_40"
+    },
+    {
+      "id": "generated:COND_FORCE_FALSE:shopcart/discounts.py:36:7",
+      "status": "killed",
+      "file": "shopcart/discounts.py",
+      "line": 36,
+      "symbol": "_parse_percent",
+      "operator": "COND_FORCE_FALSE",
+      "description": "`if isinstance(raw, bool) or not isinstance(raw, (int, str, Decimal))` becomes `if False`",
+      "detected_by": 3,
+      "logs": "logs/mutant-generated_COND_FORCE_FALSE_shopcart_discounts.py_36_7"
+    },
+    {
+      "id": "generated:COND_FORCE_TRUE:shopcart/discounts.py:36:7",
+      "status": "killed",
+      "file": "shopcart/discounts.py",
+      "line": 36,
+      "symbol": "_parse_percent",
+      "operator": "COND_FORCE_TRUE",
+      "description": "`if isinstance(raw, bool) or not isinstance(raw, (int, str, Decimal))` becomes `if True`",
+      "detected_by": 5,
+      "logs": "logs/mutant-generated_COND_FORCE_TRUE_shopcart_discounts.py_36_7"
+    },
+    {
+      "id": "generated:BOOL_SWAP:shopcart/discounts.py:36:29",
+      "status": "killed",
+      "file": "shopcart/discounts.py",
+      "line": 36,
+      "symbol": "_parse_percent",
+      "operator": "BOOL_SWAP",
+      "description": "`or` becomes `and` in `isinstance(raw, bool) or not isinstance(raw, (int, str, Decimal))`",
+      "detected_by": 3,
+      "logs": "logs/mutant-generated_BOOL_SWAP_shopcart_discounts.py_36_29"
+    },
+    {
+      "id": "generated:NOT_REMOVE:shopcart/discounts.py:36:32",
+      "status": "killed",
+      "file": "shopcart/discounts.py",
+      "line": 36,
+      "symbol": "_parse_percent",
+      "operator": "NOT_REMOVE",
+      "description": "`not` removed from `not isinstance(raw, (int, str, Decimal))`",
+      "detected_by": 7,
+      "logs": "logs/mutant-generated_NOT_REMOVE_shopcart_discounts.py_36_32"
+    },
+    {
+      "id": "generated:COND_FORCE_FALSE:shopcart/discounts.py:42:7",
+      "status": "killed",
+      "file": "shopcart/discounts.py",
+      "line": 42,
+      "symbol": "_parse_percent",
+      "operator": "COND_FORCE_FALSE",
+      "description": "`if not percent.is_finite() or percent <= 0 or percent > 100` becomes `if False`",
+      "detected_by": 3,
+      "logs": "logs/mutant-generated_COND_FORCE_FALSE_shopcart_discounts.py_42_7"
+    },
+    {
+      "id": "generated:COND_FORCE_TRUE:shopcart/discounts.py:42:7",
+      "status": "killed",
+      "file": "shopcart/discounts.py",
+      "line": 42,
+      "symbol": "_parse_percent",
+      "operator": "COND_FORCE_TRUE",
+      "description": "`if not percent.is_finite() or percent <= 0 or percent > 100` becomes `if True`",
+      "detected_by": 5,
+      "logs": "logs/mutant-generated_COND_FORCE_TRUE_shopcart_discounts.py_42_7"
+    },
+    {
+      "id": "generated:NOT_REMOVE:shopcart/discounts.py:42:7",
+      "status": "killed",
+      "file": "shopcart/discounts.py",
+      "line": 42,
+      "symbol": "_parse_percent",
+      "operator": "NOT_REMOVE",
+      "description": "`not` removed from `not percent.is_finite()`",
+      "detected_by": 5,
+      "logs": "logs/mutant-generated_NOT_REMOVE_shopcart_discounts.py_42_7"
+    },
+    {
+      "id": "generated:BOOL_SWAP:shopcart/discounts.py:42:31",
+      "status": "killed",
+      "file": "shopcart/discounts.py",
+      "line": 42,
+      "symbol": "_parse_percent",
+      "operator": "BOOL_SWAP",
+      "description": "`or` becomes `and` in `not percent.is_finite() or percent <= 0 or percent > 100`",
+      "detected_by": 2,
+      "logs": "logs/mutant-generated_BOOL_SWAP_shopcart_discounts.py_42_31"
+    },
+    {
+      "id": "generated:CMP_BOUNDARY:shopcart/discounts.py:42:42",
+      "status": "killed",
+      "file": "shopcart/discounts.py",
+      "line": 42,
+      "symbol": "_parse_percent",
+      "operator": "CMP_BOUNDARY",
+      "description": "`<=` becomes `<` in `percent <= 0`",
+      "detected_by": 1,
+      "logs": "logs/mutant-generated_CMP_BOUNDARY_shopcart_discounts.py_42_42"
+    },
+    {
+      "id": "generated:BOOL_SWAP:shopcart/discounts.py:42:47",
+      "status": "killed",
+      "file": "shopcart/discounts.py",
+      "line": 42,
+      "symbol": "_parse_percent",
+      "operator": "BOOL_SWAP",
+      "description": "`or` becomes `and` in `not percent.is_finite() or percent <= 0 or percent > 100`",
+      "detected_by": 3,
+      "logs": "logs/mutant-generated_BOOL_SWAP_shopcart_discounts.py_42_47"
+    },
+    {
+      "id": "generated:CMP_BOUNDARY:shopcart/discounts.py:42:58",
+      "status": "killed",
+      "file": "shopcart/discounts.py",
+      "line": 42,
+      "symbol": "_parse_percent",
+      "operator": "CMP_BOUNDARY",
+      "description": "`>` becomes `>=` in `percent > 100`",
+      "detected_by": 1,
+      "logs": "logs/mutant-generated_CMP_BOUNDARY_shopcart_discounts.py_42_58"
+    },
+    {
+      "id": "generated:COND_FORCE_FALSE:shopcart/money.py:12:7",
+      "status": "killed",
+      "file": "shopcart/money.py",
+      "line": 12,
+      "symbol": "to_money",
+      "operator": "COND_FORCE_FALSE",
+      "description": "`if isinstance(value, bool) or isinstance(value, float)` becomes `if False`",
+      "detected_by": 1,
+      "logs": "logs/mutant-generated_COND_FORCE_FALSE_shopcart_money.py_12_7"
+    },
+    {
+      "id": "generated:COND_FORCE_TRUE:shopcart/money.py:12:7",
+      "status": "killed",
+      "file": "shopcart/money.py",
+      "line": 12,
+      "symbol": "to_money",
+      "operator": "COND_FORCE_TRUE",
+      "description": "`if isinstance(value, bool) or isinstance(value, float)` becomes `if True`",
+      "detected_by": 35,
+      "logs": "logs/mutant-generated_COND_FORCE_TRUE_shopcart_money.py_12_7"
+    },
+    {
+      "id": "generated:BOOL_SWAP:shopcart/money.py:12:31",
+      "status": "killed",
+      "file": "shopcart/money.py",
+      "line": 12,
+      "symbol": "to_money",
+      "operator": "BOOL_SWAP",
+      "description": "`or` becomes `and` in `isinstance(value, bool) or isinstance(value, float)`",
+      "detected_by": 1,
+      "logs": "logs/mutant-generated_BOOL_SWAP_shopcart_money.py_12_31"
+    },
+    {
+      "id": "generated:COND_FORCE_FALSE:shopcart/money.py:18:7",
+      "status": "killed",
+      "file": "shopcart/money.py",
+      "line": 18,
+      "symbol": "to_money",
+      "operator": "COND_FORCE_FALSE",
+      "description": "`if not amount.is_finite()` becomes `if False`",
+      "detected_by": 3,
+      "logs": "logs/mutant-generated_COND_FORCE_FALSE_shopcart_money.py_18_7"
+    },
+    {
+      "id": "generated:COND_FORCE_TRUE:shopcart/money.py:18:7",
+      "status": "killed",
+      "file": "shopcart/money.py",
+      "line": 18,
+      "symbol": "to_money",
+      "operator": "COND_FORCE_TRUE",
+      "description": "`if not amount.is_finite()` becomes `if True`",
+      "detected_by": 31,
+      "logs": "logs/mutant-generated_COND_FORCE_TRUE_shopcart_money.py_18_7"
+    },
+    {
+      "id": "generated:NOT_REMOVE:shopcart/money.py:18:7",
+      "status": "killed",
+      "file": "shopcart/money.py",
+      "line": 18,
+      "symbol": "to_money",
+      "operator": "NOT_REMOVE",
+      "description": "`not` removed from `not amount.is_finite()`",
+      "detected_by": 34,
+      "logs": "logs/mutant-generated_NOT_REMOVE_shopcart_money.py_18_7"
     }
   ],
+  "fault_states": {
+    "killed": "at least one baseline-passing test fails with the fault in place",
+    "survived": "the fault ran and every test still passed; this does not show whether the behaviour is untested or the change has no observable effect",
+    "equivalent": "the fault compiles to identical bytecode, so it cannot change behaviour",
+    "unexecutable": "the tests timed out with the fault in place; no verdict"
+  },
   "timing": {
-    "started_at": "2026-11-13T19:38:04+00:00",
-    "finished_at": "2026-11-13T19:38:20+00:00",
-    "duration_seconds": 15.75
+    "started_at": "2026-11-13T19:48:31+00:00",
+    "finished_at": "2026-11-13T19:48:46+00:00",
+    "duration_seconds": 15.18
   }
 }

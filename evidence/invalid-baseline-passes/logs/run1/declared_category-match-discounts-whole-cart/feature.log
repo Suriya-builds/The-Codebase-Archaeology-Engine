@@ -1,0 +1,44 @@
+$ pytest -p unwritten_probe -p no:cacheprovider --rootdir . -q --continue-on-collection-errors _unwritten/feature
+...FF...F.................                                               [100%]
+=================================== FAILURES ===================================
+______________ test_category_restricts_discount_to_matching_lines ______________
+
+    def test_category_restricts_discount_to_matching_lines():
+        cart = cart_of((NOVEL, 2), (MUG, 1))  # books 25.00, home 8.00
+>       assert cart.total(discount(categories=["books"])) == Decimal("30.50")
+E       AssertionError: assert Decimal('29.70') == Decimal('30.50')
+E        +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))))
+E        +    where total = <shopcart.cart.Cart object at 0x7f5d9f079d00>.total
+E        +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))) = discount(categories=['books'])
+E        +  and   Decimal('30.50') = Decimal('30.50')
+
+_unwritten/feature/test_discount_eligibility.py:42: AssertionError
+___________________ test_several_categories_are_all_eligible ___________________
+
+    def test_several_categories_are_all_eligible():
+        cart = cart_of((NOVEL, 2), (MUG, 1), (PEN, 10))  # 25.00 + 8.00 + 3.00
+>       assert cart.total(discount(categories=["books", "office"])) == Decimal("33.20")
+E       AssertionError: assert Decimal('32.40') == Decimal('33.20')
+E        +  where Decimal('32.40') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'office', 'books'}))))
+E        +    where total = <shopcart.cart.Cart object at 0x7f5d9f064890>.total
+E        +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'office', 'books'}))) = discount(categories=['books', 'office'])
+E        +  and   Decimal('33.20') = Decimal('33.20')
+
+_unwritten/feature/test_discount_eligibility.py:47: AssertionError
+___________ test_amount_is_rounded_half_up_on_the_eligible_subtotal ____________
+
+    def test_amount_is_rounded_half_up_on_the_eligible_subtotal():
+        cart = cart_of((PEN, 1), (MUG, 1))  # 15% of 0.30 is 0.045
+        restricted = discount(percent=15, categories=["office"])
+>       assert restricted.amount_for(cart) == Decimal("0.05")
+E       AssertionError: assert Decimal('1.25') == Decimal('0.05')
+E        +  where Decimal('1.25') = amount_for(<shopcart.cart.Cart object at 0x7f5d9f0a2510>)
+E        +    where amount_for = Discount(code='TEST', percent=Decimal('15'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'office'}))).amount_for
+E        +  and   Decimal('0.05') = Decimal('0.05')
+
+_unwritten/feature/test_discount_eligibility.py:68: AssertionError
+=========================== short test summary info ============================
+FAILED _unwritten/feature/test_discount_eligibility.py::test_category_restricts_discount_to_matching_lines
+FAILED _unwritten/feature/test_discount_eligibility.py::test_several_categories_are_all_eligible
+FAILED _unwritten/feature/test_discount_eligibility.py::test_amount_is_rounded_half_up_on_the_eligible_subtotal
+3 failed, 23 passed in 0.05s

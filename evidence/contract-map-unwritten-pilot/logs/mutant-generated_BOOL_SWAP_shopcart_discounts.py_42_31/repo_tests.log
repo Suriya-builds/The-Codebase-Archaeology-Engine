@@ -1,0 +1,27 @@
+$ pytest -p unwritten_probe -p no:cacheprovider --rootdir . -q --continue-on-collection-errors tests
+..................FF..........                                           [100%]
+=================================== FAILURES ===================================
+_____________________ test_invalid_percent_is_rejected[0] ______________________
+
+percent = 0
+
+    @pytest.mark.parametrize("percent", [0, -5, 101, "abc", None, True, 2.5])
+    def test_invalid_percent_is_rejected(percent):
+>       with pytest.raises(InvalidDiscountError):
+E       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>
+
+tests/test_discounts.py:46: Failed
+_____________________ test_invalid_percent_is_rejected[-5] _____________________
+
+percent = -5
+
+    @pytest.mark.parametrize("percent", [0, -5, 101, "abc", None, True, 2.5])
+    def test_invalid_percent_is_rejected(percent):
+>       with pytest.raises(InvalidDiscountError):
+E       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>
+
+tests/test_discounts.py:46: Failed
+=========================== short test summary info ============================
+FAILED tests/test_discounts.py::test_invalid_percent_is_rejected[0] - Failed:...
+FAILED tests/test_discounts.py::test_invalid_percent_is_rejected[-5] - Failed...
+2 failed, 28 passed in 0.05s

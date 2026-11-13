@@ -1,0 +1,362 @@
+{
+ "pytest_version": "8.3.4",
+ "exit_status": 1,
+ "tests": [
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_discount_is_not_applied_below_min_subtotal",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_min_subtotal_boundary_is_inclusive",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_ineligible_discount_amount_is_zero",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_category_restricts_discount_to_matching_lines",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_several_categories_are_all_eligible",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_no_eligible_lines_means_no_discount",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_category_match_is_case_sensitive",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_min_subtotal_is_measured_on_eligible_lines_only",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "failed",
+     "detail": "def test_min_subtotal_is_measured_on_eligible_lines_only():\n        cart = cart_of((NOVEL, 2), (MUG, 2))  # books 25.00, whole cart 41.00\n>       assert cart.total(discount(min_subtotal=\"30.00\", categories=[\"books\"])) == Decimal(\"41.00\")\nE       AssertionError: assert Decimal('38.50') == Decimal('41.00')\nE        +  where Decimal('38.50') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('30.00'), categories=frozenset({'books'}))))\nE        +    where total = <shopcart.cart.Cart object at 0x7fa3a218bef0>.total\nE        +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('30.00'), categories=frozenset({'books'}))) = discount(min_subtotal='30.00', categories=['books'])\nE        +  and   Decimal('41.00') = Decimal('41.00')\n\n_unwritten/feature/test_discount_eligibility.py:62: AssertionError",
+     "exc_type": "builtins.AssertionError",
+     "raised_in": "_unwritten/feature/test_discount_eligibility.py",
+     "assertion_level": true,
+     "message": "assert Decimal('38.50') == Decimal('41.00')\n +  where Decimal('38.50') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('30.00'), categories=frozenset({'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7fa3a218bef0>.total\n +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('30.00'), categories=frozenset({'books'}))) = discount(min_subtotal='30.00', categories=['books'])\n +  and   Decimal('41.00') = Decimal('41.00')"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_amount_is_rounded_half_up_on_the_eligible_subtotal",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_eligibility_must_be_a_mapping[books]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_eligibility_must_be_a_mapping[eligibility1]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_eligibility_must_be_a_mapping[5]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_eligibility_must_be_a_mapping[True]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_invalid_min_subtotal_is_rejected[-0.01]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_invalid_min_subtotal_is_rejected[-5]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_invalid_min_subtotal_is_rejected[abc]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_invalid_min_subtotal_is_rejected[1.5]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_invalid_min_subtotal_is_rejected[None]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_invalid_min_subtotal_is_rejected[True]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_invalid_categories_are_rejected[categories0]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_invalid_categories_are_rejected[books]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_invalid_categories_are_rejected[categories2]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_invalid_categories_are_rejected[categories3]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_invalid_categories_are_rejected[categories4]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  },
+  {
+   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_invalid_categories_are_rejected[categories5]",
+   "phases": {
+    "setup": {
+     "outcome": "passed"
+    },
+    "call": {
+     "outcome": "passed"
+    },
+    "teardown": {
+     "outcome": "passed"
+    }
+   }
+  }
+ ],
+ "collection_errors": []
+}

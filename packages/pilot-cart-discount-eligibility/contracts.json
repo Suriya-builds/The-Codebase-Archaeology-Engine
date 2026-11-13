@@ -1,5 +1,5 @@
 {
-  "contract_map_fingerprint": "e85e82db43c08951f57165dff9517fd7d59c4a60650c1f2e994bffda9a556d3e",
+  "contract_map_fingerprint": "3e79e740f4bee2a0d27094ee3a7be9f2eb0a4029f946b37352085d007f437008",
   "commit": "667512bac0534ea742a7a7c3e3262142ac914c30",
   "selection": "verified contracts whose source or related symbols lie in files the reference patch touches",
   "touched_files": [
@@ -187,7 +187,7 @@
       ]
     },
     {
-      "id": "guard:shopcart/discounts.py:Discount.from_config:1",
+      "id": "guard:shopcart/discounts.py:Discount.from_config:71304af5",
       "description": "`Discount.from_config` raises `InvalidDiscountError` when `not isinstance(config, dict)` (\"discount config must be a mapping\")",
       "category": "type_validation",
       "origin": "static_analysis",
@@ -206,13 +206,13 @@
       "guard": {
         "file": "shopcart/discounts.py",
         "symbol": "Discount.from_config",
-        "index": 1,
+        "key": "71304af5",
         "condition": "not isinstance(config, dict)",
         "exception": "InvalidDiscountError"
       }
     },
     {
-      "id": "guard:shopcart/discounts.py:Discount.from_config:2",
+      "id": "guard:shopcart/discounts.py:Discount.from_config:182744ac",
       "description": "`Discount.from_config` raises `InvalidDiscountError` when `not isinstance(code, str) or not code.strip()` (\"discount code must be a non-empty string\")",
       "category": "type_validation",
       "origin": "static_analysis",
@@ -243,13 +243,13 @@
       "guard": {
         "file": "shopcart/discounts.py",
         "symbol": "Discount.from_config",
-        "index": 2,
+        "key": "182744ac",
         "condition": "not isinstance(code, str) or not code.strip()",
         "exception": "InvalidDiscountError"
       }
     },
     {
-      "id": "guard:shopcart/discounts.py:_parse_percent:1",
+      "id": "guard:shopcart/discounts.py:_parse_percent:361f4679",
       "description": "`_parse_percent` raises `InvalidDiscountError` when `isinstance(raw, bool) or not isinstance(raw, (int, str, Decimal))` (\"percent must be a number\")",
       "category": "type_validation",
       "origin": "static_analysis",
@@ -276,13 +276,13 @@
       "guard": {
         "file": "shopcart/discounts.py",
         "symbol": "_parse_percent",
-        "index": 1,
+        "key": "361f4679",
         "condition": "isinstance(raw, bool) or not isinstance(raw, (int, str, Decimal))",
         "exception": "InvalidDiscountError"
       }
     },
     {
-      "id": "guard:shopcart/discounts.py:_parse_percent:2",
+      "id": "guard:shopcart/discounts.py:_parse_percent:30fcc400",
       "description": "`_parse_percent` raises `InvalidDiscountError` when `not percent.is_finite() or percent <= 0 or percent > 100` (\"percent must be greater than 0 and at most 100\")",
       "category": "value_validation",
       "origin": "static_analysis",
@@ -309,7 +309,7 @@
       "guard": {
         "file": "shopcart/discounts.py",
         "symbol": "_parse_percent",
-        "index": 2,
+        "key": "30fcc400",
         "condition": "not percent.is_finite() or percent <= 0 or percent > 100",
         "exception": "InvalidDiscountError"
       }

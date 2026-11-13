@@ -1,0 +1,70 @@
+$ pytest -p unwritten_probe -p no:cacheprovider --rootdir . -q --continue-on-collection-errors _unwritten/probes
+F..F...F                                                                 [100%]
+==================================== ERRORS ====================================
+_______ ERROR collecting _unwritten/probes/test_hyp_stock_is_checked.py ________
+ImportError while importing test module '/workspace/_unwritten/probes/test_hyp_stock_is_checked.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+_unwritten/probes/test_hyp_stock_is_checked.py:1: in <module>
+    from shopcart.inventory import Stock
+E   ModuleNotFoundError: No module named 'shopcart.inventory'
+=================================== FAILURES ===================================
+_________________________ test_code_is_stored_as_given _________________________
+
+    def test_code_is_stored_as_given():
+>       assert Discount.from_config({"code": "ten", "percent": 10}).code == "ten"
+E       AssertionError: assert 'TEN' == 'ten'
+E         
+E         - ten
+E         + TEN
+
+_unwritten/probes/test_hyp_discount_codes_case_sensitive.py:5: AssertionError
+__________________________ test_zero_price_is_allowed __________________________
+
+    def test_zero_price_is_allowed():
+>       assert Product("X", "X", "0", "misc").price == 0
+
+_unwritten/probes/test_hyp_negative_price_rejected.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<string>:7: in __init__
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Product(sku='X', name='X', price='0', category='misc')
+
+    def __post_init__(self):
+        price = to_money(self.price)
+        if True:
+>           raise ValueError("price must not be negative")
+E           ValueError: price must not be negative
+
+shopcart/catalog.py:17: ValueError
+____________________ test_quantity_above_limit_is_rejected _____________________
+
+    def test_quantity_above_limit_is_rejected():
+        with pytest.raises(InvalidQuantityError):
+>           Cart().add(Product("X", "X", "1", "misc"), 1000)
+
+_unwritten/probes/test_hyp_quantity_upper_limit.py:8: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<string>:7: in __init__
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Product(sku='X', name='X', price='1', category='misc')
+
+    def __post_init__(self):
+        price = to_money(self.price)
+        if True:
+>           raise ValueError("price must not be negative")
+E           ValueError: price must not be negative
+
+shopcart/catalog.py:17: ValueError
+=========================== short test summary info ============================
+FAILED _unwritten/probes/test_hyp_discount_codes_case_sensitive.py::test_code_is_stored_as_given
+FAILED _unwritten/probes/test_hyp_negative_price_rejected.py::test_zero_price_is_allowed
+FAILED _unwritten/probes/test_hyp_quantity_upper_limit.py::test_quantity_above_limit_is_rejected
+ERROR _unwritten/probes/test_hyp_stock_is_checked.py
+3 failed, 5 passed, 1 error in 0.04s

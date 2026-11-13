@@ -1,0 +1,27 @@
+$ pytest -p unwritten_probe -p no:cacheprovider --rootdir . -q --continue-on-collection-errors _unwritten/feature
+.............FF...........                                               [100%]
+=================================== FAILURES ===================================
+_________________ test_invalid_min_subtotal_is_rejected[-0.01] _________________
+
+min_subtotal = '-0.01'
+
+    @pytest.mark.parametrize("min_subtotal", ["-0.01", -5, "abc", 1.5, None, True])
+    def test_invalid_min_subtotal_is_rejected(min_subtotal):
+>       with pytest.raises(InvalidDiscountError):
+E       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>
+
+_unwritten/feature/test_discount_eligibility.py:80: Failed
+__________________ test_invalid_min_subtotal_is_rejected[-5] ___________________
+
+min_subtotal = -5
+
+    @pytest.mark.parametrize("min_subtotal", ["-0.01", -5, "abc", 1.5, None, True])
+    def test_invalid_min_subtotal_is_rejected(min_subtotal):
+>       with pytest.raises(InvalidDiscountError):
+E       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidDiscountError'>
+
+_unwritten/feature/test_discount_eligibility.py:80: Failed
+=========================== short test summary info ============================
+FAILED _unwritten/feature/test_discount_eligibility.py::test_invalid_min_subtotal_is_rejected[-0.01]
+FAILED _unwritten/feature/test_discount_eligibility.py::test_invalid_min_subtotal_is_rejected[-5]
+2 failed, 24 passed in 0.05s

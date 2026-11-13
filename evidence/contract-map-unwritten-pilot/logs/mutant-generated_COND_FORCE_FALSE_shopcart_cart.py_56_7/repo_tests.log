@@ -1,0 +1,27 @@
+$ pytest -p unwritten_probe -p no:cacheprovider --rootdir . -q --continue-on-collection-errors tests
+......FF......................                                           [100%]
+=================================== FAILURES ===================================
+_____________________ test_invalid_quantity_is_rejected[0] _____________________
+
+quantity = 0
+
+    @pytest.mark.parametrize("quantity", [0, -1, 1.5, "2", True])
+    def test_invalid_quantity_is_rejected(quantity):
+>       with pytest.raises(InvalidQuantityError):
+E       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidQuantityError'>
+
+tests/test_cart.py:54: Failed
+____________________ test_invalid_quantity_is_rejected[-1] _____________________
+
+quantity = -1
+
+    @pytest.mark.parametrize("quantity", [0, -1, 1.5, "2", True])
+    def test_invalid_quantity_is_rejected(quantity):
+>       with pytest.raises(InvalidQuantityError):
+E       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidQuantityError'>
+
+tests/test_cart.py:54: Failed
+=========================== short test summary info ============================
+FAILED tests/test_cart.py::test_invalid_quantity_is_rejected[0] - Failed: DID...
+FAILED tests/test_cart.py::test_invalid_quantity_is_rejected[-1] - Failed: DI...
+2 failed, 28 passed in 0.05s

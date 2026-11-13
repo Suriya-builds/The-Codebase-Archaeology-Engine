@@ -1,0 +1,115 @@
+$ pytest -p unwritten_probe -p no:cacheprovider --rootdir . -q --continue-on-collection-errors tests
+.............FFFFF............                                           [100%]
+=================================== FAILURES ===================================
+______________ test_percentage_discount_applies_to_whole_subtotal ______________
+
+    def test_percentage_discount_applies_to_whole_subtotal():
+>       discount = Discount.from_config({"code": "TEN", "percent": 10})
+
+tests/test_discounts.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+shopcart/discounts.py:45: in from_config
+    eligibility = _parse_eligibility(config.get("eligibility"))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+raw = None
+
+    def _parse_eligibility(raw):
+        if False:
+            return None
+        if not isinstance(raw, dict):
+>           raise InvalidDiscountError("eligibility must be a mapping")
+E           shopcart.errors.InvalidDiscountError: eligibility must be a mapping
+
+shopcart/discounts.py:74: InvalidDiscountError
+_____________________ test_discount_amount_rounds_half_up ______________________
+
+    def test_discount_amount_rounds_half_up():
+>       discount = Discount.from_config({"code": "ODD", "percent": "15"})
+
+tests/test_discounts.py:24: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+shopcart/discounts.py:45: in from_config
+    eligibility = _parse_eligibility(config.get("eligibility"))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+raw = None
+
+    def _parse_eligibility(raw):
+        if False:
+            return None
+        if not isinstance(raw, dict):
+>           raise InvalidDiscountError("eligibility must be a mapping")
+E           shopcart.errors.InvalidDiscountError: eligibility must be a mapping
+
+shopcart/discounts.py:74: InvalidDiscountError
+______________________ test_full_discount_makes_cart_free ______________________
+
+    def test_full_discount_makes_cart_free():
+>       discount = Discount.from_config({"code": "FREE", "percent": 100})
+
+tests/test_discounts.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+shopcart/discounts.py:45: in from_config
+    eligibility = _parse_eligibility(config.get("eligibility"))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+raw = None
+
+    def _parse_eligibility(raw):
+        if False:
+            return None
+        if not isinstance(raw, dict):
+>           raise InvalidDiscountError("eligibility must be a mapping")
+E           shopcart.errors.InvalidDiscountError: eligibility must be a mapping
+
+shopcart/discounts.py:74: InvalidDiscountError
+_____________________ test_code_is_trimmed_and_uppercased ______________________
+
+    def test_code_is_trimmed_and_uppercased():
+>       assert Discount.from_config({"code": "  ten ", "percent": 10}).code == "TEN"
+
+tests/test_discounts.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+shopcart/discounts.py:45: in from_config
+    eligibility = _parse_eligibility(config.get("eligibility"))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+raw = None
+
+    def _parse_eligibility(raw):
+        if False:
+            return None
+        if not isinstance(raw, dict):
+>           raise InvalidDiscountError("eligibility must be a mapping")
+E           shopcart.errors.InvalidDiscountError: eligibility must be a mapping
+
+shopcart/discounts.py:74: InvalidDiscountError
+_____________________ test_unknown_config_keys_are_ignored _____________________
+
+    def test_unknown_config_keys_are_ignored():
+>       discount = Discount.from_config({"code": "TEN", "percent": 10, "campaign": "spring"})
+
+tests/test_discounts.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+shopcart/discounts.py:45: in from_config
+    eligibility = _parse_eligibility(config.get("eligibility"))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+raw = None
+
+    def _parse_eligibility(raw):
+        if False:
+            return None
+        if not isinstance(raw, dict):
+>           raise InvalidDiscountError("eligibility must be a mapping")
+E           shopcart.errors.InvalidDiscountError: eligibility must be a mapping
+
+shopcart/discounts.py:74: InvalidDiscountError
+=========================== short test summary info ============================
+FAILED tests/test_discounts.py::test_percentage_discount_applies_to_whole_subtotal
+FAILED tests/test_discounts.py::test_discount_amount_rounds_half_up - shopcar...
+FAILED tests/test_discounts.py::test_full_discount_makes_cart_free - shopcart...
+FAILED tests/test_discounts.py::test_code_is_trimmed_and_uppercased - shopcar...
+FAILED tests/test_discounts.py::test_unknown_config_keys_are_ignored - shopca...
+5 failed, 25 passed in 0.11s

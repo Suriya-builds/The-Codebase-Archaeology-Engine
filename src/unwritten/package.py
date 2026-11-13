@@ -11,6 +11,14 @@ Layout, fixed by convention:
     environment/Dockerfile  execution environment (dependencies only, no repo)
     contracts.json          optional; verified contracts this task must preserve
     tests/contracts/        optional; probes of those contracts (see contracts.attach)
+
+A task that intentionally changes a verified contract declares it in task.json:
+
+    "contract_overrides": [{
+        "contract_id": "<id from contracts.json>",
+        "reason": "why the existing behaviour has to change",
+        "new_behaviour": "what holds instead",
+        "replacement_tests": ["tests/feature/test_x.py::test_name"]}]
 """
 import hashlib
 import json
@@ -41,6 +49,15 @@ class Waiver:
 
 
 @dataclass(frozen=True)
+class ContractOverride:
+    """A declared, intentional change to a verified contract."""
+    contract_id: str
+    reason: str
+    new_behaviour: str
+    replacement_tests: tuple    # feature test ids, e.g. tests/feature/test_x.py::test_name
+
+
+@dataclass(frozen=True)
 class TaskPackage:
     root: Path
     task_id: str
@@ -56,6 +73,7 @@ class TaskPackage:
     waivers: tuple
     provenance: dict = field(default_factory=dict)
     contracts: tuple = ()
+    contract_overrides: tuple = ()
 
     @property
     def contract_tests(self):
@@ -182,6 +200,24 @@ def load_package(root):
     if not isinstance(provenance, dict):
         problems.append("provenance must be an object")
 
+    overrides = []
+    for index, entry in enumerate(raw.get("contract_overrides", [])):
+        label = f"contract_overrides[{index}]"
+        entry = entry if isinstance(entry, dict) else {}
+        texts = [entry.get(k) for k in ("contract_id", "reason", "new_behaviour")]
+        tests = entry.get("replacement_tests")
+        if not all(isinstance(v, str) and v.strip() for v in texts):
+            problems.append(f"{label} needs contract_id, reason and new_behaviour")
+        elif (not isinstance(tests, list) or not tests
+              or not all(isinstance(t, str) and t.startswith("tests/feature/") and "::" in t
+                         for t in tests)):
+            problems.append(f"{label}.replacement_tests must list feature tests as "
+                            "tests/feature/<file>::<test>")
+        elif any(o.contract_id == texts[0] for o in overrides):
+            problems.append(f"{label} overrides {texts[0]} a second time")
+        else:
+            overrides.append(ContractOverride(*texts, tuple(tests)))
+
     contracts = []
     if (root / CONTRACTS_FILE).is_file():
         try:
@@ -204,6 +240,7 @@ def load_package(root):
         dockerfile=dockerfile, python_path=python_path, repo_test_paths=repo_test_paths,
         timeout_seconds=timeout, declared_mutants=tuple(declared), generate_mutants=generate,
         waivers=tuple(waivers), provenance=provenance, contracts=tuple(contracts),
+        contract_overrides=tuple(overrides),
     )
 
 

@@ -1,5 +1,6 @@
 """Python adapter, built on the standard library's ast module."""
 import ast
+import hashlib
 from pathlib import Path
 
 from unwritten.adapters.base import Guard, Symbol
@@ -59,10 +60,17 @@ class _Visitor(ast.NodeVisitor):
                 first = raised.exc.args[0]
                 if isinstance(first, ast.Constant) and isinstance(first.value, str):
                     message = first.value
+            condition = ast.get_source_segment(self.data.decode("utf-8", "replace"), node.test) or ""
+            # The key depends on what the guard says, not where it sits, so adding or
+            # moving another guard does not rename this one.
+            key = hashlib.sha256(
+                f"{' '.join(condition.split())}\0{exception}".encode()).hexdigest()[:8]
+            repeat = sum(g.symbol == symbol and g.key.split("-")[0] == key for g in self.guards)
+            if repeat:
+                key += f"-{repeat + 1}"
             self.guards.append(Guard(
-                self.path, symbol, self.counts[symbol], node.test.lineno, node.test.col_offset,
-                ast.get_source_segment(self.data.decode("utf-8", "replace"), node.test) or "",
-                exception, message, _category(node.test)))
+                self.path, symbol, self.counts[symbol], key, node.test.lineno,
+                node.test.col_offset, condition, exception, message, _category(node.test)))
         self.generic_visit(node)
 
 

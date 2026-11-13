@@ -10,12 +10,22 @@ Two sources:
 
 Operators edit the original source text at the exact token, so every mutant is
 a one-token diff that a reviewer can read.
+
+A mutant ends in exactly one of four states:
+
+    killed       at least one test that passed without it fails with it
+    survived     it ran and every test still passes; this alone says nothing
+                 about whether it is an untested rule or a harmless change
+    equivalent   demonstrated, by identical bytecode, to change nothing
+    invalid      it gave no verdict: it does not apply, or the tests timed out
 """
 import ast
 import bisect
 import difflib
+import platform
 import re
 from dataclasses import dataclass
+from types import CodeType
 from pathlib import Path
 
 from unwritten.patches import apply_patch, is_under, parse_patch
@@ -41,12 +51,39 @@ class Mutant:
     patch: Path | None = None        # declared: diff on top of the reference
     new_source: bytes | None = None  # generated: full replacement of ``file``
     diff: str = ""
+    equivalence: str | None = None   # evidence that the mutant cannot change behaviour
 
     def apply(self, workspace):
         if self.origin == "declared":
             apply_patch(workspace, self.patch)
         else:
             (Path(workspace) / self.file).write_bytes(self.new_source)
+
+
+def _shape(code):
+    """A code object without positions: what the interpreter will actually run."""
+    return (code.co_code, code.co_names, code.co_varnames, code.co_freevars, code.co_cellvars,
+            code.co_argcount, code.co_kwonlyargcount, code.co_flags,
+            getattr(code, "co_exceptiontable", b""),
+            tuple(_shape(c) if isinstance(c, CodeType) else (type(c).__name__, repr(c))
+                  for c in code.co_consts))
+
+
+def equivalence_evidence(original, mutated):
+    """Return evidence that two sources behave identically, or None.
+
+    The only evidence accepted is that both compile to the same bytecode: then
+    the interpreter runs the same instructions and no test could ever tell
+    them apart. Compiling executes nothing. Anything short of this is not
+    called equivalent, however plausible it looks.
+    """
+    try:
+        same = _shape(compile(original, "<source>", "exec")) == _shape(compile(mutated, "<source>", "exec"))
+    except (SyntaxError, ValueError):
+        return None
+    if same:
+        return f"compiles to identical bytecode (CPython {platform.python_version()})"
+    return None
 
 
 class _Source:
@@ -146,7 +183,8 @@ def mutate_source(data, path, lines):
             mutated.decode("utf-8", "replace").splitlines(keepends=True),
             f"reference/{path}", f"mutant/{path}", n=2))
         mutants.append(Mutant(mutant_id, "generated", operator, description, path, lineno,
-                              new_source=mutated, diff=diff))
+                              new_source=mutated, diff=diff,
+                              equivalence=equivalence_evidence(data, mutated)))
     return mutants
 
 

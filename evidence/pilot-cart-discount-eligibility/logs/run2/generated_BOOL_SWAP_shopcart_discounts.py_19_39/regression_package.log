@@ -1,0 +1,126 @@
+$ pytest -p unwritten_probe -p no:cacheprovider --rootdir . -q --continue-on-collection-errors _unwritten/regression
+.FFFFF                                                                   [100%]
+=================================== FAILURES ===================================
+_________________ test_empty_eligibility_places_no_restriction _________________
+
+    def test_empty_eligibility_places_no_restriction():
+        discount = Discount.from_config({"code": "TEN", "percent": 10, "eligibility": {}})
+>       assert cart_of((NOVEL, 2), (MUG, 1)).total(discount) == Decimal("29.70")
+
+_unwritten/regression/test_discount_compatibility.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+shopcart/cart.py:50: in total
+    return max(subtotal - discount.amount_for(self), ZERO)
+shopcart/discounts.py:52: in amount_for
+    eligible = self.eligibility.eligible_subtotal(cart)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Eligibility(min_subtotal=Decimal('0.00'), categories=None)
+cart = <shopcart.cart.Cart object at 0x7f646cd282c0>
+
+    def eligible_subtotal(self, cart):
+        """Sum of the lines the discount may be applied to."""
+        total = ZERO
+        for line in cart.lines():
+>           if self.categories is None and line.product.category in self.categories:
+E           TypeError: argument of type 'NoneType' is not iterable
+
+shopcart/discounts.py:19: TypeError
+________________ test_zero_min_subtotal_is_valid_and_always_met ________________
+
+    def test_zero_min_subtotal_is_valid_and_always_met():
+        discount = Discount.from_config(
+            {"code": "TEN", "percent": 10, "eligibility": {"min_subtotal": 0}})
+>       assert cart_of((MUG, 1)).total(discount) == Decimal("7.20")
+
+_unwritten/regression/test_discount_compatibility.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+shopcart/cart.py:50: in total
+    return max(subtotal - discount.amount_for(self), ZERO)
+shopcart/discounts.py:52: in amount_for
+    eligible = self.eligibility.eligible_subtotal(cart)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Eligibility(min_subtotal=Decimal('0.00'), categories=None)
+cart = <shopcart.cart.Cart object at 0x7f646cd4ed20>
+
+    def eligible_subtotal(self, cart):
+        """Sum of the lines the discount may be applied to."""
+        total = ZERO
+        for line in cart.lines():
+>           if self.categories is None and line.product.category in self.categories:
+E           TypeError: argument of type 'NoneType' is not iterable
+
+shopcart/discounts.py:19: TypeError
+_______________ test_min_subtotal_only_keeps_every_line_eligible _______________
+
+    def test_min_subtotal_only_keeps_every_line_eligible():
+        discount = Discount.from_config(
+            {"code": "TEN", "percent": 10, "eligibility": {"min_subtotal": "10.00"}})
+>       assert cart_of((NOVEL, 2), (MUG, 1)).total(discount) == Decimal("29.70")
+
+_unwritten/regression/test_discount_compatibility.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+shopcart/cart.py:50: in total
+    return max(subtotal - discount.amount_for(self), ZERO)
+shopcart/discounts.py:52: in amount_for
+    eligible = self.eligibility.eligible_subtotal(cart)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Eligibility(min_subtotal=Decimal('10.00'), categories=None)
+cart = <shopcart.cart.Cart object at 0x7f646cd285f0>
+
+    def eligible_subtotal(self, cart):
+        """Sum of the lines the discount may be applied to."""
+        total = ZERO
+        for line in cart.lines():
+>           if self.categories is None and line.product.category in self.categories:
+E           TypeError: argument of type 'NoneType' is not iterable
+
+shopcart/discounts.py:19: TypeError
+__________________ test_unknown_eligibility_keys_are_ignored ___________________
+
+    def test_unknown_eligibility_keys_are_ignored():
+        discount = Discount.from_config(
+            {"code": "TEN", "percent": 10, "eligibility": {"weekday": "monday"}})
+>       assert cart_of((MUG, 1)).total(discount) == Decimal("7.20")
+
+_unwritten/regression/test_discount_compatibility.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+shopcart/cart.py:50: in total
+    return max(subtotal - discount.amount_for(self), ZERO)
+shopcart/discounts.py:52: in amount_for
+    eligible = self.eligibility.eligible_subtotal(cart)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Eligibility(min_subtotal=Decimal('0.00'), categories=None)
+cart = <shopcart.cart.Cart object at 0x7f646cd4c980>
+
+    def eligible_subtotal(self, cart):
+        """Sum of the lines the discount may be applied to."""
+        total = ZERO
+        for line in cart.lines():
+>           if self.categories is None and line.product.category in self.categories:
+E           TypeError: argument of type 'NoneType' is not iterable
+
+shopcart/discounts.py:19: TypeError
+________ test_cart_whose_lines_are_all_eligible_gets_the_full_discount _________
+
+    def test_cart_whose_lines_are_all_eligible_gets_the_full_discount():
+        discount = Discount.from_config(
+            {"code": "TEN", "percent": 10, "eligibility": {"categories": ["books", "home"]}})
+>       assert cart_of((NOVEL, 2), (MUG, 1)).total(discount) == Decimal("29.70")
+E       AssertionError: assert Decimal('33.00') == Decimal('29.70')
+E        +  where Decimal('33.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'home', 'books'}))))
+E        +    where total = <shopcart.cart.Cart object at 0x7f646cd51730>.total
+E        +      where <shopcart.cart.Cart object at 0x7f646cd51730> = cart_of((Product(sku='BK-1', name='Novel', price=Decimal('12.50'), category='books'), 2), (Product(sku='HM-1', name='Mug', price=Decimal('8.00'), category='home'), 1))
+E        +  and   Decimal('29.70') = Decimal('29.70')
+
+_unwritten/regression/test_discount_compatibility.py:53: AssertionError
+=========================== short test summary info ============================
+FAILED _unwritten/regression/test_discount_compatibility.py::test_empty_eligibility_places_no_restriction
+FAILED _unwritten/regression/test_discount_compatibility.py::test_zero_min_subtotal_is_valid_and_always_met
+FAILED _unwritten/regression/test_discount_compatibility.py::test_min_subtotal_only_keeps_every_line_eligible
+FAILED _unwritten/regression/test_discount_compatibility.py::test_unknown_eligibility_keys_are_ignored
+FAILED _unwritten/regression/test_discount_compatibility.py::test_cart_whose_lines_are_all_eligible_gets_the_full_discount
+5 failed, 1 passed in 0.06s

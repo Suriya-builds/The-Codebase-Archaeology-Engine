@@ -1,0 +1,96 @@
+$ pytest -p unwritten_probe -p no:cacheprovider --rootdir . -q --continue-on-collection-errors _unwritten/regression
+.FFFF.                                                                   [100%]
+=================================== FAILURES ===================================
+_________________ test_empty_eligibility_places_no_restriction _________________
+
+    def test_empty_eligibility_places_no_restriction():
+>       discount = Discount.from_config({"code": "TEN", "percent": 10, "eligibility": {}})
+
+_unwritten/regression/test_discount_compatibility.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+shopcart/discounts.py:45: in from_config
+    eligibility = _parse_eligibility(config.get("eligibility"))
+shopcart/discounts.py:78: in _parse_eligibility
+    categories = _parse_categories(categories)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+raw = None
+
+    def _parse_categories(raw):
+        if not isinstance(raw, list) or len(raw) == 0:
+>           raise InvalidDiscountError("eligibility.categories must be a non-empty list")
+E           shopcart.errors.InvalidDiscountError: eligibility.categories must be a non-empty list
+
+shopcart/discounts.py:94: InvalidDiscountError
+________________ test_zero_min_subtotal_is_valid_and_always_met ________________
+
+    def test_zero_min_subtotal_is_valid_and_always_met():
+>       discount = Discount.from_config(
+            {"code": "TEN", "percent": 10, "eligibility": {"min_subtotal": 0}})
+
+_unwritten/regression/test_discount_compatibility.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+shopcart/discounts.py:45: in from_config
+    eligibility = _parse_eligibility(config.get("eligibility"))
+shopcart/discounts.py:78: in _parse_eligibility
+    categories = _parse_categories(categories)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+raw = None
+
+    def _parse_categories(raw):
+        if not isinstance(raw, list) or len(raw) == 0:
+>           raise InvalidDiscountError("eligibility.categories must be a non-empty list")
+E           shopcart.errors.InvalidDiscountError: eligibility.categories must be a non-empty list
+
+shopcart/discounts.py:94: InvalidDiscountError
+_______________ test_min_subtotal_only_keeps_every_line_eligible _______________
+
+    def test_min_subtotal_only_keeps_every_line_eligible():
+>       discount = Discount.from_config(
+            {"code": "TEN", "percent": 10, "eligibility": {"min_subtotal": "10.00"}})
+
+_unwritten/regression/test_discount_compatibility.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+shopcart/discounts.py:45: in from_config
+    eligibility = _parse_eligibility(config.get("eligibility"))
+shopcart/discounts.py:78: in _parse_eligibility
+    categories = _parse_categories(categories)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+raw = None
+
+    def _parse_categories(raw):
+        if not isinstance(raw, list) or len(raw) == 0:
+>           raise InvalidDiscountError("eligibility.categories must be a non-empty list")
+E           shopcart.errors.InvalidDiscountError: eligibility.categories must be a non-empty list
+
+shopcart/discounts.py:94: InvalidDiscountError
+__________________ test_unknown_eligibility_keys_are_ignored ___________________
+
+    def test_unknown_eligibility_keys_are_ignored():
+>       discount = Discount.from_config(
+            {"code": "TEN", "percent": 10, "eligibility": {"weekday": "monday"}})
+
+_unwritten/regression/test_discount_compatibility.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+shopcart/discounts.py:45: in from_config
+    eligibility = _parse_eligibility(config.get("eligibility"))
+shopcart/discounts.py:78: in _parse_eligibility
+    categories = _parse_categories(categories)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+raw = None
+
+    def _parse_categories(raw):
+        if not isinstance(raw, list) or len(raw) == 0:
+>           raise InvalidDiscountError("eligibility.categories must be a non-empty list")
+E           shopcart.errors.InvalidDiscountError: eligibility.categories must be a non-empty list
+
+shopcart/discounts.py:94: InvalidDiscountError
+=========================== short test summary info ============================
+FAILED _unwritten/regression/test_discount_compatibility.py::test_empty_eligibility_places_no_restriction
+FAILED _unwritten/regression/test_discount_compatibility.py::test_zero_min_subtotal_is_valid_and_always_met
+FAILED _unwritten/regression/test_discount_compatibility.py::test_min_subtotal_only_keeps_every_line_eligible
+FAILED _unwritten/regression/test_discount_compatibility.py::test_unknown_eligibility_keys_are_ignored
+4 failed, 2 passed in 0.04s

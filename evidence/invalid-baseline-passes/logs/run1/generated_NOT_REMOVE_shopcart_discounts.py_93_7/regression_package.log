@@ -1,0 +1,28 @@
+$ pytest -p unwritten_probe -p no:cacheprovider --rootdir . -q --continue-on-collection-errors _unwritten/regression
+.....F                                                                   [100%]
+=================================== FAILURES ===================================
+________ test_cart_whose_lines_are_all_eligible_gets_the_full_discount _________
+
+    def test_cart_whose_lines_are_all_eligible_gets_the_full_discount():
+>       discount = Discount.from_config(
+            {"code": "TEN", "percent": 10, "eligibility": {"categories": ["books", "home"]}})
+
+_unwritten/regression/test_discount_compatibility.py:51: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+shopcart/discounts.py:45: in from_config
+    eligibility = _parse_eligibility(config.get("eligibility"))
+shopcart/discounts.py:78: in _parse_eligibility
+    categories = _parse_categories(categories)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+raw = ['books', 'home']
+
+    def _parse_categories(raw):
+        if isinstance(raw, list) or len(raw) == 0:
+>           raise InvalidDiscountError("eligibility.categories must be a non-empty list")
+E           shopcart.errors.InvalidDiscountError: eligibility.categories must be a non-empty list
+
+shopcart/discounts.py:94: InvalidDiscountError
+=========================== short test summary info ============================
+FAILED _unwritten/regression/test_discount_compatibility.py::test_cart_whose_lines_are_all_eligible_gets_the_full_discount
+1 failed, 5 passed in 0.03s

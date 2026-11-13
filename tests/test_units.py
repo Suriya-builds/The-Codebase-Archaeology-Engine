@@ -9,7 +9,8 @@ from conftest import PACKAGES, ROOT, VALID
 from pilot.materialize import materialize
 from unwritten.classify import classify_test
 from unwritten.errors import PackageError
-from unwritten.mutation import mutate_source
+from unwritten.adapters.python import PythonAdapter
+from unwritten.mutation import equivalence_evidence, mutate_source
 from unwritten.package import load_package, package_digest
 from unwritten.patches import apply_patch, is_under, parse_patch, touched_paths
 from unwritten.verify import compare_runs
@@ -98,6 +99,36 @@ def test_mutation_is_deterministic_and_skips_what_it_cannot_place():
     awkward = b"ok = (1 <  # comment\n      2)\n"
     assert mutate_source(awkward, "m.py", {1, 2}) == []
     assert mutate_source(b"def broken(:\n", "m.py", {1}) == []
+
+
+def test_equivalence_is_claimed_only_on_identical_bytecode():
+    # `if __debug__` and `if not 0` are compile-time true: forcing them true changes nothing.
+    source = b"def f(x):\n    if __debug__:\n        x += 1\n    if not 0:\n        x += 1\n    return x\n"
+    states = {m.id.split(":", 1)[1]: m.equivalence for m in mutate_source(source, "m.py", {2, 4})}
+    assert states["COND_FORCE_TRUE:m.py:2:7"].startswith("compiles to identical bytecode")
+    assert states["COND_FORCE_TRUE:m.py:4:7"].startswith("compiles to identical bytecode")
+    assert states["COND_FORCE_FALSE:m.py:2:7"] is None
+    assert states["COND_FORCE_FALSE:m.py:4:7"] is None
+    # Ordinary mutants are never called equivalent, and neither is a redundant-looking guard.
+    assert all(m.equivalence is None for m in mutate_source(SNIPPET, "m.py", set(range(1, 8))))
+    redundant = b"def remove(d, k):\n    if k not in d:\n        raise KeyError(k)\n    del d[k]\n"
+    assert all(m.equivalence is None for m in mutate_source(redundant, "m.py", {2}))
+    assert equivalence_evidence(b"x = 1\n", b"x = 1  # comment\n")
+    assert equivalence_evidence(b"x = 1\n", b"x = (\n") is None
+
+
+def test_guard_keys_survive_reordering_and_separate_duplicates():
+    adapter = PythonAdapter()
+    before = b"def f(a, b):\n    if a < 0:\n        raise ValueError('a')\n    return a\n"
+    after = (b"def f(a, b):\n    if b is None:\n        raise TypeError('b')\n"
+             b"    if a  <  0:\n        raise ValueError('a')\n    return a\n")
+    (original,) = adapter.guards(before, "m.py")
+    first, second = adapter.guards(after, "m.py")
+    assert (original.index, second.index) == (1, 2)       # position changed
+    assert original.key == second.key != first.key        # identity did not
+    twice = b"def g(a):\n    if a < 0:\n        raise ValueError\n    if a < 0:\n        raise ValueError\n"
+    one, two = adapter.guards(twice, "m.py")
+    assert two.key == one.key + "-2"
 
 
 # ---------------------------------------------------------------- failure classification

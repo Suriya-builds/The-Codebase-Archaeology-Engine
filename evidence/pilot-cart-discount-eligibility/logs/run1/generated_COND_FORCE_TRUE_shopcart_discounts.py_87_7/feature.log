@@ -1,0 +1,266 @@
+$ pytest -p unwritten_probe -p no:cacheprovider --rootdir . -q --continue-on-collection-errors _unwritten/feature
+FFFFFFFFF................                                                [100%]
+=================================== FAILURES ===================================
+_______________ test_discount_is_not_applied_below_min_subtotal ________________
+
+    def test_discount_is_not_applied_below_min_subtotal():
+        cart = cart_of((NOVEL, 2), (MUG, 1))  # 33.00
+>       assert cart.total(discount(min_subtotal="50.00")) == Decimal("33.00")
+
+_unwritten/feature/test_discount_eligibility.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_unwritten/feature/test_discount_eligibility.py:21: in discount
+    return Discount.from_config({"code": "TEST", "percent": percent, "eligibility": eligibility})
+shopcart/discounts.py:45: in from_config
+    eligibility = _parse_eligibility(config.get("eligibility"))
+shopcart/discounts.py:75: in _parse_eligibility
+    min_subtotal = _parse_min_subtotal(raw.get("min_subtotal", "0"))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+raw = '50.00'
+
+    def _parse_min_subtotal(raw):
+        try:
+            amount = to_money(raw)
+        except (TypeError, ValueError) as exc:
+            raise InvalidDiscountError("eligibility.min_subtotal must be a money value") from exc
+        if True:
+>           raise InvalidDiscountError("eligibility.min_subtotal must not be negative")
+E           shopcart.errors.InvalidDiscountError: eligibility.min_subtotal must not be negative
+
+shopcart/discounts.py:88: InvalidDiscountError
+___________________ test_min_subtotal_boundary_is_inclusive ____________________
+
+    def test_min_subtotal_boundary_is_inclusive():
+        cart = cart_of((NOVEL, 2), (MUG, 1))  # 33.00
+>       assert cart.total(discount(min_subtotal="33.00")) == Decimal("29.70")
+
+_unwritten/feature/test_discount_eligibility.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_unwritten/feature/test_discount_eligibility.py:21: in discount
+    return Discount.from_config({"code": "TEST", "percent": percent, "eligibility": eligibility})
+shopcart/discounts.py:45: in from_config
+    eligibility = _parse_eligibility(config.get("eligibility"))
+shopcart/discounts.py:75: in _parse_eligibility
+    min_subtotal = _parse_min_subtotal(raw.get("min_subtotal", "0"))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+raw = '33.00'
+
+    def _parse_min_subtotal(raw):
+        try:
+            amount = to_money(raw)
+        except (TypeError, ValueError) as exc:
+            raise InvalidDiscountError("eligibility.min_subtotal must be a money value") from exc
+        if True:
+>           raise InvalidDiscountError("eligibility.min_subtotal must not be negative")
+E           shopcart.errors.InvalidDiscountError: eligibility.min_subtotal must not be negative
+
+shopcart/discounts.py:88: InvalidDiscountError
+___________________ test_ineligible_discount_amount_is_zero ____________________
+
+    def test_ineligible_discount_amount_is_zero():
+        cart = cart_of((MUG, 1))
+>       assert discount(min_subtotal="8.01").amount_for(cart) == Decimal("0.00")
+
+_unwritten/feature/test_discount_eligibility.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_unwritten/feature/test_discount_eligibility.py:21: in discount
+    return Discount.from_config({"code": "TEST", "percent": percent, "eligibility": eligibility})
+shopcart/discounts.py:45: in from_config
+    eligibility = _parse_eligibility(config.get("eligibility"))
+shopcart/discounts.py:75: in _parse_eligibility
+    min_subtotal = _parse_min_subtotal(raw.get("min_subtotal", "0"))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+raw = '8.01'
+
+    def _parse_min_subtotal(raw):
+        try:
+            amount = to_money(raw)
+        except (TypeError, ValueError) as exc:
+            raise InvalidDiscountError("eligibility.min_subtotal must be a money value") from exc
+        if True:
+>           raise InvalidDiscountError("eligibility.min_subtotal must not be negative")
+E           shopcart.errors.InvalidDiscountError: eligibility.min_subtotal must not be negative
+
+shopcart/discounts.py:88: InvalidDiscountError
+______________ test_category_restricts_discount_to_matching_lines ______________
+
+    def test_category_restricts_discount_to_matching_lines():
+        cart = cart_of((NOVEL, 2), (MUG, 1))  # books 25.00, home 8.00
+>       assert cart.total(discount(categories=["books"])) == Decimal("30.50")
+
+_unwritten/feature/test_discount_eligibility.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_unwritten/feature/test_discount_eligibility.py:21: in discount
+    return Discount.from_config({"code": "TEST", "percent": percent, "eligibility": eligibility})
+shopcart/discounts.py:45: in from_config
+    eligibility = _parse_eligibility(config.get("eligibility"))
+shopcart/discounts.py:75: in _parse_eligibility
+    min_subtotal = _parse_min_subtotal(raw.get("min_subtotal", "0"))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+raw = '0'
+
+    def _parse_min_subtotal(raw):
+        try:
+            amount = to_money(raw)
+        except (TypeError, ValueError) as exc:
+            raise InvalidDiscountError("eligibility.min_subtotal must be a money value") from exc
+        if True:
+>           raise InvalidDiscountError("eligibility.min_subtotal must not be negative")
+E           shopcart.errors.InvalidDiscountError: eligibility.min_subtotal must not be negative
+
+shopcart/discounts.py:88: InvalidDiscountError
+___________________ test_several_categories_are_all_eligible ___________________
+
+    def test_several_categories_are_all_eligible():
+        cart = cart_of((NOVEL, 2), (MUG, 1), (PEN, 10))  # 25.00 + 8.00 + 3.00
+>       assert cart.total(discount(categories=["books", "office"])) == Decimal("33.20")
+
+_unwritten/feature/test_discount_eligibility.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_unwritten/feature/test_discount_eligibility.py:21: in discount
+    return Discount.from_config({"code": "TEST", "percent": percent, "eligibility": eligibility})
+shopcart/discounts.py:45: in from_config
+    eligibility = _parse_eligibility(config.get("eligibility"))
+shopcart/discounts.py:75: in _parse_eligibility
+    min_subtotal = _parse_min_subtotal(raw.get("min_subtotal", "0"))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+raw = '0'
+
+    def _parse_min_subtotal(raw):
+        try:
+            amount = to_money(raw)
+        except (TypeError, ValueError) as exc:
+            raise InvalidDiscountError("eligibility.min_subtotal must be a money value") from exc
+        if True:
+>           raise InvalidDiscountError("eligibility.min_subtotal must not be negative")
+E           shopcart.errors.InvalidDiscountError: eligibility.min_subtotal must not be negative
+
+shopcart/discounts.py:88: InvalidDiscountError
+___________________ test_no_eligible_lines_means_no_discount ___________________
+
+    def test_no_eligible_lines_means_no_discount():
+        cart = cart_of((NOVEL, 2), (MUG, 1))
+>       assert cart.total(discount(categories=["garden"])) == Decimal("33.00")
+
+_unwritten/feature/test_discount_eligibility.py:52: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_unwritten/feature/test_discount_eligibility.py:21: in discount
+    return Discount.from_config({"code": "TEST", "percent": percent, "eligibility": eligibility})
+shopcart/discounts.py:45: in from_config
+    eligibility = _parse_eligibility(config.get("eligibility"))
+shopcart/discounts.py:75: in _parse_eligibility
+    min_subtotal = _parse_min_subtotal(raw.get("min_subtotal", "0"))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+raw = '0'
+
+    def _parse_min_subtotal(raw):
+        try:
+            amount = to_money(raw)
+        except (TypeError, ValueError) as exc:
+            raise InvalidDiscountError("eligibility.min_subtotal must be a money value") from exc
+        if True:
+>           raise InvalidDiscountError("eligibility.min_subtotal must not be negative")
+E           shopcart.errors.InvalidDiscountError: eligibility.min_subtotal must not be negative
+
+shopcart/discounts.py:88: InvalidDiscountError
+____________________ test_category_match_is_case_sensitive _____________________
+
+    def test_category_match_is_case_sensitive():
+        cart = cart_of((NOVEL, 2))
+>       assert cart.total(discount(categories=["Books"])) == Decimal("25.00")
+
+_unwritten/feature/test_discount_eligibility.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_unwritten/feature/test_discount_eligibility.py:21: in discount
+    return Discount.from_config({"code": "TEST", "percent": percent, "eligibility": eligibility})
+shopcart/discounts.py:45: in from_config
+    eligibility = _parse_eligibility(config.get("eligibility"))
+shopcart/discounts.py:75: in _parse_eligibility
+    min_subtotal = _parse_min_subtotal(raw.get("min_subtotal", "0"))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+raw = '0'
+
+    def _parse_min_subtotal(raw):
+        try:
+            amount = to_money(raw)
+        except (TypeError, ValueError) as exc:
+            raise InvalidDiscountError("eligibility.min_subtotal must be a money value") from exc
+        if True:
+>           raise InvalidDiscountError("eligibility.min_subtotal must not be negative")
+E           shopcart.errors.InvalidDiscountError: eligibility.min_subtotal must not be negative
+
+shopcart/discounts.py:88: InvalidDiscountError
+_____________ test_min_subtotal_is_measured_on_eligible_lines_only _____________
+
+    def test_min_subtotal_is_measured_on_eligible_lines_only():
+        cart = cart_of((NOVEL, 2), (MUG, 2))  # books 25.00, whole cart 41.00
+>       assert cart.total(discount(min_subtotal="30.00", categories=["books"])) == Decimal("41.00")
+
+_unwritten/feature/test_discount_eligibility.py:62: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_unwritten/feature/test_discount_eligibility.py:21: in discount
+    return Discount.from_config({"code": "TEST", "percent": percent, "eligibility": eligibility})
+shopcart/discounts.py:45: in from_config
+    eligibility = _parse_eligibility(config.get("eligibility"))
+shopcart/discounts.py:75: in _parse_eligibility
+    min_subtotal = _parse_min_subtotal(raw.get("min_subtotal", "0"))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+raw = '30.00'
+
+    def _parse_min_subtotal(raw):
+        try:
+            amount = to_money(raw)
+        except (TypeError, ValueError) as exc:
+            raise InvalidDiscountError("eligibility.min_subtotal must be a money value") from exc
+        if True:
+>           raise InvalidDiscountError("eligibility.min_subtotal must not be negative")
+E           shopcart.errors.InvalidDiscountError: eligibility.min_subtotal must not be negative
+
+shopcart/discounts.py:88: InvalidDiscountError
+___________ test_amount_is_rounded_half_up_on_the_eligible_subtotal ____________
+
+    def test_amount_is_rounded_half_up_on_the_eligible_subtotal():
+        cart = cart_of((PEN, 1), (MUG, 1))  # 15% of 0.30 is 0.045
+>       restricted = discount(percent=15, categories=["office"])
+
+_unwritten/feature/test_discount_eligibility.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_unwritten/feature/test_discount_eligibility.py:21: in discount
+    return Discount.from_config({"code": "TEST", "percent": percent, "eligibility": eligibility})
+shopcart/discounts.py:45: in from_config
+    eligibility = _parse_eligibility(config.get("eligibility"))
+shopcart/discounts.py:75: in _parse_eligibility
+    min_subtotal = _parse_min_subtotal(raw.get("min_subtotal", "0"))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+raw = '0'
+
+    def _parse_min_subtotal(raw):
+        try:
+            amount = to_money(raw)
+        except (TypeError, ValueError) as exc:
+            raise InvalidDiscountError("eligibility.min_subtotal must be a money value") from exc
+        if True:
+>           raise InvalidDiscountError("eligibility.min_subtotal must not be negative")
+E           shopcart.errors.InvalidDiscountError: eligibility.min_subtotal must not be negative
+
+shopcart/discounts.py:88: InvalidDiscountError
+=========================== short test summary info ============================
+FAILED _unwritten/feature/test_discount_eligibility.py::test_discount_is_not_applied_below_min_subtotal
+FAILED _unwritten/feature/test_discount_eligibility.py::test_min_subtotal_boundary_is_inclusive
+FAILED _unwritten/feature/test_discount_eligibility.py::test_ineligible_discount_amount_is_zero
+FAILED _unwritten/feature/test_discount_eligibility.py::test_category_restricts_discount_to_matching_lines
+FAILED _unwritten/feature/test_discount_eligibility.py::test_several_categories_are_all_eligible
+FAILED _unwritten/feature/test_discount_eligibility.py::test_no_eligible_lines_means_no_discount
+FAILED _unwritten/feature/test_discount_eligibility.py::test_category_match_is_case_sensitive
+FAILED _unwritten/feature/test_discount_eligibility.py::test_min_subtotal_is_measured_on_eligible_lines_only
+FAILED _unwritten/feature/test_discount_eligibility.py::test_amount_is_rounded_half_up_on_the_eligible_subtotal
+9 failed, 16 passed in 0.22s
