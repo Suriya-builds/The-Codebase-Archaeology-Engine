@@ -89,4 +89,4 @@ shopcart/discounts.py:88: InvalidDiscountError
 FAILED _unwritten/feature/test_discount_eligibility.py::test_discount_is_not_applied_below_min_subtotal
 FAILED _unwritten/feature/test_discount_eligibility.py::test_category_restricts_discount_to_matching_lines
 FAILED _unwritten/feature/test_discount_eligibility.py::test_no_eligible_lines_means_no_discount
-3 failed in 0.04s
+3 failed in 0.03s

@@ -48,4 +48,4 @@ _unwritten/probes/test_hyp_quantity_upper_limit.py:7: Failed
 FAILED _unwritten/probes/test_hyp_discount_codes_case_sensitive.py::test_code_is_stored_as_given
 FAILED _unwritten/probes/test_hyp_quantity_upper_limit.py::test_quantity_above_limit_is_rejected
 ERROR _unwritten/probes/test_hyp_stock_is_checked.py
-2 failed, 6 passed, 1 error in 0.04s
+2 failed, 6 passed, 1 error in 0.03s

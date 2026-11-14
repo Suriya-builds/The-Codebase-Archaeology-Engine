@@ -12,7 +12,7 @@ _unwritten/regression/test_discount_compatibility.py:23:
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
 self = Discount(code='TEN', percent=Decimal('10'), eligibility=None)
-cart = <shopcart.cart.Cart object at 0x7ff8c54e9ac0>
+cart = <shopcart.cart.Cart object at 0x7fb27e4aee40>
 
     def amount_for(self, cart):
         """The amount this discount takes off the given cart."""
@@ -24,4 +24,4 @@ E       AttributeError: 'NoneType' object has no attribute 'eligible_subtotal'
 shopcart/discounts.py:52: AttributeError
 =========================== short test summary info ============================
 FAILED _unwritten/regression/test_discount_compatibility.py::test_discount_without_eligibility_applies_to_whole_cart
-1 failed, 5 passed in 0.03s
+1 failed, 5 passed in 0.02s

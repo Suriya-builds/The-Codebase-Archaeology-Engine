@@ -60,4 +60,4 @@ shopcart/discounts.py:88: InvalidDiscountError
 =========================== short test summary info ============================
 FAILED _unwritten/feature/test_discount_eligibility.py::test_category_restricts_discount_to_matching_lines
 FAILED _unwritten/feature/test_discount_eligibility.py::test_no_eligible_lines_means_no_discount
-2 failed, 1 passed in 0.03s
+2 failed, 1 passed in 0.02s

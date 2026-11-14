@@ -10,6 +10,8 @@ harness (M1) and contract archaeology (M2). Task generation and the interface
 are later milestones. Nothing here calls a model: verdicts and contract
 statuses come from executed tests only.
 
+A short account of how the pieces fit is in [docs/architecture.md](docs/architecture.md).
+
 ## The Three-World Test
 
 A task package is a pinned commit, a requirement statement, a reference

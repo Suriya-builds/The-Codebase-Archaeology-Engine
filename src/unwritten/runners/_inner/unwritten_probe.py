@@ -73,7 +73,10 @@ class Probe:
                     or (issubclass(kind, AssertionError) and in_tests))
                 phase["message"] = _clip(call.excinfo.value)
         entry = self.tests.setdefault(item.nodeid, {"nodeid": item.nodeid, "phases": {}})
-        entry["phases"][report.when] = phase
+        # Setup and teardown are recorded only when they say something; the call
+        # phase always is. This keeps the report small without losing a result.
+        if report.when == "call" or phase != {"outcome": "passed"}:
+            entry["phases"][report.when] = phase
 
     def pytest_sessionfinish(self, session, exitstatus):
         payload = {
@@ -83,7 +86,7 @@ class Probe:
             "collection_errors": self.collection_errors,
         }
         with open(self.path, "w", encoding="utf-8") as handle:
-            json.dump(payload, handle, indent=1)
+            json.dump(payload, handle, separators=(",", ":"))
 
 
 def pytest_configure(config):

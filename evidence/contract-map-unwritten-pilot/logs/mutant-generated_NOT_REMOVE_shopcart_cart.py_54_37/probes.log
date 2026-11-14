@@ -24,4 +24,4 @@ _unwritten/probes/test_hyp_discount_codes_case_sensitive.py:5: AssertionError
 =========================== short test summary info ============================
 FAILED _unwritten/probes/test_hyp_discount_codes_case_sensitive.py::test_code_is_stored_as_given
 ERROR _unwritten/probes/test_hyp_stock_is_checked.py
-1 failed, 7 passed, 1 error in 0.04s
+1 failed, 7 passed, 1 error in 0.03s

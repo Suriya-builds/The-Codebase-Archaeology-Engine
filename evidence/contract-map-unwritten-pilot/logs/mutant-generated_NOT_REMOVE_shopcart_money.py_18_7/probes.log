@@ -148,4 +148,4 @@ FAILED _unwritten/probes/test_hyp_non_finite_money_rejected.py::test_non_finite_
 FAILED _unwritten/probes/test_hyp_non_finite_money_rejected.py::test_non_finite_values_are_rejected[-Infinity]
 FAILED _unwritten/probes/test_hyp_quantity_upper_limit.py::test_quantity_above_limit_is_rejected
 ERROR _unwritten/probes/test_hyp_stock_is_checked.py
-6 failed, 2 passed, 1 error in 0.05s
+6 failed, 2 passed, 1 error in 0.03s

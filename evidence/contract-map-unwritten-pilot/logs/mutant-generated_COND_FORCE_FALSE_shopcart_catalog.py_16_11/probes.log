@@ -40,4 +40,4 @@ FAILED _unwritten/probes/test_hyp_discount_codes_case_sensitive.py::test_code_is
 FAILED _unwritten/probes/test_hyp_negative_price_rejected.py::test_negative_price_is_rejected
 FAILED _unwritten/probes/test_hyp_quantity_upper_limit.py::test_quantity_above_limit_is_rejected
 ERROR _unwritten/probes/test_hyp_stock_is_checked.py
-3 failed, 5 passed, 1 error in 0.04s
+3 failed, 5 passed, 1 error in 0.02s

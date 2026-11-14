@@ -24,4 +24,4 @@ E   TypeError: money values must be str, int or Decimal
 =========================== short test summary info ============================
 ERROR tests/test_cart.py - TypeError: money values must be str, int or Decimal
 ERROR tests/test_discounts.py - TypeError: money values must be str, int or D...
-2 errors in 0.04s
+2 errors in 0.03s

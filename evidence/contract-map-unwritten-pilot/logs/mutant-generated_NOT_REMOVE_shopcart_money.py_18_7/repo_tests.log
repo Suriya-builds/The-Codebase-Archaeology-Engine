@@ -24,4 +24,4 @@ E   ValueError: not a money value: '12.50'
 =========================== short test summary info ============================
 ERROR tests/test_cart.py - ValueError: not a money value: '12.50'
 ERROR tests/test_discounts.py - ValueError: not a money value: '12.50'
-2 errors in 0.03s
+2 errors in 0.02s

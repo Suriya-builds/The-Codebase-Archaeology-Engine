@@ -8,7 +8,7 @@ ___________________ test_min_subtotal_boundary_is_inclusive ____________________
 >       assert cart.total(discount(min_subtotal="33.00")) == Decimal("29.70")
 E       AssertionError: assert Decimal('33.00') == Decimal('29.70')
 E        +  where Decimal('33.00') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('33.00'), categories=None)))
-E        +    where total = <shopcart.cart.Cart object at 0x7fdddd860b90>.total
+E        +    where total = <shopcart.cart.Cart object at 0x7faf2124e480>.total
 E        +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('33.00'), categories=None)) = discount(min_subtotal='33.00')
 E        +  and   Decimal('29.70') = Decimal('29.70')
 
@@ -20,7 +20,7 @@ ______________ test_category_restricts_discount_to_matching_lines ______________
 >       assert cart.total(discount(categories=["books"])) == Decimal("30.50")
 E       AssertionError: assert Decimal('33.00') == Decimal('30.50')
 E        +  where Decimal('33.00') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))))
-E        +    where total = <shopcart.cart.Cart object at 0x7fdddda72fc0>.total
+E        +    where total = <shopcart.cart.Cart object at 0x7faf21238ce0>.total
 E        +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))) = discount(categories=['books'])
 E        +  and   Decimal('30.50') = Decimal('30.50')
 
@@ -32,7 +32,7 @@ ___________________ test_several_categories_are_all_eligible ___________________
 >       assert cart.total(discount(categories=["books", "office"])) == Decimal("33.20")
 E       AssertionError: assert Decimal('36.00') == Decimal('33.20')
 E        +  where Decimal('36.00') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'office', 'books'}))))
-E        +    where total = <shopcart.cart.Cart object at 0x7fdddd888d10>.total
+E        +    where total = <shopcart.cart.Cart object at 0x7faf212756a0>.total
 E        +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'office', 'books'}))) = discount(categories=['books', 'office'])
 E        +  and   Decimal('33.20') = Decimal('33.20')
 
@@ -44,7 +44,7 @@ ___________ test_amount_is_rounded_half_up_on_the_eligible_subtotal ____________
         restricted = discount(percent=15, categories=["office"])
 >       assert restricted.amount_for(cart) == Decimal("0.05")
 E       AssertionError: assert Decimal('0.00') == Decimal('0.05')
-E        +  where Decimal('0.00') = amount_for(<shopcart.cart.Cart object at 0x7fdddd88b140>)
+E        +  where Decimal('0.00') = amount_for(<shopcart.cart.Cart object at 0x7faf21275730>)
 E        +    where amount_for = Discount(code='TEST', percent=Decimal('15'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'office'}))).amount_for
 E        +  and   Decimal('0.05') = Decimal('0.05')
 
@@ -59,7 +59,7 @@ ______________ test_discount_applies_when_cart_meets_the_minimum _______________
 >       assert cart.total(discount) == Decimal("45.00")
 E       AssertionError: assert Decimal('50.00') == Decimal('45.00')
 E        +  where Decimal('50.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('20.00'), categories=None)))
-E        +    where total = <shopcart.cart.Cart object at 0x7fdddd88a1b0>.total
+E        +    where total = <shopcart.cart.Cart object at 0x7faf212770e0>.total
 E        +  and   Decimal('45.00') = Decimal('45.00')
 
 _unwritten/feature/test_discount_happy_path.py:17: AssertionError
@@ -69,4 +69,4 @@ FAILED _unwritten/feature/test_discount_eligibility.py::test_category_restricts_
 FAILED _unwritten/feature/test_discount_eligibility.py::test_several_categories_are_all_eligible
 FAILED _unwritten/feature/test_discount_eligibility.py::test_amount_is_rounded_half_up_on_the_eligible_subtotal
 FAILED _unwritten/feature/test_discount_happy_path.py::test_discount_applies_when_cart_meets_the_minimum
-5 failed, 21 passed in 0.05s
+5 failed, 21 passed in 0.04s

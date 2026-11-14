@@ -24,4 +24,4 @@ _unwritten/feature/test_discount_eligibility.py:80: Failed
 =========================== short test summary info ============================
 FAILED _unwritten/feature/test_discount_eligibility.py::test_invalid_min_subtotal_is_rejected[-0.01]
 FAILED _unwritten/feature/test_discount_eligibility.py::test_invalid_min_subtotal_is_rejected[-5]
-2 failed, 23 passed in 0.05s
+2 failed, 23 passed in 0.04s

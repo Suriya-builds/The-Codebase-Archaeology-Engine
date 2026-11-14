@@ -128,7 +128,7 @@
               "name": "feature",
               "exit_code": 1,
               "timed_out": false,
-              "duration_seconds": 0.366,
+              "duration_seconds": 0.215,
               "log": "logs/run1/world1/feature.log",
               "counts": {
                 "failed": 3
@@ -142,8 +142,8 @@
                   "exc_type": "builtins.AssertionError",
                   "phase": "call",
                   "raised_in": "_unwritten/feature/test_discount_eligibility.py",
-                  "message": "assert Decimal('29.70') == Decimal('30.50')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10')))\n +    where total = <shopcart.cart.Cart object at 0x7f2e51855fd0>.total\n +    and   Discount(code='TEST', percent=Decimal('10')) = discount(categories=['books'])\n +  and   Decimal('30.50') = Decimal('30.50')",
-                  "detail": "def test_category_restricts_discount_to_matching_lines():\n        cart = cart_of((NOVEL, 2), (MUG, 1))  # books 25.00, home 8.00\n>       assert cart.total(discount(categories=[\"books\"])) == Decimal(\"30.50\")\nE       AssertionError: assert Decimal('29.70') == Decimal('30.50')\nE        +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10')))\nE        +    where total = <shopcart.cart.Cart object at 0x7f2e51855fd0>.total\nE        +    and   Discount(code='TEST', percent=Decimal('10')) = discount(categories=['books'])\nE        +  and   Decimal('30.50') = Decimal('30.50')\n\n_unwritten/feature/test_discount_eligibility.py:33: AssertionError"
+                  "message": "assert Decimal('29.70') == Decimal('30.50')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10')))\n +    where total = <shopcart.cart.Cart object at 0x7f77dc629a00>.total\n +    and   Discount(code='TEST', percent=Decimal('10')) = discount(categories=['books'])\n +  and   Decimal('30.50') = Decimal('30.50')",
+                  "detail": "def test_category_restricts_discount_to_matching_lines():\n        cart = cart_of((NOVEL, 2), (MUG, 1))  # books 25.00, home 8.00\n>       assert cart.total(discount(categories=[\"books\"])) == Decimal(\"30.50\")\nE       AssertionError: assert Decimal('29.70') == Decimal('30.50')\nE        +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10')))\nE        +    where total = <shopcart.cart.Cart object at 0x7f77dc629a00>.total\nE        +    and   Discount(code='TEST', percent=Decimal('10')) = discount(categories=['books'])\nE        +  and   Decimal('30.50') = Decimal('30.50')\n\n_unwritten/feature/test_discount_eligibility.py:33: AssertionError"
                 },
                 {
                   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_discount_is_not_applied_below_min_subtotal",
@@ -152,8 +152,8 @@
                   "exc_type": "builtins.AssertionError",
                   "phase": "call",
                   "raised_in": "_unwritten/feature/test_discount_eligibility.py",
-                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10')))\n +    where total = <shopcart.cart.Cart object at 0x7f2e51855790>.total\n +    and   Discount(code='TEST', percent=Decimal('10')) = discount(min_subtotal='50.00')\n +  and   Decimal('33.00') = Decimal('33.00')",
-                  "detail": "def test_discount_is_not_applied_below_min_subtotal():\n        cart = cart_of((NOVEL, 2), (MUG, 1))  # 33.00\n>       assert cart.total(discount(min_subtotal=\"50.00\")) == Decimal(\"33.00\")\nE       AssertionError: assert Decimal('29.70') == Decimal('33.00')\nE        +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10')))\nE        +    where total = <shopcart.cart.Cart object at 0x7f2e51855790>.total\nE        +    and   Discount(code='TEST', percent=Decimal('10')) = discount(min_subtotal='50.00')\nE        +  and   Decimal('33.00') = Decimal('33.00')\n\n_unwritten/feature/test_discount_eligibility.py:28: AssertionError"
+                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10')))\n +    where total = <shopcart.cart.Cart object at 0x7f77dc7529c0>.total\n +    and   Discount(code='TEST', percent=Decimal('10')) = discount(min_subtotal='50.00')\n +  and   Decimal('33.00') = Decimal('33.00')",
+                  "detail": "def test_discount_is_not_applied_below_min_subtotal():\n        cart = cart_of((NOVEL, 2), (MUG, 1))  # 33.00\n>       assert cart.total(discount(min_subtotal=\"50.00\")) == Decimal(\"33.00\")\nE       AssertionError: assert Decimal('29.70') == Decimal('33.00')\nE        +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10')))\nE        +    where total = <shopcart.cart.Cart object at 0x7f77dc7529c0>.total\nE        +    and   Discount(code='TEST', percent=Decimal('10')) = discount(min_subtotal='50.00')\nE        +  and   Decimal('33.00') = Decimal('33.00')\n\n_unwritten/feature/test_discount_eligibility.py:28: AssertionError"
                 },
                 {
                   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_no_eligible_lines_means_no_discount",
@@ -162,8 +162,8 @@
                   "exc_type": "builtins.AssertionError",
                   "phase": "call",
                   "raised_in": "_unwritten/feature/test_discount_eligibility.py",
-                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10')))\n +    where total = <shopcart.cart.Cart object at 0x7f2e51878d10>.total\n +    and   Discount(code='TEST', percent=Decimal('10')) = discount(categories=['garden'])\n +  and   Decimal('33.00') = Decimal('33.00')",
-                  "detail": "def test_no_eligible_lines_means_no_discount():\n        cart = cart_of((NOVEL, 2), (MUG, 1))\n>       assert cart.total(discount(categories=[\"garden\"])) == Decimal(\"33.00\")\nE       AssertionError: assert Decimal('29.70') == Decimal('33.00')\nE        +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10')))\nE        +    where total = <shopcart.cart.Cart object at 0x7f2e51878d10>.total\nE        +    and   Discount(code='TEST', percent=Decimal('10')) = discount(categories=['garden'])\nE        +  and   Decimal('33.00') = Decimal('33.00')\n\n_unwritten/feature/test_discount_eligibility.py:38: AssertionError"
+                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10')))\n +    where total = <shopcart.cart.Cart object at 0x7f77dc64e0f0>.total\n +    and   Discount(code='TEST', percent=Decimal('10')) = discount(categories=['garden'])\n +  and   Decimal('33.00') = Decimal('33.00')",
+                  "detail": "def test_no_eligible_lines_means_no_discount():\n        cart = cart_of((NOVEL, 2), (MUG, 1))\n>       assert cart.total(discount(categories=[\"garden\"])) == Decimal(\"33.00\")\nE       AssertionError: assert Decimal('29.70') == Decimal('33.00')\nE        +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10')))\nE        +    where total = <shopcart.cart.Cart object at 0x7f77dc64e0f0>.total\nE        +    and   Discount(code='TEST', percent=Decimal('10')) = discount(categories=['garden'])\nE        +  and   Decimal('33.00') = Decimal('33.00')\n\n_unwritten/feature/test_discount_eligibility.py:38: AssertionError"
                 }
               ]
             },
@@ -171,7 +171,7 @@
               "name": "regression_package",
               "exit_code": 0,
               "timed_out": false,
-              "duration_seconds": 0.319,
+              "duration_seconds": 0.215,
               "log": "logs/run1/world1/regression_package.log",
               "counts": {
                 "passed": 6
@@ -208,7 +208,7 @@
               "name": "regression_repo",
               "exit_code": 0,
               "timed_out": false,
-              "duration_seconds": 0.367,
+              "duration_seconds": 0.265,
               "log": "logs/run1/world1/regression_repo.log",
               "counts": {
                 "passed": 30
@@ -355,7 +355,7 @@
               "name": "feature",
               "exit_code": 0,
               "timed_out": false,
-              "duration_seconds": 0.367,
+              "duration_seconds": 0.215,
               "log": "logs/run1/world2/feature.log",
               "counts": {
                 "passed": 3
@@ -380,7 +380,7 @@
               "name": "regression_package",
               "exit_code": 0,
               "timed_out": false,
-              "duration_seconds": 0.367,
+              "duration_seconds": 0.215,
               "log": "logs/run1/world2/regression_package.log",
               "counts": {
                 "passed": 6
@@ -417,7 +417,7 @@
               "name": "regression_repo",
               "exit_code": 0,
               "timed_out": false,
-              "duration_seconds": 0.316,
+              "duration_seconds": 0.215,
               "log": "logs/run1/world2/regression_repo.log",
               "counts": {
                 "passed": 30
@@ -602,7 +602,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('50.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7f2c21217d40>.total\n +    and   Discount(code='TES"
+                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('50.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7fe62bd1b620>.total\n +    and   Discount(code='TES"
                 }
               ],
               "logs": "logs/run1/declared_ignore-min-subtotal"
@@ -635,7 +635,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('29.70') == Decimal('30.50')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7f2f030dc950>.total\n +    and   Dis"
+                  "message": "assert Decimal('29.70') == Decimal('30.50')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7fcb7c7bd340>.total\n +    and   Dis"
                 }
               ],
               "logs": "logs/run1/declared_category-match-discounts-whole-cart"
@@ -656,7 +656,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('0.00') == Decimal('3.30')\n +  where Decimal('0.00') = amount_for(<shopcart.cart.Cart object at 0x7fca2a143080>)\n +    where amount_for = Discount(code='TEN', percent=Decimal('10'), eligibility=None).amount_for\n +  and   Decimal('3.30') = Decimal('3.30')"
+                  "message": "assert Decimal('0.00') == Decimal('3.30')\n +  where Decimal('0.00') = amount_for(<shopcart.cart.Cart object at 0x7f19cddc2570>)\n +    where amount_for = Discount(code='TEN', percent=Decimal('10'), eligibility=None).amount_for\n +  and   Decimal('3.30') = Decimal('3.30')"
                 },
                 {
                   "suite": "regression_repo",
@@ -664,7 +664,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('0.00') == Decimal('0.05')\n +  where Decimal('0.00') = amount_for(<shopcart.cart.Cart object at 0x7f2bfc2e9a60>)\n +    where amount_for = Discount(code='ODD', percent=Decimal('15'), eligibility=None).amount_for\n +  and   Decimal('0.05') = Decimal('0.05')"
+                  "message": "assert Decimal('0.00') == Decimal('0.05')\n +  where Decimal('0.00') = amount_for(<shopcart.cart.Cart object at 0x7f204e812240>)\n +    where amount_for = Discount(code='ODD', percent=Decimal('15'), eligibility=None).amount_for\n +  and   Decimal('0.05') = Decimal('0.05')"
                 },
                 {
                   "suite": "regression_repo",
@@ -672,7 +672,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('24.00') == Decimal('0.00')\n +  where Decimal('24.00') = total(Discount(code='FREE', percent=Decimal('100'), eligibility=None))\n +    where total = <shopcart.cart.Cart object at 0x7f2bfc2e9cd0>.total\n +      where <shopcart.cart.Cart object at 0x7f2bfc2e9cd0> = cart_of((Product(sku='H"
+                  "message": "assert Decimal('24.00') == Decimal('0.00')\n +  where Decimal('24.00') = total(Discount(code='FREE', percent=Decimal('100'), eligibility=None))\n +    where total = <shopcart.cart.Cart object at 0x7f204e839e50>.total\n +      where <shopcart.cart.Cart object at 0x7f204e839e50> = cart_of((Product(sku='H"
                 },
                 {
                   "suite": "regression_repo",
@@ -680,7 +680,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('33.00') == Decimal('29.70')\n +  where Decimal('33.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=None))\n +    where total = <shopcart.cart.Cart object at 0x7f2bfc2e98b0>.total\n +      where <shopcart.cart.Cart object at 0x7f2bfc2e98b0> = cart_of((Product(sku='BK"
+                  "message": "assert Decimal('33.00') == Decimal('29.70')\n +  where Decimal('33.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=None))\n +    where total = <shopcart.cart.Cart object at 0x7f204e839790>.total\n +      where <shopcart.cart.Cart object at 0x7f204e839790> = cart_of((Product(sku='BK"
                 }
               ],
               "logs": "logs/run1/declared_eligibility-required"
@@ -701,7 +701,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('33.00') == Decimal('30.50')\n +  where Decimal('33.00') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7ff8c0da1340>.total\n +    and   Dis"
+                  "message": "assert Decimal('33.00') == Decimal('30.50')\n +  where Decimal('33.00') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7f5f590f7a40>.total\n +    and   Dis"
                 },
                 {
                   "suite": "regression_package",
@@ -709,7 +709,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('33.00') == Decimal('29.70')\n +  where Decimal('33.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'home', 'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7f23e29390d0>.total\n +      "
+                  "message": "assert Decimal('33.00') == Decimal('29.70')\n +  where Decimal('33.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'home', 'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7fe793a85550>.total\n +      "
                 },
                 {
                   "suite": "regression_package",
@@ -717,7 +717,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('33.00') == Decimal('29.70')\n +  where Decimal('33.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7f23e2910e00>.total\n +      where <shopcart.cart.Car"
+                  "message": "assert Decimal('33.00') == Decimal('29.70')\n +  where Decimal('33.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7fe793a5c230>.total\n +      where <shopcart.cart.Car"
                 },
                 {
                   "suite": "regression_package",
@@ -725,7 +725,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('33.00') == Decimal('29.70')\n +  where Decimal('33.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('10.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7f23e2936600>.total\n +      where <shopcart.cart.Ca"
+                  "message": "assert Decimal('33.00') == Decimal('29.70')\n +  where Decimal('33.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('10.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7fe793a82f90>.total\n +      where <shopcart.cart.Ca"
                 },
                 {
                   "suite": "regression_package",
@@ -733,7 +733,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('8.00') == Decimal('7.20')\n +  where Decimal('8.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7f23e2937a10>.total\n +      where <shopcart.cart.Cart o"
+                  "message": "assert Decimal('8.00') == Decimal('7.20')\n +  where Decimal('8.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7fe793a843e0>.total\n +      where <shopcart.cart.Cart o"
                 },
                 {
                   "suite": "regression_package",
@@ -741,7 +741,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('8.00') == Decimal('7.20')\n +  where Decimal('8.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7f23e2910260>.total\n +      where <shopcart.cart.Cart o"
+                  "message": "assert Decimal('8.00') == Decimal('7.20')\n +  where Decimal('8.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7fe793a5efc0>.total\n +      where <shopcart.cart.Cart o"
                 }
               ],
               "logs": "logs/run1/generated_COND_FORCE_FALSE_shopcart_discounts.py_19_15"
@@ -762,7 +762,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('29.70') == Decimal('30.50')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7f365bf71340>.total\n +    and   Dis"
+                  "message": "assert Decimal('29.70') == Decimal('30.50')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7efca5c15340>.total\n +    and   Dis"
                 },
                 {
                   "suite": "feature",
@@ -770,7 +770,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'garden'}))))\n +    where total = <shopcart.cart.Cart object at 0x7f365bf95310>.total\n +    and   Di"
+                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'garden'}))))\n +    where total = <shopcart.cart.Cart object at 0x7efca5c3bce0>.total\n +    and   Di"
                 }
               ],
               "logs": "logs/run1/generated_COND_FORCE_TRUE_shopcart_discounts.py_19_15"
@@ -791,7 +791,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('29.70') == Decimal('30.50')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7ff4c02c4a70>.total\n +    and   Dis"
+                  "message": "assert Decimal('29.70') == Decimal('30.50')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7fedf18f6e10>.total\n +    and   Dis"
                 },
                 {
                   "suite": "feature",
@@ -807,7 +807,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'garden'}))))\n +    where total = <shopcart.cart.Cart object at 0x7ff4c02eb500>.total\n +    and   Di"
+                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'garden'}))))\n +    where total = <shopcart.cart.Cart object at 0x7fedf18f71d0>.total\n +    and   Di"
                 },
                 {
                   "suite": "regression_package",
@@ -860,7 +860,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('33.00') == Decimal('30.50')\n +  where Decimal('33.00') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7f321d9e3d70>.total\n +    and   Dis"
+                  "message": "assert Decimal('33.00') == Decimal('30.50')\n +  where Decimal('33.00') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7f5de1ac7350>.total\n +    and   Dis"
                 },
                 {
                   "suite": "feature",
@@ -876,7 +876,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('33.00') == Decimal('29.70')\n +  where Decimal('33.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'home', 'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7f04a4666390>.total\n +      "
+                  "message": "assert Decimal('33.00') == Decimal('29.70')\n +  where Decimal('33.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'home', 'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7fb79561a690>.total\n +      "
                 },
                 {
                   "suite": "regression_package",
@@ -929,7 +929,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('32.20') == Decimal('30.50')\n +  where Decimal('32.20') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7fb7184e2d20>.total\n +    and   Dis"
+                  "message": "assert Decimal('32.20') == Decimal('30.50')\n +  where Decimal('32.20') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7fa10631ba40>.total\n +    and   Dis"
                 },
                 {
                   "suite": "feature",
@@ -937,7 +937,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'garden'}))))\n +    where total = <shopcart.cart.Cart object at 0x7fb7184e00e0>.total\n +    and   Di"
+                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'garden'}))))\n +    where total = <shopcart.cart.Cart object at 0x7fa1062f7e00>.total\n +    and   Di"
                 },
                 {
                   "suite": "regression_package",
@@ -945,7 +945,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('33.00') == Decimal('29.70')\n +  where Decimal('33.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'home', 'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7ff7eb8247d0>.total\n +      "
+                  "message": "assert Decimal('33.00') == Decimal('29.70')\n +  where Decimal('33.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'home', 'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7f750d891d00>.total\n +      "
                 }
               ],
               "logs": "logs/run1/generated_CMP_NEGATE_shopcart_discounts.py_19_64"
@@ -1011,7 +1011,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('29.70') == Decimal('30.50')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7f2c6e704980>.total\n +    and   Dis"
+                  "message": "assert Decimal('29.70') == Decimal('30.50')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7fcda390e0f0>.total\n +    and   Dis"
                 },
                 {
                   "suite": "feature",
@@ -1019,7 +1019,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('50.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7f2c6e8efd40>.total\n +    and   Discount(code='TES"
+                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('50.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7fcda390f620>.total\n +    and   Discount(code='TES"
                 },
                 {
                   "suite": "feature",
@@ -1027,7 +1027,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'garden'}))))\n +    where total = <shopcart.cart.Cart object at 0x7f2c6e707bc0>.total\n +    and   Di"
+                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'garden'}))))\n +    where total = <shopcart.cart.Cart object at 0x7fcda3933500>.total\n +    and   Di"
                 }
               ],
               "logs": "logs/run1/generated_COND_FORCE_TRUE_shopcart_discounts.py_50_11"
@@ -1048,7 +1048,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('29.70') == Decimal('30.50')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7f254b66bb30>.total\n +    and   Dis"
+                  "message": "assert Decimal('29.70') == Decimal('30.50')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7fa8d4dce0f0>.total\n +    and   Dis"
                 },
                 {
                   "suite": "feature",
@@ -1056,7 +1056,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('50.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7f254b645790>.total\n +    and   Discount(code='TES"
+                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('50.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7fa8d4dcf620>.total\n +    and   Discount(code='TES"
                 },
                 {
                   "suite": "feature",
@@ -1064,7 +1064,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'garden'}))))\n +    where total = <shopcart.cart.Cart object at 0x7f254b66b950>.total\n +    and   Di"
+                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'garden'}))))\n +    where total = <shopcart.cart.Cart object at 0x7fa8d4df3500>.total\n +    and   Di"
                 },
                 {
                   "suite": "regression_package",
@@ -1117,7 +1117,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('50.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7f1ba4071790>.total\n +    and   Discount(code='TES"
+                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('50.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7ffbb98d1040>.total\n +    and   Discount(code='TES"
                 }
               ],
               "logs": "logs/run1/generated_COND_FORCE_FALSE_shopcart_discounts.py_53_11"
@@ -1138,7 +1138,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('33.00') == Decimal('30.50')\n +  where Decimal('33.00') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7f346c123710>.total\n +    and   Dis"
+                  "message": "assert Decimal('33.00') == Decimal('30.50')\n +  where Decimal('33.00') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7f47f7c67a40>.total\n +    and   Dis"
                 },
                 {
                   "suite": "regression_package",
@@ -1146,7 +1146,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('33.00') == Decimal('29.70')\n +  where Decimal('33.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'home', 'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7f8e9fc5d6a0>.total\n +      "
+                  "message": "assert Decimal('33.00') == Decimal('29.70')\n +  where Decimal('33.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'home', 'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7f0195ec5460>.total\n +      "
                 },
                 {
                   "suite": "regression_package",
@@ -1154,7 +1154,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('33.00') == Decimal('29.70')\n +  where Decimal('33.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7f8e9fc36bd0>.total\n +      where <shopcart.cart.Car"
+                  "message": "assert Decimal('33.00') == Decimal('29.70')\n +  where Decimal('33.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7f0195e9c230>.total\n +      where <shopcart.cart.Car"
                 },
                 {
                   "suite": "regression_package",
@@ -1162,7 +1162,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('33.00') == Decimal('29.70')\n +  where Decimal('33.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('10.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7f8e9fc58920>.total\n +      where <shopcart.cart.Ca"
+                  "message": "assert Decimal('33.00') == Decimal('29.70')\n +  where Decimal('33.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('10.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7f0195ec2a80>.total\n +      where <shopcart.cart.Ca"
                 },
                 {
                   "suite": "regression_package",
@@ -1170,7 +1170,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('8.00') == Decimal('7.20')\n +  where Decimal('8.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7f8e9fc5ce30>.total\n +      where <shopcart.cart.Cart o"
+                  "message": "assert Decimal('8.00') == Decimal('7.20')\n +  where Decimal('8.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7f0195ec57c0>.total\n +      where <shopcart.cart.Cart o"
                 },
                 {
                   "suite": "regression_package",
@@ -1178,7 +1178,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('8.00') == Decimal('7.20')\n +  where Decimal('8.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7f8e9fc35970>.total\n +      where <shopcart.cart.Cart o"
+                  "message": "assert Decimal('8.00') == Decimal('7.20')\n +  where Decimal('8.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7f0195e9c290>.total\n +      where <shopcart.cart.Cart o"
                 }
               ],
               "logs": "logs/run1/generated_COND_FORCE_TRUE_shopcart_discounts.py_53_11"
@@ -1272,7 +1272,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('29.70') == Decimal('30.50')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=None))\n +    where total = <shopcart.cart.Cart object at 0x7f18afd8e7e0>.total\n +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=None) = discount"
+                  "message": "assert Decimal('29.70') == Decimal('30.50')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=None))\n +    where total = <shopcart.cart.Cart object at 0x7f0f656a91f0>.total\n +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=None) = discount"
                 },
                 {
                   "suite": "feature",
@@ -1280,7 +1280,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=None))\n +    where total = <shopcart.cart.Cart object at 0x7f18afd8e2d0>.total\n +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=None) = discount"
+                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=None))\n +    where total = <shopcart.cart.Cart object at 0x7f0f656cc890>.total\n +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=None) = discount"
                 },
                 {
                   "suite": "feature",
@@ -1288,7 +1288,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=None))\n +    where total = <shopcart.cart.Cart object at 0x7f18afdb29c0>.total\n +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=None) = discount"
+                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=None))\n +    where total = <shopcart.cart.Cart object at 0x7f0f65695100>.total\n +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=None) = discount"
                 }
               ],
               "logs": "logs/run1/generated_COND_FORCE_TRUE_shopcart_discounts.py_71_7"
@@ -1309,7 +1309,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('29.70') == Decimal('30.50')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=None))\n +    where total = <shopcart.cart.Cart object at 0x7f8fb321d910>.total\n +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=None) = discount"
+                  "message": "assert Decimal('29.70') == Decimal('30.50')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=None))\n +    where total = <shopcart.cart.Cart object at 0x7f7bc5ef19a0>.total\n +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=None) = discount"
                 },
                 {
                   "suite": "feature",
@@ -1317,7 +1317,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=None))\n +    where total = <shopcart.cart.Cart object at 0x7f8fb31f9790>.total\n +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=None) = discount"
+                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=None))\n +    where total = <shopcart.cart.Cart object at 0x7f7bc5ecc260>.total\n +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=None) = discount"
                 },
                 {
                   "suite": "feature",
@@ -1325,7 +1325,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=None))\n +    where total = <shopcart.cart.Cart object at 0x7f8fb321f8c0>.total\n +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=None) = discount"
+                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=None))\n +    where total = <shopcart.cart.Cart object at 0x7f7bc5ef3f20>.total\n +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=None) = discount"
                 },
                 {
                   "suite": "regression_package",
@@ -2106,7 +2106,7 @@
               "name": "feature",
               "exit_code": 1,
               "timed_out": false,
-              "duration_seconds": 0.317,
+              "duration_seconds": 0.215,
               "log": "logs/run2/world1/feature.log",
               "counts": {
                 "failed": 3
@@ -2120,8 +2120,8 @@
                   "exc_type": "builtins.AssertionError",
                   "phase": "call",
                   "raised_in": "_unwritten/feature/test_discount_eligibility.py",
-                  "message": "assert Decimal('29.70') == Decimal('30.50')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10')))\n +    where total = <shopcart.cart.Cart object at 0x7f3cbefb29f0>.total\n +    and   Discount(code='TEST', percent=Decimal('10')) = discount(categories=['books'])\n +  and   Decimal('30.50') = Decimal('30.50')",
-                  "detail": "def test_category_restricts_discount_to_matching_lines():\n        cart = cart_of((NOVEL, 2), (MUG, 1))  # books 25.00, home 8.00\n>       assert cart.total(discount(categories=[\"books\"])) == Decimal(\"30.50\")\nE       AssertionError: assert Decimal('29.70') == Decimal('30.50')\nE        +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10')))\nE        +    where total = <shopcart.cart.Cart object at 0x7f3cbefb29f0>.total\nE        +    and   Discount(code='TEST', percent=Decimal('10')) = discount(categories=['books'])\nE        +  and   Decimal('30.50') = Decimal('30.50')\n\n_unwritten/feature/test_discount_eligibility.py:33: AssertionError"
+                  "message": "assert Decimal('29.70') == Decimal('30.50')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10')))\n +    where total = <shopcart.cart.Cart object at 0x7f9d42c09be0>.total\n +    and   Discount(code='TEST', percent=Decimal('10')) = discount(categories=['books'])\n +  and   Decimal('30.50') = Decimal('30.50')",
+                  "detail": "def test_category_restricts_discount_to_matching_lines():\n        cart = cart_of((NOVEL, 2), (MUG, 1))  # books 25.00, home 8.00\n>       assert cart.total(discount(categories=[\"books\"])) == Decimal(\"30.50\")\nE       AssertionError: assert Decimal('29.70') == Decimal('30.50')\nE        +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10')))\nE        +    where total = <shopcart.cart.Cart object at 0x7f9d42c09be0>.total\nE        +    and   Discount(code='TEST', percent=Decimal('10')) = discount(categories=['books'])\nE        +  and   Decimal('30.50') = Decimal('30.50')\n\n_unwritten/feature/test_discount_eligibility.py:33: AssertionError"
                 },
                 {
                   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_discount_is_not_applied_below_min_subtotal",
@@ -2130,8 +2130,8 @@
                   "exc_type": "builtins.AssertionError",
                   "phase": "call",
                   "raised_in": "_unwritten/feature/test_discount_eligibility.py",
-                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10')))\n +    where total = <shopcart.cart.Cart object at 0x7f3cbef8c950>.total\n +    and   Discount(code='TEST', percent=Decimal('10')) = discount(min_subtotal='50.00')\n +  and   Decimal('33.00') = Decimal('33.00')",
-                  "detail": "def test_discount_is_not_applied_below_min_subtotal():\n        cart = cart_of((NOVEL, 2), (MUG, 1))  # 33.00\n>       assert cart.total(discount(min_subtotal=\"50.00\")) == Decimal(\"33.00\")\nE       AssertionError: assert Decimal('29.70') == Decimal('33.00')\nE        +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10')))\nE        +    where total = <shopcart.cart.Cart object at 0x7f3cbef8c950>.total\nE        +    and   Discount(code='TEST', percent=Decimal('10')) = discount(min_subtotal='50.00')\nE        +  and   Decimal('33.00') = Decimal('33.00')\n\n_unwritten/feature/test_discount_eligibility.py:28: AssertionError"
+                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10')))\n +    where total = <shopcart.cart.Cart object at 0x7f9d42c2e000>.total\n +    and   Discount(code='TEST', percent=Decimal('10')) = discount(min_subtotal='50.00')\n +  and   Decimal('33.00') = Decimal('33.00')",
+                  "detail": "def test_discount_is_not_applied_below_min_subtotal():\n        cart = cart_of((NOVEL, 2), (MUG, 1))  # 33.00\n>       assert cart.total(discount(min_subtotal=\"50.00\")) == Decimal(\"33.00\")\nE       AssertionError: assert Decimal('29.70') == Decimal('33.00')\nE        +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10')))\nE        +    where total = <shopcart.cart.Cart object at 0x7f9d42c2e000>.total\nE        +    and   Discount(code='TEST', percent=Decimal('10')) = discount(min_subtotal='50.00')\nE        +  and   Decimal('33.00') = Decimal('33.00')\n\n_unwritten/feature/test_discount_eligibility.py:28: AssertionError"
                 },
                 {
                   "nodeid": "_unwritten/feature/test_discount_eligibility.py::test_no_eligible_lines_means_no_discount",
@@ -2140,8 +2140,8 @@
                   "exc_type": "builtins.AssertionError",
                   "phase": "call",
                   "raised_in": "_unwritten/feature/test_discount_eligibility.py",
-                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10')))\n +    where total = <shopcart.cart.Cart object at 0x7f3cbefb30e0>.total\n +    and   Discount(code='TEST', percent=Decimal('10')) = discount(categories=['garden'])\n +  and   Decimal('33.00') = Decimal('33.00')",
-                  "detail": "def test_no_eligible_lines_means_no_discount():\n        cart = cart_of((NOVEL, 2), (MUG, 1))\n>       assert cart.total(discount(categories=[\"garden\"])) == Decimal(\"33.00\")\nE       AssertionError: assert Decimal('29.70') == Decimal('33.00')\nE        +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10')))\nE        +    where total = <shopcart.cart.Cart object at 0x7f3cbefb30e0>.total\nE        +    and   Discount(code='TEST', percent=Decimal('10')) = discount(categories=['garden'])\nE        +  and   Decimal('33.00') = Decimal('33.00')\n\n_unwritten/feature/test_discount_eligibility.py:38: AssertionError"
+                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10')))\n +    where total = <shopcart.cart.Cart object at 0x7f9d42bf5a90>.total\n +    and   Discount(code='TEST', percent=Decimal('10')) = discount(categories=['garden'])\n +  and   Decimal('33.00') = Decimal('33.00')",
+                  "detail": "def test_no_eligible_lines_means_no_discount():\n        cart = cart_of((NOVEL, 2), (MUG, 1))\n>       assert cart.total(discount(categories=[\"garden\"])) == Decimal(\"33.00\")\nE       AssertionError: assert Decimal('29.70') == Decimal('33.00')\nE        +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10')))\nE        +    where total = <shopcart.cart.Cart object at 0x7f9d42bf5a90>.total\nE        +    and   Discount(code='TEST', percent=Decimal('10')) = discount(categories=['garden'])\nE        +  and   Decimal('33.00') = Decimal('33.00')\n\n_unwritten/feature/test_discount_eligibility.py:38: AssertionError"
                 }
               ]
             },
@@ -2149,7 +2149,7 @@
               "name": "regression_package",
               "exit_code": 0,
               "timed_out": false,
-              "duration_seconds": 0.368,
+              "duration_seconds": 0.214,
               "log": "logs/run2/world1/regression_package.log",
               "counts": {
                 "passed": 6
@@ -2186,7 +2186,7 @@
               "name": "regression_repo",
               "exit_code": 0,
               "timed_out": false,
-              "duration_seconds": 0.418,
+              "duration_seconds": 0.265,
               "log": "logs/run2/world1/regression_repo.log",
               "counts": {
                 "passed": 30
@@ -2333,7 +2333,7 @@
               "name": "feature",
               "exit_code": 0,
               "timed_out": false,
-              "duration_seconds": 0.418,
+              "duration_seconds": 0.214,
               "log": "logs/run2/world2/feature.log",
               "counts": {
                 "passed": 3
@@ -2358,7 +2358,7 @@
               "name": "regression_package",
               "exit_code": 0,
               "timed_out": false,
-              "duration_seconds": 0.318,
+              "duration_seconds": 0.265,
               "log": "logs/run2/world2/regression_package.log",
               "counts": {
                 "passed": 6
@@ -2395,7 +2395,7 @@
               "name": "regression_repo",
               "exit_code": 0,
               "timed_out": false,
-              "duration_seconds": 0.367,
+              "duration_seconds": 0.315,
               "log": "logs/run2/world2/regression_repo.log",
               "counts": {
                 "passed": 30
@@ -2580,7 +2580,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('50.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7f65ece4fd40>.total\n +    and   Discount(code='TES"
+                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('50.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7fbe2144c890>.total\n +    and   Discount(code='TES"
                 }
               ],
               "logs": "logs/run2/declared_ignore-min-subtotal"
@@ -2613,7 +2613,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('29.70') == Decimal('30.50')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7f5aa1017950>.total\n +    and   Dis"
+                  "message": "assert Decimal('29.70') == Decimal('30.50')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7fe77d9e0200>.total\n +    and   Dis"
                 }
               ],
               "logs": "logs/run2/declared_category-match-discounts-whole-cart"
@@ -2634,7 +2634,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('0.00') == Decimal('3.30')\n +  where Decimal('0.00') = amount_for(<shopcart.cart.Cart object at 0x7f14b8cb8230>)\n +    where amount_for = Discount(code='TEN', percent=Decimal('10'), eligibility=None).amount_for\n +  and   Decimal('3.30') = Decimal('3.30')"
+                  "message": "assert Decimal('0.00') == Decimal('3.30')\n +  where Decimal('0.00') = amount_for(<shopcart.cart.Cart object at 0x7fefe3c5ae40>)\n +    where amount_for = Discount(code='TEN', percent=Decimal('10'), eligibility=None).amount_for\n +  and   Decimal('3.30') = Decimal('3.30')"
                 },
                 {
                   "suite": "regression_repo",
@@ -2642,7 +2642,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('0.00') == Decimal('0.05')\n +  where Decimal('0.00') = amount_for(<shopcart.cart.Cart object at 0x7f9f1dd9d9d0>)\n +    where amount_for = Discount(code='ODD', percent=Decimal('15'), eligibility=None).amount_for\n +  and   Decimal('0.05') = Decimal('0.05')"
+                  "message": "assert Decimal('0.00') == Decimal('0.05')\n +  where Decimal('0.00') = amount_for(<shopcart.cart.Cart object at 0x7f200851d670>)\n +    where amount_for = Discount(code='ODD', percent=Decimal('15'), eligibility=None).amount_for\n +  and   Decimal('0.05') = Decimal('0.05')"
                 },
                 {
                   "suite": "regression_repo",
@@ -2650,7 +2650,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('24.00') == Decimal('0.00')\n +  where Decimal('24.00') = total(Discount(code='FREE', percent=Decimal('100'), eligibility=None))\n +    where total = <shopcart.cart.Cart object at 0x7f9f1dd9de80>.total\n +      where <shopcart.cart.Cart object at 0x7f9f1dd9de80> = cart_of((Product(sku='H"
+                  "message": "assert Decimal('24.00') == Decimal('0.00')\n +  where Decimal('24.00') = total(Discount(code='FREE', percent=Decimal('100'), eligibility=None))\n +    where total = <shopcart.cart.Cart object at 0x7f200851df70>.total\n +      where <shopcart.cart.Cart object at 0x7f200851df70> = cart_of((Product(sku='H"
                 },
                 {
                   "suite": "regression_repo",
@@ -2658,7 +2658,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('33.00') == Decimal('29.70')\n +  where Decimal('33.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=None))\n +    where total = <shopcart.cart.Cart object at 0x7f9f1dd9d760>.total\n +      where <shopcart.cart.Cart object at 0x7f9f1dd9d760> = cart_of((Product(sku='BK"
+                  "message": "assert Decimal('33.00') == Decimal('29.70')\n +  where Decimal('33.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=None))\n +    where total = <shopcart.cart.Cart object at 0x7f200851d550>.total\n +      where <shopcart.cart.Cart object at 0x7f200851d550> = cart_of((Product(sku='BK"
                 }
               ],
               "logs": "logs/run2/declared_eligibility-required"
@@ -2679,7 +2679,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('33.00') == Decimal('30.50')\n +  where Decimal('33.00') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7fdf39d3ad20>.total\n +    and   Dis"
+                  "message": "assert Decimal('33.00') == Decimal('30.50')\n +  where Decimal('33.00') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7f52c9fd7a40>.total\n +    and   Dis"
                 },
                 {
                   "suite": "regression_package",
@@ -2687,7 +2687,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('33.00') == Decimal('29.70')\n +  where Decimal('33.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'home', 'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7f1d90e610d0>.total\n +      "
+                  "message": "assert Decimal('33.00') == Decimal('29.70')\n +  where Decimal('33.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'home', 'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7fbe57151a30>.total\n +      "
                 },
                 {
                   "suite": "regression_package",
@@ -2695,7 +2695,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('33.00') == Decimal('29.70')\n +  where Decimal('33.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7f1d90e38e00>.total\n +      where <shopcart.cart.Car"
+                  "message": "assert Decimal('33.00') == Decimal('29.70')\n +  where Decimal('33.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7fbe5733b560>.total\n +      where <shopcart.cart.Car"
                 },
                 {
                   "suite": "regression_package",
@@ -2703,7 +2703,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('33.00') == Decimal('29.70')\n +  where Decimal('33.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('10.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7f1d90e5e600>.total\n +      where <shopcart.cart.Ca"
+                  "message": "assert Decimal('33.00') == Decimal('29.70')\n +  where Decimal('33.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('10.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7fbe5714e3c0>.total\n +      where <shopcart.cart.Ca"
                 },
                 {
                   "suite": "regression_package",
@@ -2711,7 +2711,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('8.00') == Decimal('7.20')\n +  where Decimal('8.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7f1d90e5fa10>.total\n +      where <shopcart.cart.Cart o"
+                  "message": "assert Decimal('8.00') == Decimal('7.20')\n +  where Decimal('8.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7fbe57150fb0>.total\n +      where <shopcart.cart.Cart o"
                 },
                 {
                   "suite": "regression_package",
@@ -2719,7 +2719,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('8.00') == Decimal('7.20')\n +  where Decimal('8.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7f1d90e38260>.total\n +      where <shopcart.cart.Cart o"
+                  "message": "assert Decimal('8.00') == Decimal('7.20')\n +  where Decimal('8.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7fbe57129790>.total\n +      where <shopcart.cart.Cart o"
                 }
               ],
               "logs": "logs/run2/generated_COND_FORCE_FALSE_shopcart_discounts.py_19_15"
@@ -2740,7 +2740,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('29.70') == Decimal('30.50')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7fab36f02d20>.total\n +    and   Dis"
+                  "message": "assert Decimal('29.70') == Decimal('30.50')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7f96adbc0200>.total\n +    and   Dis"
                 },
                 {
                   "suite": "feature",
@@ -2748,7 +2748,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'garden'}))))\n +    where total = <shopcart.cart.Cart object at 0x7fab36f022d0>.total\n +    and   Di"
+                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'garden'}))))\n +    where total = <shopcart.cart.Cart object at 0x7f96adbc1550>.total\n +    and   Di"
                 }
               ],
               "logs": "logs/run2/generated_COND_FORCE_TRUE_shopcart_discounts.py_19_15"
@@ -2769,7 +2769,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('29.70') == Decimal('30.50')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7f2c04440800>.total\n +    and   Dis"
+                  "message": "assert Decimal('29.70') == Decimal('30.50')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7fd9bdabbda0>.total\n +    and   Dis"
                 },
                 {
                   "suite": "feature",
@@ -2785,7 +2785,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'garden'}))))\n +    where total = <shopcart.cart.Cart object at 0x7f2c04443f20>.total\n +    and   Di"
+                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'garden'}))))\n +    where total = <shopcart.cart.Cart object at 0x7fd9bdab9e20>.total\n +    and   Di"
                 },
                 {
                   "suite": "regression_package",
@@ -2838,7 +2838,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('33.00') == Decimal('30.50')\n +  where Decimal('33.00') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7f4e518da420>.total\n +    and   Dis"
+                  "message": "assert Decimal('33.00') == Decimal('30.50')\n +  where Decimal('33.00') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7fd6127f7350>.total\n +    and   Dis"
                 },
                 {
                   "suite": "feature",
@@ -2854,7 +2854,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('33.00') == Decimal('29.70')\n +  where Decimal('33.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'home', 'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7f4c69a419d0>.total\n +      "
+                  "message": "assert Decimal('33.00') == Decimal('29.70')\n +  where Decimal('33.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'home', 'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7f489ddd17c0>.total\n +      "
                 },
                 {
                   "suite": "regression_package",
@@ -2907,7 +2907,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('32.20') == Decimal('30.50')\n +  where Decimal('32.20') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7fe52a4d3950>.total\n +    and   Dis"
+                  "message": "assert Decimal('32.20') == Decimal('30.50')\n +  where Decimal('32.20') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7f21b2e6ba40>.total\n +    and   Dis"
                 },
                 {
                   "suite": "feature",
@@ -2915,7 +2915,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'garden'}))))\n +    where total = <shopcart.cart.Cart object at 0x7fe52a4f7b00>.total\n +    and   Di"
+                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'garden'}))))\n +    where total = <shopcart.cart.Cart object at 0x7f21b2e47e00>.total\n +    and   Di"
                 },
                 {
                   "suite": "regression_package",
@@ -2923,7 +2923,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('33.00') == Decimal('29.70')\n +  where Decimal('33.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'home', 'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7fae0e801790>.total\n +      "
+                  "message": "assert Decimal('33.00') == Decimal('29.70')\n +  where Decimal('33.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'home', 'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7fd46ab28fe0>.total\n +      "
                 }
               ],
               "logs": "logs/run2/generated_CMP_NEGATE_shopcart_discounts.py_19_64"
@@ -2989,7 +2989,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('29.70') == Decimal('30.50')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7f49af371850>.total\n +    and   Dis"
+                  "message": "assert Decimal('29.70') == Decimal('30.50')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7ff977acfe00>.total\n +    and   Dis"
                 },
                 {
                   "suite": "feature",
@@ -2997,7 +2997,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('50.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7f49af34cc50>.total\n +    and   Discount(code='TES"
+                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('50.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7ff977af0890>.total\n +    and   Discount(code='TES"
                 },
                 {
                   "suite": "feature",
@@ -3005,7 +3005,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'garden'}))))\n +    where total = <shopcart.cart.Cart object at 0x7f49af373320>.total\n +    and   Di"
+                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'garden'}))))\n +    where total = <shopcart.cart.Cart object at 0x7ff977ab9ca0>.total\n +    and   Di"
                 }
               ],
               "logs": "logs/run2/generated_COND_FORCE_TRUE_shopcart_discounts.py_50_11"
@@ -3026,7 +3026,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('29.70') == Decimal('30.50')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7f3517ac51c0>.total\n +    and   Dis"
+                  "message": "assert Decimal('29.70') == Decimal('30.50')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7f0426e2abd0>.total\n +    and   Dis"
                 },
                 {
                   "suite": "feature",
@@ -3034,7 +3034,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('50.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7f3517ac62d0>.total\n +    and   Discount(code='TES"
+                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('50.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7f0426df1040>.total\n +    and   Discount(code='TES"
                 },
                 {
                   "suite": "feature",
@@ -3042,7 +3042,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'garden'}))))\n +    where total = <shopcart.cart.Cart object at 0x7f3517aea9c0>.total\n +    and   Di"
+                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'garden'}))))\n +    where total = <shopcart.cart.Cart object at 0x7f0426e28b60>.total\n +    and   Di"
                 },
                 {
                   "suite": "regression_package",
@@ -3095,7 +3095,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('50.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7ff022779790>.total\n +    and   Discount(code='TES"
+                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('50.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7f9133a4d040>.total\n +    and   Discount(code='TES"
                 }
               ],
               "logs": "logs/run2/generated_COND_FORCE_FALSE_shopcart_discounts.py_53_11"
@@ -3116,7 +3116,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('33.00') == Decimal('30.50')\n +  where Decimal('33.00') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7fe3feb4b950>.total\n +    and   Dis"
+                  "message": "assert Decimal('33.00') == Decimal('30.50')\n +  where Decimal('33.00') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7f3e4546ba40>.total\n +    and   Dis"
                 },
                 {
                   "suite": "regression_package",
@@ -3124,7 +3124,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('33.00') == Decimal('29.70')\n +  where Decimal('33.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'home', 'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7fbfee545220>.total\n +      "
+                  "message": "assert Decimal('33.00') == Decimal('29.70')\n +  where Decimal('33.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'home', 'books'}))))\n +    where total = <shopcart.cart.Cart object at 0x7fc89d811460>.total\n +      "
                 },
                 {
                   "suite": "regression_package",
@@ -3132,7 +3132,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('33.00') == Decimal('29.70')\n +  where Decimal('33.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7fbfee51c2c0>.total\n +      where <shopcart.cart.Car"
+                  "message": "assert Decimal('33.00') == Decimal('29.70')\n +  where Decimal('33.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7fc89d7e8230>.total\n +      where <shopcart.cart.Car"
                 },
                 {
                   "suite": "regression_package",
@@ -3140,7 +3140,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('33.00') == Decimal('29.70')\n +  where Decimal('33.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('10.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7fbfee543680>.total\n +      where <shopcart.cart.Ca"
+                  "message": "assert Decimal('33.00') == Decimal('29.70')\n +  where Decimal('33.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('10.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7fc89d80ea80>.total\n +      where <shopcart.cart.Ca"
                 },
                 {
                   "suite": "regression_package",
@@ -3148,7 +3148,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('8.00') == Decimal('7.20')\n +  where Decimal('8.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7fbfee543d40>.total\n +      where <shopcart.cart.Cart o"
+                  "message": "assert Decimal('8.00') == Decimal('7.20')\n +  where Decimal('8.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7fc89d8117c0>.total\n +      where <shopcart.cart.Cart o"
                 },
                 {
                   "suite": "regression_package",
@@ -3156,7 +3156,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('8.00') == Decimal('7.20')\n +  where Decimal('8.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7fbfee51f140>.total\n +      where <shopcart.cart.Cart o"
+                  "message": "assert Decimal('8.00') == Decimal('7.20')\n +  where Decimal('8.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=None)))\n +    where total = <shopcart.cart.Cart object at 0x7fc89d7e8290>.total\n +      where <shopcart.cart.Cart o"
                 }
               ],
               "logs": "logs/run2/generated_COND_FORCE_TRUE_shopcart_discounts.py_53_11"
@@ -3250,7 +3250,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('29.70') == Decimal('30.50')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=None))\n +    where total = <shopcart.cart.Cart object at 0x7f742ab0e7e0>.total\n +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=None) = discount"
+                  "message": "assert Decimal('29.70') == Decimal('30.50')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=None))\n +    where total = <shopcart.cart.Cart object at 0x7f10767b6bd0>.total\n +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=None) = discount"
                 },
                 {
                   "suite": "feature",
@@ -3258,7 +3258,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=None))\n +    where total = <shopcart.cart.Cart object at 0x7f742ab0e2d0>.total\n +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=None) = discount"
+                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=None))\n +    where total = <shopcart.cart.Cart object at 0x7f107677d040>.total\n +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=None) = discount"
                 },
                 {
                   "suite": "feature",
@@ -3266,7 +3266,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=None))\n +    where total = <shopcart.cart.Cart object at 0x7f742ab329c0>.total\n +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=None) = discount"
+                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=None))\n +    where total = <shopcart.cart.Cart object at 0x7f10767b4080>.total\n +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=None) = discount"
                 }
               ],
               "logs": "logs/run2/generated_COND_FORCE_TRUE_shopcart_discounts.py_71_7"
@@ -3287,7 +3287,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('29.70') == Decimal('30.50')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=None))\n +    where total = <shopcart.cart.Cart object at 0x7f21b41ee450>.total\n +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=None) = discount"
+                  "message": "assert Decimal('29.70') == Decimal('30.50')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=None))\n +    where total = <shopcart.cart.Cart object at 0x7f3b4ca159a0>.total\n +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=None) = discount"
                 },
                 {
                   "suite": "feature",
@@ -3295,7 +3295,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=None))\n +    where total = <shopcart.cart.Cart object at 0x7f21b41c8c50>.total\n +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=None) = discount"
+                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=None))\n +    where total = <shopcart.cart.Cart object at 0x7f3b4c9f0260>.total\n +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=None) = discount"
                 },
                 {
                   "suite": "feature",
@@ -3303,7 +3303,7 @@
                   "outcome": "failed",
                   "failure_class": "assertion",
                   "exc_type": "builtins.AssertionError",
-                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=None))\n +    where total = <shopcart.cart.Cart object at 0x7f21b41ef4a0>.total\n +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=None) = discount"
+                  "message": "assert Decimal('29.70') == Decimal('33.00')\n +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=None))\n +    where total = <shopcart.cart.Cart object at 0x7f3b4ca17f20>.total\n +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=None) = discount"
                 },
                 {
                   "suite": "regression_package",
@@ -4066,8 +4066,8 @@
     }
   ],
   "timing": {
-    "started_at": "2026-11-13T19:50:01+00:00",
-    "finished_at": "2026-11-13T19:50:37+00:00",
-    "duration_seconds": 36.3
+    "started_at": "2026-11-14T05:44:31+00:00",
+    "finished_at": "2026-11-14T05:44:55+00:00",
+    "duration_seconds": 24.06
   }
 }

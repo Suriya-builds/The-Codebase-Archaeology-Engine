@@ -25,4 +25,4 @@ E           shopcart.errors.InvalidDiscountError: eligibility.categories must be
 shopcart/discounts.py:94: InvalidDiscountError
 =========================== short test summary info ============================
 FAILED _unwritten/regression/test_discount_compatibility.py::test_cart_whose_lines_are_all_eligible_gets_the_full_discount
-1 failed, 5 passed in 0.03s
+1 failed, 5 passed in 0.02s

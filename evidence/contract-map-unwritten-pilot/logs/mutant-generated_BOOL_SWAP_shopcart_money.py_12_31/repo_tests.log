@@ -10,4 +10,4 @@ E       Failed: DID NOT RAISE <class 'TypeError'>
 tests/test_cart.py:63: Failed
 =========================== short test summary info ============================
 FAILED tests/test_cart.py::test_float_prices_are_rejected - Failed: DID NOT R...
-1 failed, 29 passed in 0.04s
+1 failed, 29 passed in 0.03s

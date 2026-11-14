@@ -30,7 +30,7 @@ ____________________ test_quantity_above_limit_is_rejected _____________________
 _unwritten/probes/test_hyp_quantity_upper_limit.py:8: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = <shopcart.cart.Cart object at 0x7f3e82255d60>
+self = <shopcart.cart.Cart object at 0x7f36c2e8a4e0>
 product = Product(sku='X', name='X', price=Decimal('1.00'), category='misc')
 quantity = 1000
 
@@ -46,4 +46,4 @@ shopcart/cart.py:27: AttributeError
 FAILED _unwritten/probes/test_hyp_discount_codes_case_sensitive.py::test_code_is_stored_as_given
 FAILED _unwritten/probes/test_hyp_quantity_upper_limit.py::test_quantity_above_limit_is_rejected
 ERROR _unwritten/probes/test_hyp_stock_is_checked.py
-2 failed, 6 passed, 1 error in 0.03s
+2 failed, 6 passed, 1 error in 0.02s

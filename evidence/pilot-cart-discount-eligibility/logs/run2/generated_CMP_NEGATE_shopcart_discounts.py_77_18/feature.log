@@ -143,4 +143,4 @@ FAILED _unwritten/feature/test_discount_eligibility.py::test_invalid_categories_
 FAILED _unwritten/feature/test_discount_eligibility.py::test_invalid_categories_are_rejected[categories3]
 FAILED _unwritten/feature/test_discount_eligibility.py::test_invalid_categories_are_rejected[categories4]
 FAILED _unwritten/feature/test_discount_eligibility.py::test_invalid_categories_are_rejected[categories5]
-9 failed, 16 passed in 0.08s
+9 failed, 16 passed in 0.05s

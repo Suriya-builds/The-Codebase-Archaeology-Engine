@@ -1,15 +1,1 @@
-{
- "pytest_version": "8.3.4",
- "exit_status": 1,
- "tests": [],
- "collection_errors": [
-  {
-   "nodeid": "tests/test_cart.py",
-   "detail": "tests/test_cart.py:7: in <module>\n    NOVEL = Product(\"BK-1\", \"Novel\", \"12.50\", \"books\")\n<string>:7: in __init__\n    ???\nshopcart/catalog.py:15: in __post_init__\n    price = to_money(self.price)\nshopcart/money.py:19: in to_money\n    raise ValueError(f\"not a money value: {value!r}\")\nE   ValueError: not a money value: '12.50'"
-  },
-  {
-   "nodeid": "tests/test_discounts.py",
-   "detail": "tests/test_discounts.py:7: in <module>\n    NOVEL = Product(\"BK-1\", \"Novel\", \"12.50\", \"books\")\n<string>:7: in __init__\n    ???\nshopcart/catalog.py:15: in __post_init__\n    price = to_money(self.price)\nshopcart/money.py:19: in to_money\n    raise ValueError(f\"not a money value: {value!r}\")\nE   ValueError: not a money value: '12.50'"
-  }
- ]
-}
+{"pytest_version":"8.3.4","exit_status":1,"tests":[],"collection_errors":[{"nodeid":"tests/test_cart.py","detail":"tests/test_cart.py:7: in <module>\n    NOVEL = Product(\"BK-1\", \"Novel\", \"12.50\", \"books\")\n<string>:7: in __init__\n    ???\nshopcart/catalog.py:15: in __post_init__\n    price = to_money(self.price)\nshopcart/money.py:19: in to_money\n    raise ValueError(f\"not a money value: {value!r}\")\nE   ValueError: not a money value: '12.50'"},{"nodeid":"tests/test_discounts.py","detail":"tests/test_discounts.py:7: in <module>\n    NOVEL = Product(\"BK-1\", \"Novel\", \"12.50\", \"books\")\n<string>:7: in __init__\n    ???\nshopcart/catalog.py:15: in __post_init__\n    price = to_money(self.price)\nshopcart/money.py:19: in to_money\n    raise ValueError(f\"not a money value: {value!r}\")\nE   ValueError: not a money value: '12.50'"}]}

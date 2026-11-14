@@ -24,4 +24,4 @@ E           shopcart.errors.InvalidDiscountError: eligibility must be a mapping
 shopcart/discounts.py:74: InvalidDiscountError
 =========================== short test summary info ============================
 FAILED _unwritten/regression/test_discount_compatibility.py::test_discount_without_eligibility_applies_to_whole_cart
-1 failed, 5 passed in 0.04s
+1 failed, 5 passed in 0.03s

@@ -93,4 +93,4 @@ FAILED _unwritten/regression/test_discount_compatibility.py::test_empty_eligibil
 FAILED _unwritten/regression/test_discount_compatibility.py::test_zero_min_subtotal_is_valid_and_always_met
 FAILED _unwritten/regression/test_discount_compatibility.py::test_min_subtotal_only_keeps_every_line_eligible
 FAILED _unwritten/regression/test_discount_compatibility.py::test_unknown_eligibility_keys_are_ignored
-4 failed, 2 passed in 0.05s
+4 failed, 2 passed in 0.04s

@@ -1,3 +1,3 @@
 $ pytest -p unwritten_probe -p no:cacheprovider --rootdir . -q --continue-on-collection-errors tests
 ..............................                                           [100%]
-30 passed in 0.05s
+30 passed in 0.04s

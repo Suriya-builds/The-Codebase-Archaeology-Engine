@@ -110,4 +110,4 @@ FAILED _unwritten/feature/test_discount_eligibility.py::test_eligibility_must_be
 FAILED _unwritten/feature/test_discount_eligibility.py::test_eligibility_must_be_a_mapping[eligibility1]
 FAILED _unwritten/feature/test_discount_eligibility.py::test_eligibility_must_be_a_mapping[5]
 FAILED _unwritten/feature/test_discount_eligibility.py::test_eligibility_must_be_a_mapping[True]
-4 failed, 21 passed in 0.09s
+4 failed, 21 passed in 0.04s

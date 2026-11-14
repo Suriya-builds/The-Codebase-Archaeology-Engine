@@ -12,7 +12,7 @@ _unwritten/regression/test_discount_compatibility.py:23:
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
 self = Discount(code='TEN', percent=Decimal('10'), eligibility=None)
-cart = <shopcart.cart.Cart object at 0x7f6658bc0230>
+cart = <shopcart.cart.Cart object at 0x7ffb8424a570>
 
     def amount_for(self, cart):
         """The amount this discount takes off the given cart."""
