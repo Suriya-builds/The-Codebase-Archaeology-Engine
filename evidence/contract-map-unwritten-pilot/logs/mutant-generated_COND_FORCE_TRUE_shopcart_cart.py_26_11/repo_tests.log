@@ -10,7 +10,7 @@ ________________________ test_subtotal_sums_line_totals ________________________
 tests/test_cart.py:20: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = <shopcart.cart.Cart object at 0x7fc825c2d520>
+self = <shopcart.cart.Cart object at 0x7fc235a4f290>
 product = Product(sku='BK-1', name='Novel', price=Decimal('12.50'), category='books')
 quantity = 2
 
@@ -31,7 +31,7 @@ __________________ test_adding_same_product_merges_quantities __________________
 tests/test_cart.py:27: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = <shopcart.cart.Cart object at 0x7fc825c43c80>
+self = <shopcart.cart.Cart object at 0x7fc23582b950>
 product = Product(sku='BK-1', name='Novel', price=Decimal('12.50'), category='books')
 quantity = 1
 
@@ -52,7 +52,7 @@ _______________________ test_lines_keep_insertion_order ________________________
 tests/test_cart.py:34: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = <shopcart.cart.Cart object at 0x7fc825c69730>
+self = <shopcart.cart.Cart object at 0x7fc2358291f0>
 product = Product(sku='HM-1', name='Mug', price=Decimal('8.00'), category='home')
 quantity = 1
 
@@ -73,7 +73,7 @@ ___________________________ test_remove_deletes_line ___________________________
 tests/test_cart.py:41: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = <shopcart.cart.Cart object at 0x7fc825c69fd0>
+self = <shopcart.cart.Cart object at 0x7fc235865b80>
 product = Product(sku='BK-1', name='Novel', price=Decimal('12.50'), category='books')
 quantity = 1
 
@@ -97,7 +97,7 @@ tests/test_discounts.py:14: in cart_of
     cart.add(product, quantity)
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = <shopcart.cart.Cart object at 0x7fc825c6a6c0>
+self = <shopcart.cart.Cart object at 0x7fc236337950>
 product = Product(sku='BK-1', name='Novel', price=Decimal('12.50'), category='books')
 quantity = 2
 
@@ -121,7 +121,7 @@ tests/test_discounts.py:14: in cart_of
     cart.add(product, quantity)
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = <shopcart.cart.Cart object at 0x7fc825c6b7d0>
+self = <shopcart.cart.Cart object at 0x7fc235868620>
 product = Product(sku='P', name='Pen', price=Decimal('0.30'), category='office')
 quantity = 1
 
@@ -145,7 +145,7 @@ tests/test_discounts.py:14: in cart_of
     cart.add(product, quantity)
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = <shopcart.cart.Cart object at 0x7fc825c6cbc0>
+self = <shopcart.cart.Cart object at 0x7fc235868ec0>
 product = Product(sku='HM-1', name='Mug', price=Decimal('8.00'), category='home')
 quantity = 3
 

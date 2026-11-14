@@ -12,7 +12,7 @@ ___________________________ test_remove_deletes_line ___________________________
 tests/test_cart.py:43: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = <shopcart.cart.Cart object at 0x7f907ca50e90>, sku = 'BK-1'
+self = <shopcart.cart.Cart object at 0x7fbd787e43b0>, sku = 'BK-1'
 
     def remove(self, sku):
         if sku in self._lines:

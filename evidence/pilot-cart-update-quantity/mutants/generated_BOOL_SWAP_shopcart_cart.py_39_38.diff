@@ -1,0 +1,9 @@
+--- reference/shopcart/cart.py
++++ mutant/shopcart/cart.py
+@@ -37,5 +37,5 @@
+         if sku not in self._lines:
+             raise KeyError(sku)
+-        if isinstance(quantity, bool) or not isinstance(quantity, int):
++        if isinstance(quantity, bool) and not isinstance(quantity, int):
+             raise InvalidQuantityError("quantity must be an integer")
+         if quantity < 0:

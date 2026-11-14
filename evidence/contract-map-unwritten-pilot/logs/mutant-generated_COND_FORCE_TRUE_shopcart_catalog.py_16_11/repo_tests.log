@@ -20,4 +20,4 @@ E   ValueError: price must not be negative
 =========================== short test summary info ============================
 ERROR tests/test_cart.py - ValueError: price must not be negative
 ERROR tests/test_discounts.py - ValueError: price must not be negative
-2 errors in 0.03s
+2 errors in 0.02s

@@ -3,6 +3,9 @@
     unwritten verify <package> --repo <git repository> [--runner docker|local]
     unwritten contracts extract --repo <git repository> --profile <profile.json>
     unwritten contracts attach <package> --map <contract map directory>
+    unwritten variation <package> <package> ... --repo <git repository>
+    unwritten status <package> [--evidence <dir>]
+    unwritten release <package> --evidence <dir> --reviewer <name> --approve
 
 Exit status: 0 accepted, 1 rejected, 2 the harness could not complete.
 """
@@ -14,6 +17,8 @@ from pathlib import Path
 from unwritten.contracts import MAP_FILE, attach_contracts, extract_contracts
 from unwritten.errors import HarnessError
 from unwritten.profile import load_profile
+from unwritten.release import package_status, release_package
+from unwritten.variation import DEFAULT_THRESHOLD, REPORT_FILE, variation_report
 from unwritten.runners import make_runner
 from unwritten.verify import EVIDENCE_FILE, verify_package
 
@@ -132,6 +137,44 @@ def _contracts_attach(args):
     return 0
 
 
+def _variation(args):
+    out_dir = Path(args.out) if args.out else Path("unwritten-evidence") / "variation"
+    report = variation_report(args.packages, args.repo, make_runner(args.runner), out_dir,
+                              args.threshold)
+    print(f"UNWRITTEN variation  {len(report['fingerprints'])} tasks, threshold {args.threshold}")
+    for fp in report["fingerprints"]:
+        print(f"\n  {fp['task_id']}\n    symbols     {', '.join(fp['symbols'])}"
+              f"\n    categories  {', '.join(fp['categories'])}"
+              f"\n    contracts   {len(fp['contracts'])} attached, "
+              f"{len(fp['contracts_overridden'])} overridden")
+    for pair in report["pairs"]:
+        print(f"\n  {pair['tasks'][0]}  vs  {pair['tasks'][1]}")
+        print(f"    distance {pair['distance']}   statement word overlap "
+              f"{pair['statement_word_overlap']} (information only)")
+        for name, result in (pair["test_overlap"] or {}).items():
+            print(f"    {name}: {result['passed']}/{result['tests']} pass")
+        print("    DUPLICATE: " + "; ".join(pair["duplicate_reasons"]) if pair["duplicate"]
+              else "    distinct")
+    print(f"\nreport            {Path(report['report_dir']) / REPORT_FILE}")
+    return 1 if report["duplicates"] else 0
+
+
+def _status(args):
+    status = package_status(args.package, args.evidence)
+    print(f"{args.package}: {status['status'].upper()}")
+    for key, value in status.items():
+        if key != "status":
+            print(f"  {key}: {value}")
+    return 1 if status["status"] == "release_invalid" else 0
+
+
+def _release(args):
+    record = release_package(args.package, args.evidence, args.reviewer, args.approve, args.notes)
+    print(f"{args.package}: RELEASED by {record['reviewer']} at {record['reviewed_at']}")
+    print(f"  statement {record['statement_sha256'][:12]}  tests {record['tests_sha256'][:12]}")
+    return 0
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(prog="unwritten", description=__doc__.split("\n")[0])
     commands = parser.add_subparsers(dest="command", required=True)
@@ -165,8 +208,35 @@ def main(argv=None):
         description="Attach verified contracts to a task package as regression protection.")
     attach.add_argument("package", help="task package directory")
     attach.add_argument("--map", required=True, help="directory written by 'contracts extract'")
+    variation = commands.add_parser(
+        "variation", help="measure how different task packages are from each other",
+        description="Compare task packages by what they change and test, not by wording.")
+    variation.add_argument("packages", nargs="+", help="two or more task package directories")
+    variation.add_argument("--repo", required=True)
+    variation.add_argument("--runner", choices=("docker", "local"), default="docker")
+    variation.add_argument("--threshold", type=float, default=DEFAULT_THRESHOLD,
+                           help=f"distance below which a pair is a duplicate (default {DEFAULT_THRESHOLD})")
+    variation.add_argument("--out", help="report directory (default unwritten-evidence/variation)")
+    status = commands.add_parser("status", help="draft, validated, released or release_invalid")
+    status.add_argument("package")
+    status.add_argument("--evidence", help="evidence directory from 'unwritten verify'")
+    release = commands.add_parser(
+        "release", help="record a human review of a validated package",
+        description="Record that a named person approved the statement and tests as they are now.")
+    release.add_argument("package")
+    release.add_argument("--evidence", required=True)
+    release.add_argument("--reviewer", required=True, help="who reviewed (not authenticated)")
+    release.add_argument("--approve", action="store_true",
+                         help="states that the statement was read against the tests and approved")
+    release.add_argument("--notes", default="")
     args = parser.parse_args(argv)
     try:
+        if args.command == "variation":
+            return _variation(args)
+        if args.command == "status":
+            return _status(args)
+        if args.command == "release":
+            return _release(args)
         if args.command == "contracts":
             return _contracts_extract(args) if args.action == "extract" else _contracts_attach(args)
         return _verify(args)

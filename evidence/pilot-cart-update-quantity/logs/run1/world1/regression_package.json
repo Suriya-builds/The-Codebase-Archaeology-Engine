@@ -1,0 +1,1 @@
+{"pytest_version":"8.3.4","exit_status":0,"tests":[{"nodeid":"_unwritten/regression/test_cart_compatibility.py::test_add_still_merges_instead_of_replacing","phases":{"call":{"outcome":"passed"}}},{"nodeid":"_unwritten/regression/test_cart_compatibility.py::test_remove_then_add_still_moves_the_line_to_the_end","phases":{"call":{"outcome":"passed"}}}],"collection_errors":[]}

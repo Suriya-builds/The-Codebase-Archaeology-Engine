@@ -1,0 +1,19 @@
+$ pytest -p unwritten_probe -p no:cacheprovider --rootdir . -q --continue-on-collection-errors _unwritten/feature
+..F............                                                          [100%]
+=================================== FAILURES ===================================
+__________________________ test_zero_removes_the_line __________________________
+
+    def test_zero_removes_the_line():
+        cart = cart_of((NOVEL, 2), (MUG, 1))
+        cart.update_quantity("BK-1", 0)
+>       assert snapshot(cart) == [("HM-1", 1)]
+E       AssertionError: assert [('BK-1', 0), ('HM-1', 1)] == [('HM-1', 1)]
+E         
+E         At index 0 diff: ('BK-1', 0) != ('HM-1', 1)
+E         Left contains one more item: ('HM-1', 1)
+E         Use -v to get more diff
+
+_unwritten/feature/test_update_quantity.py:41: AssertionError
+=========================== short test summary info ============================
+FAILED _unwritten/feature/test_update_quantity.py::test_zero_removes_the_line
+1 failed, 14 passed in 0.02s

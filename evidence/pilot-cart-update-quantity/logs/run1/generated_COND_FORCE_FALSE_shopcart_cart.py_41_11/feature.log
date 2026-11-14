@@ -1,0 +1,29 @@
+$ pytest -p unwritten_probe -p no:cacheprovider --rootdir . -q --continue-on-collection-errors _unwritten/feature
+.......FF......                                                          [100%]
+=================================== FAILURES ===================================
+__________ test_invalid_quantity_is_rejected_and_changes_nothing[-1] ___________
+
+quantity = -1
+
+    @pytest.mark.parametrize("quantity", [-1, -100, 1.5, "2", None, True, False])
+    def test_invalid_quantity_is_rejected_and_changes_nothing(quantity):
+        cart = cart_of((NOVEL, 2), (MUG, 1))
+>       with pytest.raises(InvalidQuantityError):
+E       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidQuantityError'>
+
+_unwritten/feature/test_update_quantity.py:63: Failed
+_________ test_invalid_quantity_is_rejected_and_changes_nothing[-100] __________
+
+quantity = -100
+
+    @pytest.mark.parametrize("quantity", [-1, -100, 1.5, "2", None, True, False])
+    def test_invalid_quantity_is_rejected_and_changes_nothing(quantity):
+        cart = cart_of((NOVEL, 2), (MUG, 1))
+>       with pytest.raises(InvalidQuantityError):
+E       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidQuantityError'>
+
+_unwritten/feature/test_update_quantity.py:63: Failed
+=========================== short test summary info ============================
+FAILED _unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[-1]
+FAILED _unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[-100]
+2 failed, 13 passed in 0.03s

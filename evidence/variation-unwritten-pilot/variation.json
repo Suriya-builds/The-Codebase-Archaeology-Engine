@@ -1,0 +1,153 @@
+{
+  "method": {
+    "distance": "1 - weighted Jaccard similarity over the dimensions below; a dimension empty in both tasks is left out",
+    "weights": {
+      "symbols": 0.4,
+      "categories": 0.25,
+      "contracts": 0.2,
+      "files": 0.15
+    },
+    "threshold": 0.25,
+    "threshold_note": "the threshold is a chosen value, not a measured one",
+    "test_overlap": "share of one task's feature tests that pass with the other task's reference implementation; 1.0 means subsumed",
+    "statement_word_overlap": "reported for information; it decides nothing"
+  },
+  "environment": {
+    "runner": "docker",
+    "isolation": {
+      "network": "none",
+      "read_only_root": true,
+      "capabilities": "none",
+      "user": "65534:65534",
+      "memory": "1g",
+      "cpus": "2",
+      "pids": "256",
+      "tmpfs": "/tmp:rw,size=256m"
+    },
+    "image": "unwritten-env:da8c25df4f5e6e87",
+    "image_id": "sha256:2eba2c24e502803b83b0227531fa737f085a80b3ac6ba879781eca8496c16416",
+    "dockerfile_sha256": "da8c25df4f5e6e87aaf2c2df4277ab64735f21a8f967ee212ac2ce4b2ff62947"
+  },
+  "fingerprints": [
+    {
+      "task_id": "pilot-cart-discount-eligibility",
+      "commit": "667512bac0534ea742a7a7c3e3262142ac914c30",
+      "files": [
+        "shopcart/discounts.py"
+      ],
+      "symbols": [
+        "shopcart/discounts.py:<module>",
+        "shopcart/discounts.py:Discount",
+        "shopcart/discounts.py:Discount.amount_for",
+        "shopcart/discounts.py:Discount.from_config",
+        "shopcart/discounts.py:Eligibility",
+        "shopcart/discounts.py:Eligibility.eligible_subtotal",
+        "shopcart/discounts.py:_parse_categories",
+        "shopcart/discounts.py:_parse_eligibility",
+        "shopcart/discounts.py:_parse_min_subtotal"
+      ],
+      "contracts": [
+        "guard:shopcart/discounts.py:Discount.from_config:182744ac",
+        "guard:shopcart/discounts.py:Discount.from_config:71304af5",
+        "guard:shopcart/discounts.py:_parse_percent:30fcc400",
+        "guard:shopcart/discounts.py:_parse_percent:361f4679",
+        "test:tests/test_discounts.py::test_code_is_trimmed_and_uppercased",
+        "test:tests/test_discounts.py::test_config_must_be_a_mapping",
+        "test:tests/test_discounts.py::test_discount_amount_rounds_half_up",
+        "test:tests/test_discounts.py::test_full_discount_makes_cart_free",
+        "test:tests/test_discounts.py::test_invalid_code_is_rejected",
+        "test:tests/test_discounts.py::test_invalid_percent_is_rejected",
+        "test:tests/test_discounts.py::test_percentage_discount_applies_to_whole_subtotal",
+        "test:tests/test_discounts.py::test_unknown_config_keys_are_ignored"
+      ],
+      "contracts_overridden": [],
+      "categories": [
+        "changes_existing_behaviour",
+        "input_validation",
+        "new_public_name",
+        "new_type"
+      ],
+      "counts": {
+        "lines_added": 57,
+        "public_names_added": 2,
+        "new_types": 1,
+        "guards_added": 4,
+        "signatures_changed": 0,
+        "feature_test_functions": 12,
+        "acceptance_criteria": 0
+      }
+    },
+    {
+      "task_id": "pilot-cart-update-quantity",
+      "commit": "667512bac0534ea742a7a7c3e3262142ac914c30",
+      "files": [
+        "shopcart/cart.py"
+      ],
+      "symbols": [
+        "shopcart/cart.py:Cart.update_quantity"
+      ],
+      "contracts": [
+        "guard:shopcart/cart.py:_check_quantity:489e0964",
+        "guard:shopcart/cart.py:_check_quantity:ce994315",
+        "test:tests/test_cart.py::test_adding_same_product_merges_quantities",
+        "test:tests/test_cart.py::test_empty_cart_totals_zero",
+        "test:tests/test_cart.py::test_invalid_quantity_is_rejected",
+        "test:tests/test_cart.py::test_lines_keep_insertion_order",
+        "test:tests/test_cart.py::test_remove_deletes_line",
+        "test:tests/test_cart.py::test_subtotal_sums_line_totals",
+        "test:tests/test_discounts.py::test_discount_amount_rounds_half_up",
+        "test:tests/test_discounts.py::test_full_discount_makes_cart_free",
+        "test:tests/test_discounts.py::test_percentage_discount_applies_to_whole_subtotal"
+      ],
+      "contracts_overridden": [],
+      "categories": [
+        "input_validation",
+        "new_public_name"
+      ],
+      "counts": {
+        "lines_added": 13,
+        "public_names_added": 1,
+        "new_types": 0,
+        "guards_added": 3,
+        "signatures_changed": 0,
+        "feature_test_functions": 7,
+        "acceptance_criteria": 5
+      }
+    }
+  ],
+  "pairs": [
+    {
+      "tasks": [
+        "pilot-cart-discount-eligibility",
+        "pilot-cart-update-quantity"
+      ],
+      "distance": 0.845,
+      "similarity_by_dimension": {
+        "symbols": 0.0,
+        "categories": 0.5,
+        "contracts": 0.15,
+        "files": 0.0
+      },
+      "statement_word_overlap": 0.2035,
+      "test_overlap": {
+        "pilot-cart-discount-eligibility tests on pilot-cart-update-quantity reference": {
+          "passed": 0,
+          "tests": 25,
+          "uncollectable_files": 0,
+          "overlap": 0.0,
+          "log": "logs/pilot-cart-discount-eligibility__on__pilot-cart-update-quantity/feature.log"
+        },
+        "pilot-cart-update-quantity tests on pilot-cart-discount-eligibility reference": {
+          "passed": 0,
+          "tests": 15,
+          "uncollectable_files": 0,
+          "overlap": 0.0,
+          "log": "logs/pilot-cart-update-quantity__on__pilot-cart-discount-eligibility/feature.log"
+        }
+      },
+      "duplicate": false,
+      "duplicate_reasons": []
+    }
+  ],
+  "duplicates": []
+}

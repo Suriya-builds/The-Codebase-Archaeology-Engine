@@ -1,0 +1,9 @@
+--- reference/shopcart/cart.py
++++ mutant/shopcart/cart.py
+@@ -65,5 +65,5 @@
+ 
+ def _check_quantity(quantity):
+-    if isinstance(quantity, bool) or not isinstance(quantity, int):
++    if False:
+         raise InvalidQuantityError("quantity must be an integer")
+     if quantity < 1:

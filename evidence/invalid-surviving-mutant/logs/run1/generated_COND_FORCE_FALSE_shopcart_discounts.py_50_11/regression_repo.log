@@ -14,7 +14,7 @@ shopcart/cart.py:50: in total
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
 self = Discount(code='TEN', percent=Decimal('10'), eligibility=None)
-cart = <shopcart.cart.Cart object at 0x7f17fec18680>
+cart = <shopcart.cart.Cart object at 0x7f0172a47f80>
 
     def amount_for(self, cart):
         """The amount this discount takes off the given cart."""
@@ -35,7 +35,7 @@ tests/test_discounts.py:26:
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
 self = Discount(code='ODD', percent=Decimal('15'), eligibility=None)
-cart = <shopcart.cart.Cart object at 0x7f17fec2f920>
+cart = <shopcart.cart.Cart object at 0x7f0172c53e00>
 
     def amount_for(self, cart):
         """The amount this discount takes off the given cart."""
@@ -58,7 +58,7 @@ shopcart/cart.py:50: in total
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
 self = Discount(code='FREE', percent=Decimal('100'), eligibility=None)
-cart = <shopcart.cart.Cart object at 0x7f17fec566f0>
+cart = <shopcart.cart.Cart object at 0x7f0172a322a0>
 
     def amount_for(self, cart):
         """The amount this discount takes off the given cart."""
@@ -72,4 +72,4 @@ shopcart/discounts.py:52: AttributeError
 FAILED tests/test_discounts.py::test_percentage_discount_applies_to_whole_subtotal
 FAILED tests/test_discounts.py::test_discount_amount_rounds_half_up - Attribu...
 FAILED tests/test_discounts.py::test_full_discount_makes_cart_free - Attribut...
-3 failed, 27 passed in 0.04s
+3 failed, 27 passed in 0.05s

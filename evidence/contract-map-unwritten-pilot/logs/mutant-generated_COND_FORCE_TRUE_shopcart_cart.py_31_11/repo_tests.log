@@ -12,7 +12,7 @@ ___________________________ test_remove_deletes_line ___________________________
 tests/test_cart.py:43: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-self = <shopcart.cart.Cart object at 0x7fc00fbbcce0>, sku = 'BK-1'
+self = <shopcart.cart.Cart object at 0x7f4cd331c7d0>, sku = 'BK-1'
 
     def remove(self, sku):
         if True:
@@ -22,4 +22,4 @@ E           KeyError: 'BK-1'
 shopcart/cart.py:32: KeyError
 =========================== short test summary info ============================
 FAILED tests/test_cart.py::test_remove_deletes_line - KeyError: 'BK-1'
-1 failed, 29 passed in 0.03s
+1 failed, 29 passed in 0.04s

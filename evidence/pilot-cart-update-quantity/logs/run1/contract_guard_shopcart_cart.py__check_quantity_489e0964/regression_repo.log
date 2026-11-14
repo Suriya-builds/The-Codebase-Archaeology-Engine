@@ -1,0 +1,52 @@
+$ pytest -p unwritten_probe -p no:cacheprovider --rootdir . -q --continue-on-collection-errors tests
+........FFF...................                                           [100%]
+=================================== FAILURES ===================================
+____________________ test_invalid_quantity_is_rejected[1.5] ____________________
+
+quantity = 1.5
+
+    @pytest.mark.parametrize("quantity", [0, -1, 1.5, "2", True])
+    def test_invalid_quantity_is_rejected(quantity):
+>       with pytest.raises(InvalidQuantityError):
+E       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidQuantityError'>
+
+tests/test_cart.py:54: Failed
+_____________________ test_invalid_quantity_is_rejected[2] _____________________
+
+quantity = '2'
+
+    @pytest.mark.parametrize("quantity", [0, -1, 1.5, "2", True])
+    def test_invalid_quantity_is_rejected(quantity):
+        with pytest.raises(InvalidQuantityError):
+>           Cart().add(NOVEL, quantity)
+
+tests/test_cart.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+shopcart/cart.py:24: in add
+    _check_quantity(quantity)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+quantity = '2'
+
+    def _check_quantity(quantity):
+        if False:
+            raise InvalidQuantityError("quantity must be an integer")
+>       if quantity < 1:
+E       TypeError: '<' not supported between instances of 'str' and 'int'
+
+shopcart/cart.py:69: TypeError
+___________________ test_invalid_quantity_is_rejected[True] ____________________
+
+quantity = True
+
+    @pytest.mark.parametrize("quantity", [0, -1, 1.5, "2", True])
+    def test_invalid_quantity_is_rejected(quantity):
+>       with pytest.raises(InvalidQuantityError):
+E       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidQuantityError'>
+
+tests/test_cart.py:54: Failed
+=========================== short test summary info ============================
+FAILED tests/test_cart.py::test_invalid_quantity_is_rejected[1.5] - Failed: D...
+FAILED tests/test_cart.py::test_invalid_quantity_is_rejected[2] - TypeError: ...
+FAILED tests/test_cart.py::test_invalid_quantity_is_rejected[True] - Failed: ...
+3 failed, 27 passed in 0.04s

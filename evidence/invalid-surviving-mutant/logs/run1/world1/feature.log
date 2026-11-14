@@ -8,7 +8,7 @@ _______________ test_discount_is_not_applied_below_min_subtotal ________________
 >       assert cart.total(discount(min_subtotal="50.00")) == Decimal("33.00")
 E       AssertionError: assert Decimal('29.70') == Decimal('33.00')
 E        +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10')))
-E        +    where total = <shopcart.cart.Cart object at 0x7f77dc7529c0>.total
+E        +    where total = <shopcart.cart.Cart object at 0x7f721ad8ee40>.total
 E        +    and   Discount(code='TEST', percent=Decimal('10')) = discount(min_subtotal='50.00')
 E        +  and   Decimal('33.00') = Decimal('33.00')
 
@@ -20,7 +20,7 @@ ______________ test_category_restricts_discount_to_matching_lines ______________
 >       assert cart.total(discount(categories=["books"])) == Decimal("30.50")
 E       AssertionError: assert Decimal('29.70') == Decimal('30.50')
 E        +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10')))
-E        +    where total = <shopcart.cart.Cart object at 0x7f77dc629a00>.total
+E        +    where total = <shopcart.cart.Cart object at 0x7f721ad69820>.total
 E        +    and   Discount(code='TEST', percent=Decimal('10')) = discount(categories=['books'])
 E        +  and   Decimal('30.50') = Decimal('30.50')
 
@@ -32,7 +32,7 @@ ___________________ test_no_eligible_lines_means_no_discount ___________________
 >       assert cart.total(discount(categories=["garden"])) == Decimal("33.00")
 E       AssertionError: assert Decimal('29.70') == Decimal('33.00')
 E        +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10')))
-E        +    where total = <shopcart.cart.Cart object at 0x7f77dc64e0f0>.total
+E        +    where total = <shopcart.cart.Cart object at 0x7f721ad559a0>.total
 E        +    and   Discount(code='TEST', percent=Decimal('10')) = discount(categories=['garden'])
 E        +  and   Decimal('33.00') = Decimal('33.00')
 

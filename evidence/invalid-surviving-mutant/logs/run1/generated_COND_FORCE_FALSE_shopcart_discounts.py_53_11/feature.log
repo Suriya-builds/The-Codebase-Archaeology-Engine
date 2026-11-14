@@ -8,11 +8,11 @@ _______________ test_discount_is_not_applied_below_min_subtotal ________________
 >       assert cart.total(discount(min_subtotal="50.00")) == Decimal("33.00")
 E       AssertionError: assert Decimal('29.70') == Decimal('33.00')
 E        +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('50.00'), categories=None)))
-E        +    where total = <shopcart.cart.Cart object at 0x7ffbb98d1040>.total
+E        +    where total = <shopcart.cart.Cart object at 0x7f937e07b290>.total
 E        +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('50.00'), categories=None)) = discount(min_subtotal='50.00')
 E        +  and   Decimal('33.00') = Decimal('33.00')
 
 _unwritten/feature/test_discount_eligibility.py:28: AssertionError
 =========================== short test summary info ============================
 FAILED _unwritten/feature/test_discount_eligibility.py::test_discount_is_not_applied_below_min_subtotal
-1 failed, 2 passed in 0.02s
+1 failed, 2 passed in 0.03s

@@ -1,0 +1,95 @@
+$ pytest -p unwritten_probe -p no:cacheprovider --rootdir . -q --continue-on-collection-errors _unwritten/feature
+.........FFFFF.                                                          [100%]
+=================================== FAILURES ===================================
+__________ test_invalid_quantity_is_rejected_and_changes_nothing[1.5] __________
+
+quantity = 1.5
+
+    @pytest.mark.parametrize("quantity", [-1, -100, 1.5, "2", None, True, False])
+    def test_invalid_quantity_is_rejected_and_changes_nothing(quantity):
+        cart = cart_of((NOVEL, 2), (MUG, 1))
+>       with pytest.raises(InvalidQuantityError):
+E       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidQuantityError'>
+
+_unwritten/feature/test_update_quantity.py:63: Failed
+___________ test_invalid_quantity_is_rejected_and_changes_nothing[2] ___________
+
+quantity = '2'
+
+    @pytest.mark.parametrize("quantity", [-1, -100, 1.5, "2", None, True, False])
+    def test_invalid_quantity_is_rejected_and_changes_nothing(quantity):
+        cart = cart_of((NOVEL, 2), (MUG, 1))
+        with pytest.raises(InvalidQuantityError):
+>           cart.update_quantity("BK-1", quantity)
+
+_unwritten/feature/test_update_quantity.py:64: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <shopcart.cart.Cart object at 0x7f384a07d940>, sku = 'BK-1'
+quantity = '2'
+
+    def update_quantity(self, sku, quantity):
+        """Set the quantity of a product already in the cart; zero removes the line."""
+        if sku not in self._lines:
+            raise KeyError(sku)
+        if False:
+            raise InvalidQuantityError("quantity must be an integer")
+>       if quantity < 0:
+E       TypeError: '<' not supported between instances of 'str' and 'int'
+
+shopcart/cart.py:41: TypeError
+_________ test_invalid_quantity_is_rejected_and_changes_nothing[None] __________
+
+quantity = None
+
+    @pytest.mark.parametrize("quantity", [-1, -100, 1.5, "2", None, True, False])
+    def test_invalid_quantity_is_rejected_and_changes_nothing(quantity):
+        cart = cart_of((NOVEL, 2), (MUG, 1))
+        with pytest.raises(InvalidQuantityError):
+>           cart.update_quantity("BK-1", quantity)
+
+_unwritten/feature/test_update_quantity.py:64: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <shopcart.cart.Cart object at 0x7f384a0b93a0>, sku = 'BK-1'
+quantity = None
+
+    def update_quantity(self, sku, quantity):
+        """Set the quantity of a product already in the cart; zero removes the line."""
+        if sku not in self._lines:
+            raise KeyError(sku)
+        if False:
+            raise InvalidQuantityError("quantity must be an integer")
+>       if quantity < 0:
+E       TypeError: '<' not supported between instances of 'NoneType' and 'int'
+
+shopcart/cart.py:41: TypeError
+_________ test_invalid_quantity_is_rejected_and_changes_nothing[True] __________
+
+quantity = True
+
+    @pytest.mark.parametrize("quantity", [-1, -100, 1.5, "2", None, True, False])
+    def test_invalid_quantity_is_rejected_and_changes_nothing(quantity):
+        cart = cart_of((NOVEL, 2), (MUG, 1))
+>       with pytest.raises(InvalidQuantityError):
+E       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidQuantityError'>
+
+_unwritten/feature/test_update_quantity.py:63: Failed
+_________ test_invalid_quantity_is_rejected_and_changes_nothing[False] _________
+
+quantity = False
+
+    @pytest.mark.parametrize("quantity", [-1, -100, 1.5, "2", None, True, False])
+    def test_invalid_quantity_is_rejected_and_changes_nothing(quantity):
+        cart = cart_of((NOVEL, 2), (MUG, 1))
+>       with pytest.raises(InvalidQuantityError):
+E       Failed: DID NOT RAISE <class 'shopcart.errors.InvalidQuantityError'>
+
+_unwritten/feature/test_update_quantity.py:63: Failed
+=========================== short test summary info ============================
+FAILED _unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[1.5]
+FAILED _unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[2]
+FAILED _unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[None]
+FAILED _unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[True]
+FAILED _unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[False]
+5 failed, 10 passed in 0.03s

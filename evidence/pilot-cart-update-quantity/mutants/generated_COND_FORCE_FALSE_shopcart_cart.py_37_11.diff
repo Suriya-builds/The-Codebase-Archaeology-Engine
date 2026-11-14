@@ -1,0 +1,9 @@
+--- reference/shopcart/cart.py
++++ mutant/shopcart/cart.py
+@@ -35,5 +35,5 @@
+     def update_quantity(self, sku, quantity):
+         """Set the quantity of a product already in the cart; zero removes the line."""
+-        if sku not in self._lines:
++        if False:
+             raise KeyError(sku)
+         if isinstance(quantity, bool) or not isinstance(quantity, int):

@@ -5,10 +5,14 @@
 UNWRITTEN turns a repository into feature-development tasks and proves each
 one is valid before accepting it.
 
-**Status: milestones M1 and M2.** This repository contains the verification
-harness (M1) and contract archaeology (M2). Task generation and the interface
-are later milestones. Nothing here calls a model: verdicts and contract
-statuses come from executed tests only.
+**Status: M1 and M2 accepted; M3a (the deterministic half of the Challenge
+Factory) implemented.** This repository contains the verification harness,
+contract archaeology, and the checks that hold a task to its own statement:
+declared interfaces, criterion traceability, variation measurement and
+release states. Task generation, the blind solver and the interface are not
+built yet. Nothing here calls a model: verdicts and contract statuses come
+from executed tests only. The approved plan for the rest is in
+[docs/m3-proposal.md](docs/m3-proposal.md).
 
 A short account of how the pieces fit is in [docs/architecture.md](docs/architecture.md).
 
@@ -145,6 +149,90 @@ Language support goes through `src/unwritten/adapters/` (source files,
 symbols, guards, mutants). Python is the only adapter; test execution is
 pytest only.
 
+## Holding a task to its statement (schema 0.2)
+
+A solver sees only `statement.md`. Schema 0.2 packages therefore declare, in
+`task.json`, what the statement promises, and the harness checks the rest of
+the package against it. Schema 0.1 packages are unaffected.
+
+    "acceptance_criteria": [{"id": "AC-1", "text": "..."}]
+    "test_criteria":       {"tests/feature/test_x.py::test_name": ["AC-1"]}
+    "public_interface":    [{"module": "shopcart.cart", "name": "Cart.update_quantity",
+                             "kind": "function",
+                             "signature": "update_quantity(self, sku, quantity)"}]
+
+**Static gates** run first and execute nothing:
+
+- the statement must contain every criterion id and every declared name with
+  its module and signature;
+- every feature test names a criterion and every criterion has a test;
+- feature tests may import only names that exist at the base commit or are
+  declared, and never private names;
+- a declared name must be new, or changed in signature.
+
+**World 1** then accepts a second kind of failure. A feature test may fail on
+a missing name when all of these hold: the exception is an `ImportError`,
+`AttributeError` or unexpected-argument `TypeError`; it was raised by test
+code; and the missing name matches a declared entry. The missing name is read
+from the exception object (`ImportError.name`, `AttributeError.name` and
+`.obj`); only the unexpected-argument case has to be parsed from the message,
+and the evidence says so. A missing name that is not declared is rejected:
+
+| Code | Meaning |
+|---|---|
+| `W1_FEATURE_USES_UNDECLARED_INTERFACE` | a test depends on a name the statement never mentions |
+| `W2_DECLARED_INTERFACE_NOT_IMPLEMENTED` | the reference does not define a declared name |
+| `W2_DECLARED_SIGNATURE_MISMATCH` | the reference's signature differs from the statement |
+| `GATE_STATEMENT_MISSING_CRITERION`, `GATE_STATEMENT_MISSING_INTERFACE` | the manifest declares something the statement does not say |
+| `GATE_TEST_WITHOUT_CRITERION`, `GATE_CRITERION_WITHOUT_TEST`, `GATE_UNKNOWN_TEST` | traceability is broken |
+| `GATE_TEST_USES_PRIVATE_NAME`, `GATE_TEST_IMPORTS_UNDECLARED_NAME` | a test is coupled to implementation detail |
+| `GATE_INTERFACE_NOT_NEW` | a declared name already exists unchanged |
+
+`packages/pilot-cart-update-quantity` is the hand-written schema 0.2 example:
+a task that adds one public method. All 15 of its feature tests fail at the
+base commit on that declared method, and pass with the reference.
+
+## Variation
+
+    unwritten variation <package> <package> ... --repo <git repo>
+
+Tasks are compared by what they change and test. Wording decides nothing.
+
+- **Fingerprint**, computed from the reference patch: files, symbols touched,
+  attached and overridden contracts, and categories derived from the change
+  (new public name, new type, signature change, input validation, change to
+  existing behaviour, contract change).
+- **Distance**: one minus a weighted Jaccard similarity over those sets.
+- **Test overlap**: the share of one task's feature tests that pass with the
+  other task's reference. Every feature test fails at the base commit, so a
+  passing test is behaviour the other task already delivers. Full overlap
+  means one task subsumes the other.
+
+A pair is a duplicate when the distance is below the threshold (0.25, a chosen
+value) or either task subsumes the other; the command then exits 1. The two
+pilot tasks are 0.85 apart with no test overlap. A copy of one task with a
+completely rewritten statement is caught at distance 0 with full overlap in
+both directions.
+
+## Validated and released
+
+    unwritten status  <package> [--evidence <dir>]
+    unwritten release <package> --evidence <dir> --reviewer <name> --approve
+
+| State | Meaning |
+|---|---|
+| draft | no accepted evidence for the package as it is now |
+| validated | `verify` accepted exactly this content |
+| released | validated, and a named person approved the statement and tests |
+| release_invalid | released once, but the content has changed since |
+
+`release` refuses unless the evidence is accepted and was produced for the
+current content. It writes `release.json` with the reviewer, a timestamp and
+hashes of the statement, the tests and the whole package. Any later change
+makes `status` report `release_invalid` and name what changed. The reviewer's
+name is whatever was typed; it is not authenticated. No package in this
+repository has been released: that is a human act.
+
 ## Quick start
 
 Requirements: Python 3.10+, git, Docker.
@@ -177,6 +265,7 @@ see `src/unwritten/runners/docker.py`.
 | `packages/pilot-cart-discount-eligibility` | hand-written task on the pilot repo | accepted |
 | `packages/invalid-baseline-passes` | same task plus a feature test that already passes at base | rejected: `W1_FEATURE_PASSES_AT_BASE` |
 | `packages/invalid-surviving-mutant` | same reference, weak feature tests | rejected: `W3_MUTANT_SURVIVED` |
+| `packages/pilot-cart-update-quantity` | hand-written schema 0.2 task that adds a public method | accepted |
 
 The pilot repository (`pilot/unwritten-pilot`, a small shopping-cart library)
 is stored as plain files. `pilot/materialize.py` turns it into a git
@@ -203,8 +292,9 @@ Each verification writes a directory:
     logs/run<N>/<world or mutant>/<suite>.log and .json    raw pytest output and per-test records
     mutants/<id>.diff       what each mutant changed
 
-`evidence/` holds the evidence from verifying the three shipped packages on
-the Docker runner, and the pilot's contract map, with their raw logs. A test
+`evidence/` holds the evidence from verifying the four shipped packages on
+the Docker runner, the pilot's contract map and the variation report for the
+two valid tasks, with their raw logs. A test
 checks that every file these documents refer to exists.
 
 Every rejection reason carries a code, the world that raised it and the tests
@@ -238,13 +328,20 @@ or mutants responsible.
 Source layout: `src/unwritten/` holds `package` and `profile` (loading),
 `patches`, `workspace`, `execution`, `mutation`, `classify`, `worlds` (one
 class per world, run in `PIPELINE` order), `verify` (orchestration and
-verdict), `contracts/` (extract, attach, hypotheses), `adapters/`, `runners/`
+verdict), `gates` and `interface` (schema 0.2 checks), `variation`, `release`,
+`contracts/` (extract, attach, hypotheses), `adapters/`, `runners/`
 and the two files that execute inside the sandbox, `runners/_inner/`. The
 harness has no runtime dependencies outside the standard library.
 
 ## Known limits
 
 - Python repositories tested with pytest only.
+- Declared-interface attribution needs Python 3.12 or later inside the sandbox
+  for `from module import name` failures (`ImportError.name_from`).
+- A declared class or attribute is checked for existence only; signatures are
+  compared for functions and methods.
+- The variation threshold and weights are chosen values. Removed-only hunks do
+  not contribute symbols to a fingerprint.
 - The harness proves that tests detect the feature's absence and detect
   mutants. It does not prove the tests match the written statement, or that
   the task is solvable from the statement alone. That needs a solver that

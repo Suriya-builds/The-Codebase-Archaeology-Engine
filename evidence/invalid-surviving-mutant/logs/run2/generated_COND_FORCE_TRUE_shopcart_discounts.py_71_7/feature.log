@@ -8,7 +8,7 @@ _______________ test_discount_is_not_applied_below_min_subtotal ________________
 >       assert cart.total(discount(min_subtotal="50.00")) == Decimal("33.00")
 E       AssertionError: assert Decimal('29.70') == Decimal('33.00')
 E        +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=None))
-E        +    where total = <shopcart.cart.Cart object at 0x7f107677d040>.total
+E        +    where total = <shopcart.cart.Cart object at 0x7fb8424c35f0>.total
 E        +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=None) = discount(min_subtotal='50.00')
 E        +  and   Decimal('33.00') = Decimal('33.00')
 
@@ -20,7 +20,7 @@ ______________ test_category_restricts_discount_to_matching_lines ______________
 >       assert cart.total(discount(categories=["books"])) == Decimal("30.50")
 E       AssertionError: assert Decimal('29.70') == Decimal('30.50')
 E        +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=None))
-E        +    where total = <shopcart.cart.Cart object at 0x7f10767b6bd0>.total
+E        +    where total = <shopcart.cart.Cart object at 0x7fb8424c0530>.total
 E        +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=None) = discount(categories=['books'])
 E        +  and   Decimal('30.50') = Decimal('30.50')
 
@@ -32,7 +32,7 @@ ___________________ test_no_eligible_lines_means_no_discount ___________________
 >       assert cart.total(discount(categories=["garden"])) == Decimal("33.00")
 E       AssertionError: assert Decimal('29.70') == Decimal('33.00')
 E        +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=None))
-E        +    where total = <shopcart.cart.Cart object at 0x7f10767b4080>.total
+E        +    where total = <shopcart.cart.Cart object at 0x7fb8424891c0>.total
 E        +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=None) = discount(categories=['garden'])
 E        +  and   Decimal('33.00') = Decimal('33.00')
 
@@ -41,4 +41,4 @@ _unwritten/feature/test_discount_eligibility.py:38: AssertionError
 FAILED _unwritten/feature/test_discount_eligibility.py::test_discount_is_not_applied_below_min_subtotal
 FAILED _unwritten/feature/test_discount_eligibility.py::test_category_restricts_discount_to_matching_lines
 FAILED _unwritten/feature/test_discount_eligibility.py::test_no_eligible_lines_means_no_discount
-3 failed in 0.02s
+3 failed in 0.03s

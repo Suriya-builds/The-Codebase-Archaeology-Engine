@@ -1,0 +1,14 @@
+diff --git a/shopcart/cart.py b/shopcart/cart.py
+index 2a90aa4..8f9d077 100644
+--- a/shopcart/cart.py
++++ b/shopcart/cart.py
+@@ -40,9 +40,6 @@ class Cart:
+             raise InvalidQuantityError("quantity must be an integer")
+         if quantity < 0:
+             raise InvalidQuantityError("quantity must not be negative")
+-        if quantity == 0:
+-            del self._lines[sku]
+-            return
+         self._lines[sku] = CartLine(self._lines[sku].product, quantity)
+ 
+     def lines(self):

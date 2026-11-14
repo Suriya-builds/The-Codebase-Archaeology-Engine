@@ -168,4 +168,4 @@ FAILED _unwritten/feature/test_discount_eligibility.py::test_invalid_categories_
 FAILED _unwritten/feature/test_discount_eligibility.py::test_invalid_categories_are_rejected[categories4]
 FAILED _unwritten/feature/test_discount_eligibility.py::test_invalid_categories_are_rejected[categories5]
 FAILED _unwritten/feature/test_discount_happy_path.py::test_discount_applies_when_cart_meets_the_minimum
-10 failed, 16 passed in 0.06s
+10 failed, 16 passed in 0.09s

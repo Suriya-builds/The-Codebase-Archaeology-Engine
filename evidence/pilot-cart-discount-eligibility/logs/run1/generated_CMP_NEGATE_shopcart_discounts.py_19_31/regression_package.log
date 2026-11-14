@@ -16,7 +16,7 @@ shopcart/discounts.py:52: in amount_for
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
 self = Eligibility(min_subtotal=Decimal('0.00'), categories=None)
-cart = <shopcart.cart.Cart object at 0x7f137df7ab70>
+cart = <shopcart.cart.Cart object at 0x7fe112116b10>
 
     def eligible_subtotal(self, cart):
         """Sum of the lines the discount may be applied to."""
@@ -42,7 +42,7 @@ shopcart/discounts.py:52: in amount_for
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
 self = Eligibility(min_subtotal=Decimal('0.00'), categories=None)
-cart = <shopcart.cart.Cart object at 0x7f137dfd7fe0>
+cart = <shopcart.cart.Cart object at 0x7fe111ef0380>
 
     def eligible_subtotal(self, cart):
         """Sum of the lines the discount may be applied to."""
@@ -68,7 +68,7 @@ shopcart/discounts.py:52: in amount_for
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
 self = Eligibility(min_subtotal=Decimal('10.00'), categories=None)
-cart = <shopcart.cart.Cart object at 0x7f137dfd44d0>
+cart = <shopcart.cart.Cart object at 0x7fe111ef0080>
 
     def eligible_subtotal(self, cart):
         """Sum of the lines the discount may be applied to."""
@@ -94,7 +94,7 @@ shopcart/discounts.py:52: in amount_for
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
 self = Eligibility(min_subtotal=Decimal('0.00'), categories=None)
-cart = <shopcart.cart.Cart object at 0x7f137dfb0e60>
+cart = <shopcart.cart.Cart object at 0x7fe111f2c2f0>
 
     def eligible_subtotal(self, cart):
         """Sum of the lines the discount may be applied to."""
@@ -109,4 +109,4 @@ FAILED _unwritten/regression/test_discount_compatibility.py::test_empty_eligibil
 FAILED _unwritten/regression/test_discount_compatibility.py::test_zero_min_subtotal_is_valid_and_always_met
 FAILED _unwritten/regression/test_discount_compatibility.py::test_min_subtotal_only_keeps_every_line_eligible
 FAILED _unwritten/regression/test_discount_compatibility.py::test_unknown_eligibility_keys_are_ignored
-4 failed, 2 passed in 0.05s
+4 failed, 2 passed in 0.04s

@@ -27,4 +27,4 @@ E       AttributeError: 'list' object has no attribute 'get'
 shopcart/discounts.py:41: AttributeError
 =========================== short test summary info ============================
 FAILED tests/test_discounts.py::test_config_must_be_a_mapping - AttributeErro...
-1 failed, 29 passed in 0.03s
+1 failed, 29 passed in 0.05s

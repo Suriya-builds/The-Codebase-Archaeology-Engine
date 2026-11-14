@@ -8,8 +8,8 @@ _________________ test_empty_eligibility_places_no_restriction _________________
 >       assert cart_of((NOVEL, 2), (MUG, 1)).total(discount) == Decimal("29.70")
 E       AssertionError: assert Decimal('33.00') == Decimal('29.70')
 E        +  where Decimal('33.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=None)))
-E        +    where total = <shopcart.cart.Cart object at 0x7f8d64c8fdd0>.total
-E        +      where <shopcart.cart.Cart object at 0x7f8d64c8fdd0> = cart_of((Product(sku='BK-1', name='Novel', price=Decimal('12.50'), category='books'), 2), (Product(sku='HM-1', name='Mug', price=Decimal('8.00'), category='home'), 1))
+E        +    where total = <shopcart.cart.Cart object at 0x7f7afdd89d90>.total
+E        +      where <shopcart.cart.Cart object at 0x7f7afdd89d90> = cart_of((Product(sku='BK-1', name='Novel', price=Decimal('12.50'), category='books'), 2), (Product(sku='HM-1', name='Mug', price=Decimal('8.00'), category='home'), 1))
 E        +  and   Decimal('29.70') = Decimal('29.70')
 
 _unwritten/regression/test_discount_compatibility.py:29: AssertionError
@@ -21,8 +21,8 @@ ________________ test_zero_min_subtotal_is_valid_and_always_met ________________
 >       assert cart_of((MUG, 1)).total(discount) == Decimal("7.20")
 E       AssertionError: assert Decimal('8.00') == Decimal('7.20')
 E        +  where Decimal('8.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=None)))
-E        +    where total = <shopcart.cart.Cart object at 0x7f8d64a7e5d0>.total
-E        +      where <shopcart.cart.Cart object at 0x7f8d64a7e5d0> = cart_of((Product(sku='HM-1', name='Mug', price=Decimal('8.00'), category='home'), 1))
+E        +    where total = <shopcart.cart.Cart object at 0x7f7afdd88bf0>.total
+E        +      where <shopcart.cart.Cart object at 0x7f7afdd88bf0> = cart_of((Product(sku='HM-1', name='Mug', price=Decimal('8.00'), category='home'), 1))
 E        +  and   Decimal('7.20') = Decimal('7.20')
 
 _unwritten/regression/test_discount_compatibility.py:35: AssertionError
@@ -34,8 +34,8 @@ _______________ test_min_subtotal_only_keeps_every_line_eligible _______________
 >       assert cart_of((NOVEL, 2), (MUG, 1)).total(discount) == Decimal("29.70")
 E       AssertionError: assert Decimal('33.00') == Decimal('29.70')
 E        +  where Decimal('33.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('10.00'), categories=None)))
-E        +    where total = <shopcart.cart.Cart object at 0x7f8d64aa3620>.total
-E        +      where <shopcart.cart.Cart object at 0x7f8d64aa3620> = cart_of((Product(sku='BK-1', name='Novel', price=Decimal('12.50'), category='books'), 2), (Product(sku='HM-1', name='Mug', price=Decimal('8.00'), category='home'), 1))
+E        +    where total = <shopcart.cart.Cart object at 0x7f7afdd74980>.total
+E        +      where <shopcart.cart.Cart object at 0x7f7afdd74980> = cart_of((Product(sku='BK-1', name='Novel', price=Decimal('12.50'), category='books'), 2), (Product(sku='HM-1', name='Mug', price=Decimal('8.00'), category='home'), 1))
 E        +  and   Decimal('29.70') = Decimal('29.70')
 
 _unwritten/regression/test_discount_compatibility.py:41: AssertionError
@@ -47,8 +47,8 @@ __________________ test_unknown_eligibility_keys_are_ignored ___________________
 >       assert cart_of((MUG, 1)).total(discount) == Decimal("7.20")
 E       AssertionError: assert Decimal('8.00') == Decimal('7.20')
 E        +  where Decimal('8.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=None)))
-E        +    where total = <shopcart.cart.Cart object at 0x7f8d64aa50a0>.total
-E        +      where <shopcart.cart.Cart object at 0x7f8d64aa50a0> = cart_of((Product(sku='HM-1', name='Mug', price=Decimal('8.00'), category='home'), 1))
+E        +    where total = <shopcart.cart.Cart object at 0x7f7afddb0d40>.total
+E        +      where <shopcart.cart.Cart object at 0x7f7afddb0d40> = cart_of((Product(sku='HM-1', name='Mug', price=Decimal('8.00'), category='home'), 1))
 E        +  and   Decimal('7.20') = Decimal('7.20')
 
 _unwritten/regression/test_discount_compatibility.py:47: AssertionError
@@ -60,8 +60,8 @@ ________ test_cart_whose_lines_are_all_eligible_gets_the_full_discount _________
 >       assert cart_of((NOVEL, 2), (MUG, 1)).total(discount) == Decimal("29.70")
 E       AssertionError: assert Decimal('33.00') == Decimal('29.70')
 E        +  where Decimal('33.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'home', 'books'}))))
-E        +    where total = <shopcart.cart.Cart object at 0x7f8d64aa5a90>.total
-E        +      where <shopcart.cart.Cart object at 0x7f8d64aa5a90> = cart_of((Product(sku='BK-1', name='Novel', price=Decimal('12.50'), category='books'), 2), (Product(sku='HM-1', name='Mug', price=Decimal('8.00'), category='home'), 1))
+E        +    where total = <shopcart.cart.Cart object at 0x7f7afddb19d0>.total
+E        +      where <shopcart.cart.Cart object at 0x7f7afddb19d0> = cart_of((Product(sku='BK-1', name='Novel', price=Decimal('12.50'), category='books'), 2), (Product(sku='HM-1', name='Mug', price=Decimal('8.00'), category='home'), 1))
 E        +  and   Decimal('29.70') = Decimal('29.70')
 
 _unwritten/regression/test_discount_compatibility.py:53: AssertionError
@@ -71,4 +71,4 @@ FAILED _unwritten/regression/test_discount_compatibility.py::test_zero_min_subto
 FAILED _unwritten/regression/test_discount_compatibility.py::test_min_subtotal_only_keeps_every_line_eligible
 FAILED _unwritten/regression/test_discount_compatibility.py::test_unknown_eligibility_keys_are_ignored
 FAILED _unwritten/regression/test_discount_compatibility.py::test_cart_whose_lines_are_all_eligible_gets_the_full_discount
-5 failed, 1 passed in 0.03s
+5 failed, 1 passed in 0.04s

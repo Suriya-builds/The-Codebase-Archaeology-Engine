@@ -16,7 +16,7 @@ shopcart/discounts.py:52: in amount_for
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
 self = Eligibility(min_subtotal=Decimal('0.00'), categories=None)
-cart = <shopcart.cart.Cart object at 0x7ff689836b70>
+cart = <shopcart.cart.Cart object at 0x7fd4e9c64980>
 
     def eligible_subtotal(self, cart):
         """Sum of the lines the discount may be applied to."""
@@ -42,7 +42,7 @@ shopcart/discounts.py:52: in amount_for
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
 self = Eligibility(min_subtotal=Decimal('0.00'), categories=None)
-cart = <shopcart.cart.Cart object at 0x7ff689893fe0>
+cart = <shopcart.cart.Cart object at 0x7fd4e9c8b2f0>
 
     def eligible_subtotal(self, cart):
         """Sum of the lines the discount may be applied to."""
@@ -68,7 +68,7 @@ shopcart/discounts.py:52: in amount_for
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
 self = Eligibility(min_subtotal=Decimal('10.00'), categories=None)
-cart = <shopcart.cart.Cart object at 0x7ff6898904d0>
+cart = <shopcart.cart.Cart object at 0x7fd4e9c64980>
 
     def eligible_subtotal(self, cart):
         """Sum of the lines the discount may be applied to."""
@@ -94,7 +94,7 @@ shopcart/discounts.py:52: in amount_for
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
 self = Eligibility(min_subtotal=Decimal('0.00'), categories=None)
-cart = <shopcart.cart.Cart object at 0x7ff68986ce60>
+cart = <shopcart.cart.Cart object at 0x7fd4e9c2f320>
 
     def eligible_subtotal(self, cart):
         """Sum of the lines the discount may be applied to."""

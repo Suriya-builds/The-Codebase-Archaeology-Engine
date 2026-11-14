@@ -8,7 +8,7 @@ ___________________ test_min_subtotal_boundary_is_inclusive ____________________
 >       assert cart.total(discount(min_subtotal="33.00")) == Decimal("29.70")
 E       AssertionError: assert Decimal('33.00') == Decimal('29.70')
 E        +  where Decimal('33.00') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('33.00'), categories=None)))
-E        +    where total = <shopcart.cart.Cart object at 0x7f7f99972b40>.total
+E        +    where total = <shopcart.cart.Cart object at 0x7fd75b8e0ce0>.total
 E        +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('33.00'), categories=None)) = discount(min_subtotal='33.00')
 E        +  and   Decimal('29.70') = Decimal('29.70')
 

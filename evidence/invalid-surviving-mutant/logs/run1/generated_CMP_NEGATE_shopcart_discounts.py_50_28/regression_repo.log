@@ -14,7 +14,7 @@ shopcart/cart.py:50: in total
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
 self = Discount(code='TEN', percent=Decimal('10'), eligibility=None)
-cart = <shopcart.cart.Cart object at 0x7f0fe72d0680>
+cart = <shopcart.cart.Cart object at 0x7f21f14dd910>
 
     def amount_for(self, cart):
         """The amount this discount takes off the given cart."""
@@ -35,7 +35,7 @@ tests/test_discounts.py:26:
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
 self = Discount(code='ODD', percent=Decimal('15'), eligibility=None)
-cart = <shopcart.cart.Cart object at 0x7f0fe72e5190>
+cart = <shopcart.cart.Cart object at 0x7f21f14b45c0>
 
     def amount_for(self, cart):
         """The amount this discount takes off the given cart."""
@@ -58,7 +58,7 @@ shopcart/cart.py:50: in total
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
 self = Discount(code='FREE', percent=Decimal('100'), eligibility=None)
-cart = <shopcart.cart.Cart object at 0x7f0fe730e9c0>
+cart = <shopcart.cart.Cart object at 0x7f21f14de660>
 
     def amount_for(self, cart):
         """The amount this discount takes off the given cart."""

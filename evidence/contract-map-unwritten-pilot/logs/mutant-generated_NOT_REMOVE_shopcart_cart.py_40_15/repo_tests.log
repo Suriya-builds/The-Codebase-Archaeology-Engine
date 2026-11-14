@@ -8,7 +8,7 @@ _________________________ test_empty_cart_totals_zero __________________________
 >       assert cart.is_empty()
 E       assert {}
 E        +  where {} = is_empty()
-E        +    where is_empty = <shopcart.cart.Cart object at 0x7f086f809d30>.is_empty
+E        +    where is_empty = <shopcart.cart.Cart object at 0x7f87b8ce6cf0>.is_empty
 
 tests/test_cart.py:13: AssertionError
 =========================== short test summary info ============================

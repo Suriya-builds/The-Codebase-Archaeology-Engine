@@ -8,7 +8,7 @@ _______________ test_discount_is_not_applied_below_min_subtotal ________________
 >       assert cart.total(discount(min_subtotal="50.00")) == Decimal("33.00")
 E       AssertionError: assert Decimal('29.70') == Decimal('33.00')
 E        +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('50.00'), categories=None)))
-E        +    where total = <shopcart.cart.Cart object at 0x7f7ed951d490>.total
+E        +    where total = <shopcart.cart.Cart object at 0x7f970ab362d0>.total
 E        +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('50.00'), categories=None)) = discount(min_subtotal='50.00')
 E        +  and   Decimal('33.00') = Decimal('33.00')
 
@@ -21,7 +21,7 @@ ___________________ test_min_subtotal_boundary_is_inclusive ____________________
 >       assert cart.total(discount(min_subtotal="33.01")) == Decimal("33.00")
 E       AssertionError: assert Decimal('29.70') == Decimal('33.00')
 E        +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('33.01'), categories=None)))
-E        +    where total = <shopcart.cart.Cart object at 0x7f7ed9544e60>.total
+E        +    where total = <shopcart.cart.Cart object at 0x7f970ab583e0>.total
 E        +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('33.01'), categories=None)) = discount(min_subtotal='33.01')
 E        +  and   Decimal('33.00') = Decimal('33.00')
 
@@ -32,7 +32,7 @@ ___________________ test_ineligible_discount_amount_is_zero ____________________
         cart = cart_of((MUG, 1))
 >       assert discount(min_subtotal="8.01").amount_for(cart) == Decimal("0.00")
 E       AssertionError: assert Decimal('0.80') == Decimal('0.00')
-E        +  where Decimal('0.80') = amount_for(<shopcart.cart.Cart object at 0x7f7ed972b6b0>)
+E        +  where Decimal('0.80') = amount_for(<shopcart.cart.Cart object at 0x7f970ab5a4b0>)
 E        +    where amount_for = Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('8.01'), categories=None)).amount_for
 E        +      where Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('8.01'), categories=None)) = discount(min_subtotal='8.01')
 E        +  and   Decimal('0.00') = Decimal('0.00')
@@ -45,7 +45,7 @@ ______________ test_category_restricts_discount_to_matching_lines ______________
 >       assert cart.total(discount(categories=["books"])) == Decimal("30.50")
 E       AssertionError: assert Decimal('29.70') == Decimal('30.50')
 E        +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))))
-E        +    where total = <shopcart.cart.Cart object at 0x7f7ed9544110>.total
+E        +    where total = <shopcart.cart.Cart object at 0x7f970ab5c590>.total
 E        +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'books'}))) = discount(categories=['books'])
 E        +  and   Decimal('30.50') = Decimal('30.50')
 
@@ -57,7 +57,7 @@ ___________________ test_several_categories_are_all_eligible ___________________
 >       assert cart.total(discount(categories=["books", "office"])) == Decimal("33.20")
 E       AssertionError: assert Decimal('32.40') == Decimal('33.20')
 E        +  where Decimal('32.40') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'office', 'books'}))))
-E        +    where total = <shopcart.cart.Cart object at 0x7f7ed9544e00>.total
+E        +    where total = <shopcart.cart.Cart object at 0x7f970ab5d760>.total
 E        +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'office', 'books'}))) = discount(categories=['books', 'office'])
 E        +  and   Decimal('33.20') = Decimal('33.20')
 
@@ -69,7 +69,7 @@ ___________________ test_no_eligible_lines_means_no_discount ___________________
 >       assert cart.total(discount(categories=["garden"])) == Decimal("33.00")
 E       AssertionError: assert Decimal('29.70') == Decimal('33.00')
 E        +  where Decimal('29.70') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'garden'}))))
-E        +    where total = <shopcart.cart.Cart object at 0x7f7ed9545fa0>.total
+E        +    where total = <shopcart.cart.Cart object at 0x7f970ab5e570>.total
 E        +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'garden'}))) = discount(categories=['garden'])
 E        +  and   Decimal('33.00') = Decimal('33.00')
 
@@ -81,7 +81,7 @@ ____________________ test_category_match_is_case_sensitive _____________________
 >       assert cart.total(discount(categories=["Books"])) == Decimal("25.00")
 E       AssertionError: assert Decimal('22.50') == Decimal('25.00')
 E        +  where Decimal('22.50') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'Books'}))))
-E        +    where total = <shopcart.cart.Cart object at 0x7f7ed9547050>.total
+E        +    where total = <shopcart.cart.Cart object at 0x7f970ab5fb90>.total
 E        +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'Books'}))) = discount(categories=['Books'])
 E        +  and   Decimal('25.00') = Decimal('25.00')
 
@@ -93,7 +93,7 @@ _____________ test_min_subtotal_is_measured_on_eligible_lines_only _____________
 >       assert cart.total(discount(min_subtotal="30.00", categories=["books"])) == Decimal("41.00")
 E       AssertionError: assert Decimal('36.90') == Decimal('41.00')
 E        +  where Decimal('36.90') = total(Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('30.00'), categories=frozenset({'books'}))))
-E        +    where total = <shopcart.cart.Cart object at 0x7f7ed9549820>.total
+E        +    where total = <shopcart.cart.Cart object at 0x7f970ab63ef0>.total
 E        +    and   Discount(code='TEST', percent=Decimal('10'), eligibility=Eligibility(min_subtotal=Decimal('30.00'), categories=frozenset({'books'}))) = discount(min_subtotal='30.00', categories=['books'])
 E        +  and   Decimal('41.00') = Decimal('41.00')
 
@@ -105,7 +105,7 @@ ___________ test_amount_is_rounded_half_up_on_the_eligible_subtotal ____________
         restricted = discount(percent=15, categories=["office"])
 >       assert restricted.amount_for(cart) == Decimal("0.05")
 E       AssertionError: assert Decimal('1.25') == Decimal('0.05')
-E        +  where Decimal('1.25') = amount_for(<shopcart.cart.Cart object at 0x7f7ed954b380>)
+E        +  where Decimal('1.25') = amount_for(<shopcart.cart.Cart object at 0x7f970ab62900>)
 E        +    where amount_for = Discount(code='TEST', percent=Decimal('15'), eligibility=Eligibility(min_subtotal=Decimal('0.00'), categories=frozenset({'office'}))).amount_for
 E        +  and   Decimal('0.05') = Decimal('0.05')
 

@@ -8,7 +8,7 @@ ___________ test_discount_without_eligibility_applies_to_whole_cart ____________
         cart = cart_of((NOVEL, 2), (MUG, 1))
 >       assert discount.amount_for(cart) == Decimal("3.30")
 E       AssertionError: assert Decimal('0.00') == Decimal('3.30')
-E        +  where Decimal('0.00') = amount_for(<shopcart.cart.Cart object at 0x7f19cddc2570>)
+E        +  where Decimal('0.00') = amount_for(<shopcart.cart.Cart object at 0x7f8700eb3ef0>)
 E        +    where amount_for = Discount(code='TEN', percent=Decimal('10'), eligibility=None).amount_for
 E        +  and   Decimal('3.30') = Decimal('3.30')
 

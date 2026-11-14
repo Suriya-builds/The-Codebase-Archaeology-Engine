@@ -1,0 +1,249 @@
+$ pytest -p unwritten_probe -p no:cacheprovider --rootdir . -q --continue-on-collection-errors _unwritten/feature
+FFF....FFFFFFFF                                                          [100%]
+=================================== FAILURES ===================================
+______________________ test_update_replaces_the_quantity _______________________
+
+    def test_update_replaces_the_quantity():
+        cart = cart_of((NOVEL, 2), (MUG, 1))
+>       assert cart.update_quantity("BK-1", 5) is None
+
+_unwritten/feature/test_update_quantity.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <shopcart.cart.Cart object at 0x7f1dd4facce0>, sku = 'BK-1', quantity = 5
+
+    def update_quantity(self, sku, quantity):
+        """Set the quantity of a product already in the cart; zero removes the line."""
+        if True:
+>           raise KeyError(sku)
+E           KeyError: 'BK-1'
+
+shopcart/cart.py:38: KeyError
+_____________ test_update_can_lower_the_quantity_and_totals_follow _____________
+
+    def test_update_can_lower_the_quantity_and_totals_follow():
+        cart = cart_of((NOVEL, 4), (MUG, 1))
+>       cart.update_quantity("BK-1", 1)
+
+_unwritten/feature/test_update_quantity.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <shopcart.cart.Cart object at 0x7f1dd4fc19d0>, sku = 'BK-1', quantity = 1
+
+    def update_quantity(self, sku, quantity):
+        """Set the quantity of a product already in the cart; zero removes the line."""
+        if True:
+>           raise KeyError(sku)
+E           KeyError: 'BK-1'
+
+shopcart/cart.py:38: KeyError
+__________________________ test_zero_removes_the_line __________________________
+
+    def test_zero_removes_the_line():
+        cart = cart_of((NOVEL, 2), (MUG, 1))
+>       cart.update_quantity("BK-1", 0)
+
+_unwritten/feature/test_update_quantity.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <shopcart.cart.Cart object at 0x7f1dd4fc3c80>, sku = 'BK-1', quantity = 0
+
+    def update_quantity(self, sku, quantity):
+        """Set the quantity of a product already in the cart; zero removes the line."""
+        if True:
+>           raise KeyError(sku)
+E           KeyError: 'BK-1'
+
+shopcart/cart.py:38: KeyError
+__________ test_invalid_quantity_is_rejected_and_changes_nothing[-1] ___________
+
+quantity = -1
+
+    @pytest.mark.parametrize("quantity", [-1, -100, 1.5, "2", None, True, False])
+    def test_invalid_quantity_is_rejected_and_changes_nothing(quantity):
+        cart = cart_of((NOVEL, 2), (MUG, 1))
+        with pytest.raises(InvalidQuantityError):
+>           cart.update_quantity("BK-1", quantity)
+
+_unwritten/feature/test_update_quantity.py:64: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <shopcart.cart.Cart object at 0x7f1dd4fadfd0>, sku = 'BK-1'
+quantity = -1
+
+    def update_quantity(self, sku, quantity):
+        """Set the quantity of a product already in the cart; zero removes the line."""
+        if True:
+>           raise KeyError(sku)
+E           KeyError: 'BK-1'
+
+shopcart/cart.py:38: KeyError
+_________ test_invalid_quantity_is_rejected_and_changes_nothing[-100] __________
+
+quantity = -100
+
+    @pytest.mark.parametrize("quantity", [-1, -100, 1.5, "2", None, True, False])
+    def test_invalid_quantity_is_rejected_and_changes_nothing(quantity):
+        cart = cart_of((NOVEL, 2), (MUG, 1))
+        with pytest.raises(InvalidQuantityError):
+>           cart.update_quantity("BK-1", quantity)
+
+_unwritten/feature/test_update_quantity.py:64: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <shopcart.cart.Cart object at 0x7f1dd4fc31a0>, sku = 'BK-1'
+quantity = -100
+
+    def update_quantity(self, sku, quantity):
+        """Set the quantity of a product already in the cart; zero removes the line."""
+        if True:
+>           raise KeyError(sku)
+E           KeyError: 'BK-1'
+
+shopcart/cart.py:38: KeyError
+__________ test_invalid_quantity_is_rejected_and_changes_nothing[1.5] __________
+
+quantity = 1.5
+
+    @pytest.mark.parametrize("quantity", [-1, -100, 1.5, "2", None, True, False])
+    def test_invalid_quantity_is_rejected_and_changes_nothing(quantity):
+        cart = cart_of((NOVEL, 2), (MUG, 1))
+        with pytest.raises(InvalidQuantityError):
+>           cart.update_quantity("BK-1", quantity)
+
+_unwritten/feature/test_update_quantity.py:64: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <shopcart.cart.Cart object at 0x7f1dd4fe6bd0>, sku = 'BK-1'
+quantity = 1.5
+
+    def update_quantity(self, sku, quantity):
+        """Set the quantity of a product already in the cart; zero removes the line."""
+        if True:
+>           raise KeyError(sku)
+E           KeyError: 'BK-1'
+
+shopcart/cart.py:38: KeyError
+___________ test_invalid_quantity_is_rejected_and_changes_nothing[2] ___________
+
+quantity = '2'
+
+    @pytest.mark.parametrize("quantity", [-1, -100, 1.5, "2", None, True, False])
+    def test_invalid_quantity_is_rejected_and_changes_nothing(quantity):
+        cart = cart_of((NOVEL, 2), (MUG, 1))
+        with pytest.raises(InvalidQuantityError):
+>           cart.update_quantity("BK-1", quantity)
+
+_unwritten/feature/test_update_quantity.py:64: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <shopcart.cart.Cart object at 0x7f1dd4fe4590>, sku = 'BK-1'
+quantity = '2'
+
+    def update_quantity(self, sku, quantity):
+        """Set the quantity of a product already in the cart; zero removes the line."""
+        if True:
+>           raise KeyError(sku)
+E           KeyError: 'BK-1'
+
+shopcart/cart.py:38: KeyError
+_________ test_invalid_quantity_is_rejected_and_changes_nothing[None] __________
+
+quantity = None
+
+    @pytest.mark.parametrize("quantity", [-1, -100, 1.5, "2", None, True, False])
+    def test_invalid_quantity_is_rejected_and_changes_nothing(quantity):
+        cart = cart_of((NOVEL, 2), (MUG, 1))
+        with pytest.raises(InvalidQuantityError):
+>           cart.update_quantity("BK-1", quantity)
+
+_unwritten/feature/test_update_quantity.py:64: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <shopcart.cart.Cart object at 0x7f1dd4fe6f00>, sku = 'BK-1'
+quantity = None
+
+    def update_quantity(self, sku, quantity):
+        """Set the quantity of a product already in the cart; zero removes the line."""
+        if True:
+>           raise KeyError(sku)
+E           KeyError: 'BK-1'
+
+shopcart/cart.py:38: KeyError
+_________ test_invalid_quantity_is_rejected_and_changes_nothing[True] __________
+
+quantity = True
+
+    @pytest.mark.parametrize("quantity", [-1, -100, 1.5, "2", None, True, False])
+    def test_invalid_quantity_is_rejected_and_changes_nothing(quantity):
+        cart = cart_of((NOVEL, 2), (MUG, 1))
+        with pytest.raises(InvalidQuantityError):
+>           cart.update_quantity("BK-1", quantity)
+
+_unwritten/feature/test_update_quantity.py:64: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <shopcart.cart.Cart object at 0x7f1dd4fec590>, sku = 'BK-1'
+quantity = True
+
+    def update_quantity(self, sku, quantity):
+        """Set the quantity of a product already in the cart; zero removes the line."""
+        if True:
+>           raise KeyError(sku)
+E           KeyError: 'BK-1'
+
+shopcart/cart.py:38: KeyError
+_________ test_invalid_quantity_is_rejected_and_changes_nothing[False] _________
+
+quantity = False
+
+    @pytest.mark.parametrize("quantity", [-1, -100, 1.5, "2", None, True, False])
+    def test_invalid_quantity_is_rejected_and_changes_nothing(quantity):
+        cart = cart_of((NOVEL, 2), (MUG, 1))
+        with pytest.raises(InvalidQuantityError):
+>           cart.update_quantity("BK-1", quantity)
+
+_unwritten/feature/test_update_quantity.py:64: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <shopcart.cart.Cart object at 0x7f1dd4fe7020>, sku = 'BK-1'
+quantity = False
+
+    def update_quantity(self, sku, quantity):
+        """Set the quantity of a product already in the cart; zero removes the line."""
+        if True:
+>           raise KeyError(sku)
+E           KeyError: 'BK-1'
+
+shopcart/cart.py:38: KeyError
+_____________________ test_updated_line_keeps_its_position _____________________
+
+    def test_updated_line_keeps_its_position():
+        cart = cart_of((NOVEL, 1), (MUG, 1), (PEN, 1))
+>       cart.update_quantity("BK-1", 7)
+
+_unwritten/feature/test_update_quantity.py:70: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <shopcart.cart.Cart object at 0x7f1dd4fe40b0>, sku = 'BK-1', quantity = 7
+
+    def update_quantity(self, sku, quantity):
+        """Set the quantity of a product already in the cart; zero removes the line."""
+        if True:
+>           raise KeyError(sku)
+E           KeyError: 'BK-1'
+
+shopcart/cart.py:38: KeyError
+=========================== short test summary info ============================
+FAILED _unwritten/feature/test_update_quantity.py::test_update_replaces_the_quantity
+FAILED _unwritten/feature/test_update_quantity.py::test_update_can_lower_the_quantity_and_totals_follow
+FAILED _unwritten/feature/test_update_quantity.py::test_zero_removes_the_line
+FAILED _unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[-1]
+FAILED _unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[-100]
+FAILED _unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[1.5]
+FAILED _unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[2]
+FAILED _unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[None]
+FAILED _unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[True]
+FAILED _unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[False]
+FAILED _unwritten/feature/test_update_quantity.py::test_updated_line_keeps_its_position
+11 failed, 4 passed in 0.06s

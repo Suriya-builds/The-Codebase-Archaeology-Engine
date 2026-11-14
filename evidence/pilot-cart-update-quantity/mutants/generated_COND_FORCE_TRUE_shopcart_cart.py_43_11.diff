@@ -1,0 +1,9 @@
+--- reference/shopcart/cart.py
++++ mutant/shopcart/cart.py
+@@ -41,5 +41,5 @@
+         if quantity < 0:
+             raise InvalidQuantityError("quantity must not be negative")
+-        if quantity == 0:
++        if True:
+             del self._lines[sku]
+             return

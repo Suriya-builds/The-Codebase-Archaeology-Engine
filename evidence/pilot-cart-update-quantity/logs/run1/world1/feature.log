@@ -1,0 +1,181 @@
+$ pytest -p unwritten_probe -p no:cacheprovider --rootdir . -q --continue-on-collection-errors _unwritten/feature
+FFFFFFFFFFFFFFF                                                          [100%]
+=================================== FAILURES ===================================
+______________________ test_update_replaces_the_quantity _______________________
+
+    def test_update_replaces_the_quantity():
+        cart = cart_of((NOVEL, 2), (MUG, 1))
+>       assert cart.update_quantity("BK-1", 5) is None
+E       AttributeError: 'Cart' object has no attribute 'update_quantity'
+
+_unwritten/feature/test_update_quantity.py:27: AttributeError
+_____________ test_update_can_lower_the_quantity_and_totals_follow _____________
+
+    def test_update_can_lower_the_quantity_and_totals_follow():
+        cart = cart_of((NOVEL, 4), (MUG, 1))
+>       cart.update_quantity("BK-1", 1)
+E       AttributeError: 'Cart' object has no attribute 'update_quantity'
+
+_unwritten/feature/test_update_quantity.py:33: AttributeError
+__________________________ test_zero_removes_the_line __________________________
+
+    def test_zero_removes_the_line():
+        cart = cart_of((NOVEL, 2), (MUG, 1))
+>       cart.update_quantity("BK-1", 0)
+E       AttributeError: 'Cart' object has no attribute 'update_quantity'
+
+_unwritten/feature/test_update_quantity.py:40: AttributeError
+____________ test_unknown_sku_raises_key_error_and_changes_nothing _____________
+
+    def test_unknown_sku_raises_key_error_and_changes_nothing():
+        cart = cart_of((NOVEL, 2))
+        with pytest.raises(KeyError):
+>           cart.update_quantity("NOPE", 3)
+E           AttributeError: 'Cart' object has no attribute 'update_quantity'
+
+_unwritten/feature/test_update_quantity.py:49: AttributeError
+_________ test_unknown_sku_is_reported_before_an_invalid_quantity[-1] __________
+
+quantity = -1
+
+    @pytest.mark.parametrize("quantity", [-1, 1.5, True])
+    def test_unknown_sku_is_reported_before_an_invalid_quantity(quantity):
+        cart = cart_of((NOVEL, 2))
+        with pytest.raises(KeyError):
+>           cart.update_quantity("NOPE", quantity)
+E           AttributeError: 'Cart' object has no attribute 'update_quantity'
+
+_unwritten/feature/test_update_quantity.py:57: AttributeError
+_________ test_unknown_sku_is_reported_before_an_invalid_quantity[1.5] _________
+
+quantity = 1.5
+
+    @pytest.mark.parametrize("quantity", [-1, 1.5, True])
+    def test_unknown_sku_is_reported_before_an_invalid_quantity(quantity):
+        cart = cart_of((NOVEL, 2))
+        with pytest.raises(KeyError):
+>           cart.update_quantity("NOPE", quantity)
+E           AttributeError: 'Cart' object has no attribute 'update_quantity'
+
+_unwritten/feature/test_update_quantity.py:57: AttributeError
+________ test_unknown_sku_is_reported_before_an_invalid_quantity[True] _________
+
+quantity = True
+
+    @pytest.mark.parametrize("quantity", [-1, 1.5, True])
+    def test_unknown_sku_is_reported_before_an_invalid_quantity(quantity):
+        cart = cart_of((NOVEL, 2))
+        with pytest.raises(KeyError):
+>           cart.update_quantity("NOPE", quantity)
+E           AttributeError: 'Cart' object has no attribute 'update_quantity'
+
+_unwritten/feature/test_update_quantity.py:57: AttributeError
+__________ test_invalid_quantity_is_rejected_and_changes_nothing[-1] ___________
+
+quantity = -1
+
+    @pytest.mark.parametrize("quantity", [-1, -100, 1.5, "2", None, True, False])
+    def test_invalid_quantity_is_rejected_and_changes_nothing(quantity):
+        cart = cart_of((NOVEL, 2), (MUG, 1))
+        with pytest.raises(InvalidQuantityError):
+>           cart.update_quantity("BK-1", quantity)
+E           AttributeError: 'Cart' object has no attribute 'update_quantity'
+
+_unwritten/feature/test_update_quantity.py:64: AttributeError
+_________ test_invalid_quantity_is_rejected_and_changes_nothing[-100] __________
+
+quantity = -100
+
+    @pytest.mark.parametrize("quantity", [-1, -100, 1.5, "2", None, True, False])
+    def test_invalid_quantity_is_rejected_and_changes_nothing(quantity):
+        cart = cart_of((NOVEL, 2), (MUG, 1))
+        with pytest.raises(InvalidQuantityError):
+>           cart.update_quantity("BK-1", quantity)
+E           AttributeError: 'Cart' object has no attribute 'update_quantity'
+
+_unwritten/feature/test_update_quantity.py:64: AttributeError
+__________ test_invalid_quantity_is_rejected_and_changes_nothing[1.5] __________
+
+quantity = 1.5
+
+    @pytest.mark.parametrize("quantity", [-1, -100, 1.5, "2", None, True, False])
+    def test_invalid_quantity_is_rejected_and_changes_nothing(quantity):
+        cart = cart_of((NOVEL, 2), (MUG, 1))
+        with pytest.raises(InvalidQuantityError):
+>           cart.update_quantity("BK-1", quantity)
+E           AttributeError: 'Cart' object has no attribute 'update_quantity'
+
+_unwritten/feature/test_update_quantity.py:64: AttributeError
+___________ test_invalid_quantity_is_rejected_and_changes_nothing[2] ___________
+
+quantity = '2'
+
+    @pytest.mark.parametrize("quantity", [-1, -100, 1.5, "2", None, True, False])
+    def test_invalid_quantity_is_rejected_and_changes_nothing(quantity):
+        cart = cart_of((NOVEL, 2), (MUG, 1))
+        with pytest.raises(InvalidQuantityError):
+>           cart.update_quantity("BK-1", quantity)
+E           AttributeError: 'Cart' object has no attribute 'update_quantity'
+
+_unwritten/feature/test_update_quantity.py:64: AttributeError
+_________ test_invalid_quantity_is_rejected_and_changes_nothing[None] __________
+
+quantity = None
+
+    @pytest.mark.parametrize("quantity", [-1, -100, 1.5, "2", None, True, False])
+    def test_invalid_quantity_is_rejected_and_changes_nothing(quantity):
+        cart = cart_of((NOVEL, 2), (MUG, 1))
+        with pytest.raises(InvalidQuantityError):
+>           cart.update_quantity("BK-1", quantity)
+E           AttributeError: 'Cart' object has no attribute 'update_quantity'
+
+_unwritten/feature/test_update_quantity.py:64: AttributeError
+_________ test_invalid_quantity_is_rejected_and_changes_nothing[True] __________
+
+quantity = True
+
+    @pytest.mark.parametrize("quantity", [-1, -100, 1.5, "2", None, True, False])
+    def test_invalid_quantity_is_rejected_and_changes_nothing(quantity):
+        cart = cart_of((NOVEL, 2), (MUG, 1))
+        with pytest.raises(InvalidQuantityError):
+>           cart.update_quantity("BK-1", quantity)
+E           AttributeError: 'Cart' object has no attribute 'update_quantity'
+
+_unwritten/feature/test_update_quantity.py:64: AttributeError
+_________ test_invalid_quantity_is_rejected_and_changes_nothing[False] _________
+
+quantity = False
+
+    @pytest.mark.parametrize("quantity", [-1, -100, 1.5, "2", None, True, False])
+    def test_invalid_quantity_is_rejected_and_changes_nothing(quantity):
+        cart = cart_of((NOVEL, 2), (MUG, 1))
+        with pytest.raises(InvalidQuantityError):
+>           cart.update_quantity("BK-1", quantity)
+E           AttributeError: 'Cart' object has no attribute 'update_quantity'
+
+_unwritten/feature/test_update_quantity.py:64: AttributeError
+_____________________ test_updated_line_keeps_its_position _____________________
+
+    def test_updated_line_keeps_its_position():
+        cart = cart_of((NOVEL, 1), (MUG, 1), (PEN, 1))
+>       cart.update_quantity("BK-1", 7)
+E       AttributeError: 'Cart' object has no attribute 'update_quantity'
+
+_unwritten/feature/test_update_quantity.py:70: AttributeError
+=========================== short test summary info ============================
+FAILED _unwritten/feature/test_update_quantity.py::test_update_replaces_the_quantity
+FAILED _unwritten/feature/test_update_quantity.py::test_update_can_lower_the_quantity_and_totals_follow
+FAILED _unwritten/feature/test_update_quantity.py::test_zero_removes_the_line
+FAILED _unwritten/feature/test_update_quantity.py::test_unknown_sku_raises_key_error_and_changes_nothing
+FAILED _unwritten/feature/test_update_quantity.py::test_unknown_sku_is_reported_before_an_invalid_quantity[-1]
+FAILED _unwritten/feature/test_update_quantity.py::test_unknown_sku_is_reported_before_an_invalid_quantity[1.5]
+FAILED _unwritten/feature/test_update_quantity.py::test_unknown_sku_is_reported_before_an_invalid_quantity[True]
+FAILED _unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[-1]
+FAILED _unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[-100]
+FAILED _unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[1.5]
+FAILED _unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[2]
+FAILED _unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[None]
+FAILED _unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[True]
+FAILED _unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[False]
+FAILED _unwritten/feature/test_update_quantity.py::test_updated_line_keeps_its_position
+15 failed in 0.11s

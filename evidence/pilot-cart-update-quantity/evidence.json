@@ -1,0 +1,3419 @@
+{
+  "evidence_schema": "0.2",
+  "harness": {
+    "name": "unwritten",
+    "version": "0.1.0"
+  },
+  "verdict": "accepted",
+  "reasons": [],
+  "task": {
+    "package": "pilot-cart-update-quantity",
+    "package_sha256": "22eeda193303899752b3250e5d3d0fd99c0d6ceee5e38166a31ee954302c609d",
+    "task_id": "pilot-cart-update-quantity",
+    "title": "Update the quantity of a cart line",
+    "schema_version": "0.2"
+  },
+  "repository": {
+    "name": "unwritten-pilot",
+    "commit": "667512bac0534ea742a7a7c3e3262142ac914c30",
+    "tree": "79bc8aba14de40bd9f84d39685f3a138465b1c2f"
+  },
+  "environment": {
+    "runner": "docker",
+    "isolation": {
+      "network": "none",
+      "read_only_root": true,
+      "capabilities": "none",
+      "user": "65534:65534",
+      "memory": "1g",
+      "cpus": "2",
+      "pids": "256",
+      "tmpfs": "/tmp:rw,size=256m"
+    },
+    "image": "unwritten-env:da8c25df4f5e6e87",
+    "image_id": "sha256:2eba2c24e502803b83b0227531fa737f085a80b3ac6ba879781eca8496c16416",
+    "dockerfile_sha256": "da8c25df4f5e6e87aaf2c2df4277ab64735f21a8f967ee212ac2ce4b2ff62947",
+    "pytest_version": "8.3.4",
+    "python_version": "3.12.16"
+  },
+  "process": {
+    "llm_calls": 0,
+    "llm_note": "the harness contains no model client; verdicts come from executed tests only",
+    "manual_interventions": [],
+    "package_provenance": {
+      "authored_by": "human",
+      "llm_calls": 0,
+      "notes": "Hand-written schema 0.2 fixture for milestone M3a: a task that adds a new public name. No part of this package was generated."
+    }
+  },
+  "repeatability": {
+    "runs": 2,
+    "equivalent": true,
+    "fingerprints": [
+      "5d41808b38d3cd9df02a373d6beba6b521bcea530771301eff01f719e3cb93a3",
+      "5d41808b38d3cd9df02a373d6beba6b521bcea530771301eff01f719e3cb93a3"
+    ],
+    "compared": "world status, rejection reasons, every test's id, outcome, failure class and exception type, every mutant's status and killing tests"
+  },
+  "summary": {
+    "gates": {
+      "status": "passed",
+      "acceptance_criteria": 5,
+      "feature_test_functions": 7,
+      "declared_interface": 1
+    },
+    "world1": {
+      "status": "passed",
+      "feature_tests": 15,
+      "feature_failing_by_assertion": 0,
+      "regression_tests": 32,
+      "regression_passing": 32,
+      "feature_failing_by_declared_interface": 15,
+      "feature_files_blocked_by_declared_interface": []
+    },
+    "world2": {
+      "status": "passed",
+      "feature_tests": 15,
+      "feature_passing": 15,
+      "regression_tests": 32,
+      "regression_passing": 32
+    },
+    "world3": {
+      "status": "passed",
+      "mutants": 18,
+      "mutants_executed": 18,
+      "declared": 3,
+      "generated": 13,
+      "contract": 2,
+      "contract_guards_not_found": [],
+      "killed": 18,
+      "survived": 0,
+      "survived_waived": 0,
+      "equivalent": 0,
+      "invalid": 0,
+      "mutation_score": 1.0,
+      "mutation_score_basis": "killed / (killed + survived); equivalent and invalid mutants are excluded"
+    }
+  },
+  "contracts": [
+    {
+      "id": "test:tests/test_cart.py::test_adding_same_product_merges_quantities",
+      "description": "adding same product merges quantities",
+      "origin": "repository",
+      "evidence_type": "existing_test",
+      "probes": [
+        {
+          "suite": "regression_repo",
+          "nodeid": "tests/test_cart.py::test_adding_same_product_merges_quantities",
+          "world1": "passed",
+          "world2": "passed"
+        }
+      ],
+      "holds_at_base": true,
+      "preserved_by_reference": true,
+      "mutants_killed": []
+    },
+    {
+      "id": "test:tests/test_cart.py::test_empty_cart_totals_zero",
+      "description": "empty cart totals zero",
+      "origin": "repository",
+      "evidence_type": "existing_test",
+      "probes": [
+        {
+          "suite": "regression_repo",
+          "nodeid": "tests/test_cart.py::test_empty_cart_totals_zero",
+          "world1": "passed",
+          "world2": "passed"
+        }
+      ],
+      "holds_at_base": true,
+      "preserved_by_reference": true,
+      "mutants_killed": []
+    },
+    {
+      "id": "test:tests/test_cart.py::test_invalid_quantity_is_rejected",
+      "description": "invalid quantity is rejected",
+      "origin": "repository",
+      "evidence_type": "existing_test",
+      "probes": [
+        {
+          "suite": "regression_repo",
+          "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[-1]",
+          "world1": "passed",
+          "world2": "passed"
+        },
+        {
+          "suite": "regression_repo",
+          "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[0]",
+          "world1": "passed",
+          "world2": "passed"
+        },
+        {
+          "suite": "regression_repo",
+          "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[1.5]",
+          "world1": "passed",
+          "world2": "passed"
+        },
+        {
+          "suite": "regression_repo",
+          "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[2]",
+          "world1": "passed",
+          "world2": "passed"
+        },
+        {
+          "suite": "regression_repo",
+          "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[True]",
+          "world1": "passed",
+          "world2": "passed"
+        }
+      ],
+      "holds_at_base": true,
+      "preserved_by_reference": true,
+      "mutants_killed": [
+        "contract:guard:shopcart/cart.py:_check_quantity:489e0964",
+        "contract:guard:shopcart/cart.py:_check_quantity:ce994315"
+      ]
+    },
+    {
+      "id": "test:tests/test_cart.py::test_lines_keep_insertion_order",
+      "description": "lines keep insertion order",
+      "origin": "repository",
+      "evidence_type": "existing_test",
+      "probes": [
+        {
+          "suite": "regression_repo",
+          "nodeid": "tests/test_cart.py::test_lines_keep_insertion_order",
+          "world1": "passed",
+          "world2": "passed"
+        }
+      ],
+      "holds_at_base": true,
+      "preserved_by_reference": true,
+      "mutants_killed": []
+    },
+    {
+      "id": "test:tests/test_cart.py::test_remove_deletes_line",
+      "description": "remove deletes line",
+      "origin": "repository",
+      "evidence_type": "existing_test",
+      "probes": [
+        {
+          "suite": "regression_repo",
+          "nodeid": "tests/test_cart.py::test_remove_deletes_line",
+          "world1": "passed",
+          "world2": "passed"
+        }
+      ],
+      "holds_at_base": true,
+      "preserved_by_reference": true,
+      "mutants_killed": []
+    },
+    {
+      "id": "test:tests/test_cart.py::test_subtotal_sums_line_totals",
+      "description": "subtotal sums line totals",
+      "origin": "repository",
+      "evidence_type": "existing_test",
+      "probes": [
+        {
+          "suite": "regression_repo",
+          "nodeid": "tests/test_cart.py::test_subtotal_sums_line_totals",
+          "world1": "passed",
+          "world2": "passed"
+        }
+      ],
+      "holds_at_base": true,
+      "preserved_by_reference": true,
+      "mutants_killed": []
+    },
+    {
+      "id": "test:tests/test_discounts.py::test_discount_amount_rounds_half_up",
+      "description": "discount amount rounds half up",
+      "origin": "repository",
+      "evidence_type": "existing_test",
+      "probes": [
+        {
+          "suite": "regression_repo",
+          "nodeid": "tests/test_discounts.py::test_discount_amount_rounds_half_up",
+          "world1": "passed",
+          "world2": "passed"
+        }
+      ],
+      "holds_at_base": true,
+      "preserved_by_reference": true,
+      "mutants_killed": []
+    },
+    {
+      "id": "test:tests/test_discounts.py::test_full_discount_makes_cart_free",
+      "description": "full discount makes cart free",
+      "origin": "repository",
+      "evidence_type": "existing_test",
+      "probes": [
+        {
+          "suite": "regression_repo",
+          "nodeid": "tests/test_discounts.py::test_full_discount_makes_cart_free",
+          "world1": "passed",
+          "world2": "passed"
+        }
+      ],
+      "holds_at_base": true,
+      "preserved_by_reference": true,
+      "mutants_killed": []
+    },
+    {
+      "id": "test:tests/test_discounts.py::test_percentage_discount_applies_to_whole_subtotal",
+      "description": "percentage discount applies to whole subtotal",
+      "origin": "repository",
+      "evidence_type": "existing_test",
+      "probes": [
+        {
+          "suite": "regression_repo",
+          "nodeid": "tests/test_discounts.py::test_percentage_discount_applies_to_whole_subtotal",
+          "world1": "passed",
+          "world2": "passed"
+        }
+      ],
+      "holds_at_base": true,
+      "preserved_by_reference": true,
+      "mutants_killed": []
+    },
+    {
+      "id": "guard:shopcart/cart.py:_check_quantity:489e0964",
+      "description": "`_check_quantity` raises `InvalidQuantityError` when `isinstance(quantity, bool) or not isinstance(quantity, int)` (\"quantity must be an integer\")",
+      "origin": "static_analysis",
+      "evidence_type": "guard_clause",
+      "probes": [
+        {
+          "suite": "regression_repo",
+          "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[1.5]",
+          "world1": "passed",
+          "world2": "passed"
+        },
+        {
+          "suite": "regression_repo",
+          "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[2]",
+          "world1": "passed",
+          "world2": "passed"
+        },
+        {
+          "suite": "regression_repo",
+          "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[True]",
+          "world1": "passed",
+          "world2": "passed"
+        }
+      ],
+      "holds_at_base": true,
+      "preserved_by_reference": true,
+      "mutants_killed": [
+        "contract:guard:shopcart/cart.py:_check_quantity:489e0964"
+      ]
+    },
+    {
+      "id": "guard:shopcart/cart.py:_check_quantity:ce994315",
+      "description": "`_check_quantity` raises `InvalidQuantityError` when `quantity < 1` (\"quantity must be at least 1\")",
+      "origin": "static_analysis",
+      "evidence_type": "guard_clause",
+      "probes": [
+        {
+          "suite": "regression_repo",
+          "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[-1]",
+          "world1": "passed",
+          "world2": "passed"
+        },
+        {
+          "suite": "regression_repo",
+          "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[0]",
+          "world1": "passed",
+          "world2": "passed"
+        }
+      ],
+      "holds_at_base": true,
+      "preserved_by_reference": true,
+      "mutants_killed": [
+        "contract:guard:shopcart/cart.py:_check_quantity:ce994315"
+      ]
+    }
+  ],
+  "runs": [
+    {
+      "index": 1,
+      "fingerprint": "5d41808b38d3cd9df02a373d6beba6b521bcea530771301eff01f719e3cb93a3",
+      "worlds": {
+        "gates": {
+          "title": "Static Gates",
+          "status": "passed",
+          "expectation": "the statement, the declared interface, the acceptance criteria and the feature tests are consistent with each other and with the base commit",
+          "summary": {
+            "acceptance_criteria": 5,
+            "feature_test_functions": 7,
+            "declared_interface": 1
+          },
+          "reasons": []
+        },
+        "world1": {
+          "title": "Broken World",
+          "status": "passed",
+          "expectation": "every feature test fails with an assertion-level failure; every regression test passes",
+          "summary": {
+            "feature_tests": 15,
+            "feature_failing_by_assertion": 0,
+            "regression_tests": 32,
+            "regression_passing": 32,
+            "feature_failing_by_declared_interface": 15,
+            "feature_files_blocked_by_declared_interface": []
+          },
+          "reasons": [],
+          "suites": {
+            "feature": {
+              "name": "feature",
+              "exit_code": 1,
+              "timed_out": false,
+              "duration_seconds": 1.32,
+              "log": "logs/run1/world1/feature.log",
+              "counts": {
+                "failed": 15
+              },
+              "collection_errors": [],
+              "tests": [
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[-100]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.AttributeError",
+                  "phase": "call",
+                  "raised_in": "_unwritten/feature/test_update_quantity.py",
+                  "raised_in_tests": true,
+                  "missing": {
+                    "kind": "attribute",
+                    "owner": "shopcart.cart.Cart",
+                    "name": "update_quantity"
+                  },
+                  "message": "'Cart' object has no attribute 'update_quantity'",
+                  "detail": "quantity = -100\n\n    @pytest.mark.parametrize(\"quantity\", [-1, -100, 1.5, \"2\", None, True, False])\n    def test_invalid_quantity_is_rejected_and_changes_nothing(quantity):\n        cart = cart_of((NOVEL, 2), (MUG, 1))\n        with pytest.raises(InvalidQuantityError):\n>           cart.update_quantity(\"BK-1\", quantity)\nE           AttributeError: 'Cart' object has no attribute 'update_quantity'\n\n_unwritten/feature/test_update_quantity.py:64: AttributeError"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[-1]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.AttributeError",
+                  "phase": "call",
+                  "raised_in": "_unwritten/feature/test_update_quantity.py",
+                  "raised_in_tests": true,
+                  "missing": {
+                    "kind": "attribute",
+                    "owner": "shopcart.cart.Cart",
+                    "name": "update_quantity"
+                  },
+                  "message": "'Cart' object has no attribute 'update_quantity'",
+                  "detail": "quantity = -1\n\n    @pytest.mark.parametrize(\"quantity\", [-1, -100, 1.5, \"2\", None, True, False])\n    def test_invalid_quantity_is_rejected_and_changes_nothing(quantity):\n        cart = cart_of((NOVEL, 2), (MUG, 1))\n        with pytest.raises(InvalidQuantityError):\n>           cart.update_quantity(\"BK-1\", quantity)\nE           AttributeError: 'Cart' object has no attribute 'update_quantity'\n\n_unwritten/feature/test_update_quantity.py:64: AttributeError"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[1.5]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.AttributeError",
+                  "phase": "call",
+                  "raised_in": "_unwritten/feature/test_update_quantity.py",
+                  "raised_in_tests": true,
+                  "missing": {
+                    "kind": "attribute",
+                    "owner": "shopcart.cart.Cart",
+                    "name": "update_quantity"
+                  },
+                  "message": "'Cart' object has no attribute 'update_quantity'",
+                  "detail": "quantity = 1.5\n\n    @pytest.mark.parametrize(\"quantity\", [-1, -100, 1.5, \"2\", None, True, False])\n    def test_invalid_quantity_is_rejected_and_changes_nothing(quantity):\n        cart = cart_of((NOVEL, 2), (MUG, 1))\n        with pytest.raises(InvalidQuantityError):\n>           cart.update_quantity(\"BK-1\", quantity)\nE           AttributeError: 'Cart' object has no attribute 'update_quantity'\n\n_unwritten/feature/test_update_quantity.py:64: AttributeError"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[2]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.AttributeError",
+                  "phase": "call",
+                  "raised_in": "_unwritten/feature/test_update_quantity.py",
+                  "raised_in_tests": true,
+                  "missing": {
+                    "kind": "attribute",
+                    "owner": "shopcart.cart.Cart",
+                    "name": "update_quantity"
+                  },
+                  "message": "'Cart' object has no attribute 'update_quantity'",
+                  "detail": "quantity = '2'\n\n    @pytest.mark.parametrize(\"quantity\", [-1, -100, 1.5, \"2\", None, True, False])\n    def test_invalid_quantity_is_rejected_and_changes_nothing(quantity):\n        cart = cart_of((NOVEL, 2), (MUG, 1))\n        with pytest.raises(InvalidQuantityError):\n>           cart.update_quantity(\"BK-1\", quantity)\nE           AttributeError: 'Cart' object has no attribute 'update_quantity'\n\n_unwritten/feature/test_update_quantity.py:64: AttributeError"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[False]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.AttributeError",
+                  "phase": "call",
+                  "raised_in": "_unwritten/feature/test_update_quantity.py",
+                  "raised_in_tests": true,
+                  "missing": {
+                    "kind": "attribute",
+                    "owner": "shopcart.cart.Cart",
+                    "name": "update_quantity"
+                  },
+                  "message": "'Cart' object has no attribute 'update_quantity'",
+                  "detail": "quantity = False\n\n    @pytest.mark.parametrize(\"quantity\", [-1, -100, 1.5, \"2\", None, True, False])\n    def test_invalid_quantity_is_rejected_and_changes_nothing(quantity):\n        cart = cart_of((NOVEL, 2), (MUG, 1))\n        with pytest.raises(InvalidQuantityError):\n>           cart.update_quantity(\"BK-1\", quantity)\nE           AttributeError: 'Cart' object has no attribute 'update_quantity'\n\n_unwritten/feature/test_update_quantity.py:64: AttributeError"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[None]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.AttributeError",
+                  "phase": "call",
+                  "raised_in": "_unwritten/feature/test_update_quantity.py",
+                  "raised_in_tests": true,
+                  "missing": {
+                    "kind": "attribute",
+                    "owner": "shopcart.cart.Cart",
+                    "name": "update_quantity"
+                  },
+                  "message": "'Cart' object has no attribute 'update_quantity'",
+                  "detail": "quantity = None\n\n    @pytest.mark.parametrize(\"quantity\", [-1, -100, 1.5, \"2\", None, True, False])\n    def test_invalid_quantity_is_rejected_and_changes_nothing(quantity):\n        cart = cart_of((NOVEL, 2), (MUG, 1))\n        with pytest.raises(InvalidQuantityError):\n>           cart.update_quantity(\"BK-1\", quantity)\nE           AttributeError: 'Cart' object has no attribute 'update_quantity'\n\n_unwritten/feature/test_update_quantity.py:64: AttributeError"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[True]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.AttributeError",
+                  "phase": "call",
+                  "raised_in": "_unwritten/feature/test_update_quantity.py",
+                  "raised_in_tests": true,
+                  "missing": {
+                    "kind": "attribute",
+                    "owner": "shopcart.cart.Cart",
+                    "name": "update_quantity"
+                  },
+                  "message": "'Cart' object has no attribute 'update_quantity'",
+                  "detail": "quantity = True\n\n    @pytest.mark.parametrize(\"quantity\", [-1, -100, 1.5, \"2\", None, True, False])\n    def test_invalid_quantity_is_rejected_and_changes_nothing(quantity):\n        cart = cart_of((NOVEL, 2), (MUG, 1))\n        with pytest.raises(InvalidQuantityError):\n>           cart.update_quantity(\"BK-1\", quantity)\nE           AttributeError: 'Cart' object has no attribute 'update_quantity'\n\n_unwritten/feature/test_update_quantity.py:64: AttributeError"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_unknown_sku_is_reported_before_an_invalid_quantity[-1]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.AttributeError",
+                  "phase": "call",
+                  "raised_in": "_unwritten/feature/test_update_quantity.py",
+                  "raised_in_tests": true,
+                  "missing": {
+                    "kind": "attribute",
+                    "owner": "shopcart.cart.Cart",
+                    "name": "update_quantity"
+                  },
+                  "message": "'Cart' object has no attribute 'update_quantity'",
+                  "detail": "quantity = -1\n\n    @pytest.mark.parametrize(\"quantity\", [-1, 1.5, True])\n    def test_unknown_sku_is_reported_before_an_invalid_quantity(quantity):\n        cart = cart_of((NOVEL, 2))\n        with pytest.raises(KeyError):\n>           cart.update_quantity(\"NOPE\", quantity)\nE           AttributeError: 'Cart' object has no attribute 'update_quantity'\n\n_unwritten/feature/test_update_quantity.py:57: AttributeError"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_unknown_sku_is_reported_before_an_invalid_quantity[1.5]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.AttributeError",
+                  "phase": "call",
+                  "raised_in": "_unwritten/feature/test_update_quantity.py",
+                  "raised_in_tests": true,
+                  "missing": {
+                    "kind": "attribute",
+                    "owner": "shopcart.cart.Cart",
+                    "name": "update_quantity"
+                  },
+                  "message": "'Cart' object has no attribute 'update_quantity'",
+                  "detail": "quantity = 1.5\n\n    @pytest.mark.parametrize(\"quantity\", [-1, 1.5, True])\n    def test_unknown_sku_is_reported_before_an_invalid_quantity(quantity):\n        cart = cart_of((NOVEL, 2))\n        with pytest.raises(KeyError):\n>           cart.update_quantity(\"NOPE\", quantity)\nE           AttributeError: 'Cart' object has no attribute 'update_quantity'\n\n_unwritten/feature/test_update_quantity.py:57: AttributeError"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_unknown_sku_is_reported_before_an_invalid_quantity[True]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.AttributeError",
+                  "phase": "call",
+                  "raised_in": "_unwritten/feature/test_update_quantity.py",
+                  "raised_in_tests": true,
+                  "missing": {
+                    "kind": "attribute",
+                    "owner": "shopcart.cart.Cart",
+                    "name": "update_quantity"
+                  },
+                  "message": "'Cart' object has no attribute 'update_quantity'",
+                  "detail": "quantity = True\n\n    @pytest.mark.parametrize(\"quantity\", [-1, 1.5, True])\n    def test_unknown_sku_is_reported_before_an_invalid_quantity(quantity):\n        cart = cart_of((NOVEL, 2))\n        with pytest.raises(KeyError):\n>           cart.update_quantity(\"NOPE\", quantity)\nE           AttributeError: 'Cart' object has no attribute 'update_quantity'\n\n_unwritten/feature/test_update_quantity.py:57: AttributeError"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_unknown_sku_raises_key_error_and_changes_nothing",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.AttributeError",
+                  "phase": "call",
+                  "raised_in": "_unwritten/feature/test_update_quantity.py",
+                  "raised_in_tests": true,
+                  "missing": {
+                    "kind": "attribute",
+                    "owner": "shopcart.cart.Cart",
+                    "name": "update_quantity"
+                  },
+                  "message": "'Cart' object has no attribute 'update_quantity'",
+                  "detail": "def test_unknown_sku_raises_key_error_and_changes_nothing():\n        cart = cart_of((NOVEL, 2))\n        with pytest.raises(KeyError):\n>           cart.update_quantity(\"NOPE\", 3)\nE           AttributeError: 'Cart' object has no attribute 'update_quantity'\n\n_unwritten/feature/test_update_quantity.py:49: AttributeError"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_update_can_lower_the_quantity_and_totals_follow",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.AttributeError",
+                  "phase": "call",
+                  "raised_in": "_unwritten/feature/test_update_quantity.py",
+                  "raised_in_tests": true,
+                  "missing": {
+                    "kind": "attribute",
+                    "owner": "shopcart.cart.Cart",
+                    "name": "update_quantity"
+                  },
+                  "message": "'Cart' object has no attribute 'update_quantity'",
+                  "detail": "def test_update_can_lower_the_quantity_and_totals_follow():\n        cart = cart_of((NOVEL, 4), (MUG, 1))\n>       cart.update_quantity(\"BK-1\", 1)\nE       AttributeError: 'Cart' object has no attribute 'update_quantity'\n\n_unwritten/feature/test_update_quantity.py:33: AttributeError"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_update_replaces_the_quantity",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.AttributeError",
+                  "phase": "call",
+                  "raised_in": "_unwritten/feature/test_update_quantity.py",
+                  "raised_in_tests": true,
+                  "missing": {
+                    "kind": "attribute",
+                    "owner": "shopcart.cart.Cart",
+                    "name": "update_quantity"
+                  },
+                  "message": "'Cart' object has no attribute 'update_quantity'",
+                  "detail": "def test_update_replaces_the_quantity():\n        cart = cart_of((NOVEL, 2), (MUG, 1))\n>       assert cart.update_quantity(\"BK-1\", 5) is None\nE       AttributeError: 'Cart' object has no attribute 'update_quantity'\n\n_unwritten/feature/test_update_quantity.py:27: AttributeError"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_updated_line_keeps_its_position",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.AttributeError",
+                  "phase": "call",
+                  "raised_in": "_unwritten/feature/test_update_quantity.py",
+                  "raised_in_tests": true,
+                  "missing": {
+                    "kind": "attribute",
+                    "owner": "shopcart.cart.Cart",
+                    "name": "update_quantity"
+                  },
+                  "message": "'Cart' object has no attribute 'update_quantity'",
+                  "detail": "def test_updated_line_keeps_its_position():\n        cart = cart_of((NOVEL, 1), (MUG, 1), (PEN, 1))\n>       cart.update_quantity(\"BK-1\", 7)\nE       AttributeError: 'Cart' object has no attribute 'update_quantity'\n\n_unwritten/feature/test_update_quantity.py:70: AttributeError"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_zero_removes_the_line",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.AttributeError",
+                  "phase": "call",
+                  "raised_in": "_unwritten/feature/test_update_quantity.py",
+                  "raised_in_tests": true,
+                  "missing": {
+                    "kind": "attribute",
+                    "owner": "shopcart.cart.Cart",
+                    "name": "update_quantity"
+                  },
+                  "message": "'Cart' object has no attribute 'update_quantity'",
+                  "detail": "def test_zero_removes_the_line():\n        cart = cart_of((NOVEL, 2), (MUG, 1))\n>       cart.update_quantity(\"BK-1\", 0)\nE       AttributeError: 'Cart' object has no attribute 'update_quantity'\n\n_unwritten/feature/test_update_quantity.py:40: AttributeError"
+                }
+              ]
+            },
+            "regression_package": {
+              "name": "regression_package",
+              "exit_code": 0,
+              "timed_out": false,
+              "duration_seconds": 0.215,
+              "log": "logs/run1/world1/regression_package.log",
+              "counts": {
+                "passed": 2
+              },
+              "collection_errors": [],
+              "tests": [
+                {
+                  "nodeid": "_unwritten/regression/test_cart_compatibility.py::test_add_still_merges_instead_of_replacing",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "_unwritten/regression/test_cart_compatibility.py::test_remove_then_add_still_moves_the_line_to_the_end",
+                  "outcome": "passed"
+                }
+              ]
+            },
+            "regression_repo": {
+              "name": "regression_repo",
+              "exit_code": 0,
+              "timed_out": false,
+              "duration_seconds": 0.265,
+              "log": "logs/run1/world1/regression_repo.log",
+              "counts": {
+                "passed": 30
+              },
+              "collection_errors": [],
+              "tests": [
+                {
+                  "nodeid": "tests/test_cart.py::test_adding_same_product_merges_quantities",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_empty_cart_totals_zero",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_float_prices_are_rejected",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[-1]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[0]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[1.5]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[2]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[True]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_lines_keep_insertion_order",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_product_price_is_normalised_to_cents",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_remove_deletes_line",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_remove_unknown_sku_raises_key_error",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_subtotal_sums_line_totals",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_code_is_trimmed_and_uppercased",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_config_must_be_a_mapping",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_discount_amount_rounds_half_up",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_full_discount_makes_cart_free",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_code_is_rejected[   ]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_code_is_rejected[7]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_code_is_rejected[None]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_code_is_rejected[]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[-5]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[0]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[101]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[2.5]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[None]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[True]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[abc]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_percentage_discount_applies_to_whole_subtotal",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_unknown_config_keys_are_ignored",
+                  "outcome": "passed"
+                }
+              ]
+            }
+          }
+        },
+        "world2": {
+          "title": "Correct World",
+          "status": "passed",
+          "expectation": "with the reference implementation, every feature test passes and every regression test ends exactly as it did in World 1",
+          "summary": {
+            "feature_tests": 15,
+            "feature_passing": 15,
+            "regression_tests": 32,
+            "regression_passing": 32
+          },
+          "reasons": [],
+          "suites": {
+            "feature": {
+              "name": "feature",
+              "exit_code": 0,
+              "timed_out": false,
+              "duration_seconds": 0.366,
+              "log": "logs/run1/world2/feature.log",
+              "counts": {
+                "passed": 15
+              },
+              "collection_errors": [],
+              "tests": [
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[-100]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[-1]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[1.5]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[2]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[False]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[None]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[True]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_unknown_sku_is_reported_before_an_invalid_quantity[-1]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_unknown_sku_is_reported_before_an_invalid_quantity[1.5]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_unknown_sku_is_reported_before_an_invalid_quantity[True]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_unknown_sku_raises_key_error_and_changes_nothing",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_update_can_lower_the_quantity_and_totals_follow",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_update_replaces_the_quantity",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_updated_line_keeps_its_position",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_zero_removes_the_line",
+                  "outcome": "passed"
+                }
+              ]
+            },
+            "regression_package": {
+              "name": "regression_package",
+              "exit_code": 0,
+              "timed_out": false,
+              "duration_seconds": 0.266,
+              "log": "logs/run1/world2/regression_package.log",
+              "counts": {
+                "passed": 2
+              },
+              "collection_errors": [],
+              "tests": [
+                {
+                  "nodeid": "_unwritten/regression/test_cart_compatibility.py::test_add_still_merges_instead_of_replacing",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "_unwritten/regression/test_cart_compatibility.py::test_remove_then_add_still_moves_the_line_to_the_end",
+                  "outcome": "passed"
+                }
+              ]
+            },
+            "regression_repo": {
+              "name": "regression_repo",
+              "exit_code": 0,
+              "timed_out": false,
+              "duration_seconds": 0.265,
+              "log": "logs/run1/world2/regression_repo.log",
+              "counts": {
+                "passed": 30
+              },
+              "collection_errors": [],
+              "tests": [
+                {
+                  "nodeid": "tests/test_cart.py::test_adding_same_product_merges_quantities",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_empty_cart_totals_zero",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_float_prices_are_rejected",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[-1]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[0]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[1.5]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[2]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[True]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_lines_keep_insertion_order",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_product_price_is_normalised_to_cents",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_remove_deletes_line",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_remove_unknown_sku_raises_key_error",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_subtotal_sums_line_totals",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_code_is_trimmed_and_uppercased",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_config_must_be_a_mapping",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_discount_amount_rounds_half_up",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_full_discount_makes_cart_free",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_code_is_rejected[   ]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_code_is_rejected[7]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_code_is_rejected[None]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_code_is_rejected[]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[-5]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[0]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[101]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[2.5]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[None]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[True]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[abc]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_percentage_discount_applies_to_whole_subtotal",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_unknown_config_keys_are_ignored",
+                  "outcome": "passed"
+                }
+              ]
+            }
+          }
+        },
+        "world3": {
+          "title": "Deception World",
+          "status": "passed",
+          "expectation": "every mutant of the reference implementation makes at least one test fail that passed in World 2",
+          "summary": {
+            "mutants": 18,
+            "mutants_executed": 18,
+            "declared": 3,
+            "generated": 13,
+            "contract": 2,
+            "contract_guards_not_found": [],
+            "killed": 18,
+            "survived": 0,
+            "survived_waived": 0,
+            "equivalent": 0,
+            "invalid": 0,
+            "mutation_score": 1.0,
+            "mutation_score_basis": "killed / (killed + survived); equivalent and invalid mutants are excluded"
+          },
+          "reasons": [],
+          "mutants": [
+            {
+              "id": "declared:zero-keeps-empty-line",
+              "origin": "declared",
+              "operator": "DECLARED",
+              "description": "A quantity of 0 leaves a line with zero units instead of removing it.",
+              "file": null,
+              "line": null,
+              "diff": "mutants/declared_zero-keeps-empty-line.diff",
+              "status": "killed",
+              "killed_by": [
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_zero_removes_the_line",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.AssertionError",
+                  "message": "assert [('BK-1', 0), ('HM-1', 1)] == [('HM-1', 1)]\n  \n  At index 0 diff: ('BK-1', 0) != ('HM-1', 1)\n  Left contains one more item: ('HM-1', 1)\n  Use -v to get more diff"
+                }
+              ],
+              "logs": "logs/run1/declared_zero-keeps-empty-line"
+            },
+            {
+              "id": "declared:adds-instead-of-replacing",
+              "origin": "declared",
+              "operator": "DECLARED",
+              "description": "The new quantity is added to the old one, as Cart.add does.",
+              "file": null,
+              "line": null,
+              "diff": "mutants/declared_adds-instead-of-replacing.diff",
+              "status": "killed",
+              "killed_by": [
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_update_can_lower_the_quantity_and_totals_follow",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.AssertionError",
+                  "message": "assert Decimal('70.50') == Decimal('20.50')\n +  where Decimal('70.50') = subtotal()\n +    where subtotal = <shopcart.cart.Cart object at 0x7f46f8769220>.subtotal\n +  and   Decimal('20.50') = Decimal('20.50')"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_update_replaces_the_quantity",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.AssertionError",
+                  "message": "assert [('BK-1', 7), ('HM-1', 1)] == [('BK-1', 5), ('HM-1', 1)]\n  \n  At index 0 diff: ('BK-1', 7) != ('BK-1', 5)\n  Use -v to get more diff"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_updated_line_keeps_its_position",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.AssertionError",
+                  "message": "assert [('BK-1', 8),..., ('OF-1', 1)] == [('BK-1', 7),..., ('OF-1', 1)]\n  \n  At index 0 diff: ('BK-1', 8) != ('BK-1', 7)\n  Use -v to get more diff"
+                }
+              ],
+              "logs": "logs/run1/declared_adds-instead-of-replacing"
+            },
+            {
+              "id": "declared:moves-line-to-end",
+              "origin": "declared",
+              "operator": "DECLARED",
+              "description": "The updated line is re-inserted and loses its position.",
+              "file": null,
+              "line": null,
+              "diff": "mutants/declared_moves-line-to-end.diff",
+              "status": "killed",
+              "killed_by": [
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_update_replaces_the_quantity",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.AssertionError",
+                  "message": "assert [('HM-1', 1), ('BK-1', 5)] == [('BK-1', 5), ('HM-1', 1)]\n  \n  At index 0 diff: ('HM-1', 1) != ('BK-1', 5)\n  Use -v to get more diff"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_updated_line_keeps_its_position",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.AssertionError",
+                  "message": "assert [('OF-1', 1),..., ('HM-1', 2)] == [('BK-1', 7),..., ('OF-1', 1)]\n  \n  At index 0 diff: ('OF-1', 1) != ('BK-1', 7)\n  Use -v to get more diff"
+                }
+              ],
+              "logs": "logs/run1/declared_moves-line-to-end"
+            },
+            {
+              "id": "generated:COND_FORCE_FALSE:shopcart/cart.py:37:11",
+              "origin": "generated",
+              "operator": "COND_FORCE_FALSE",
+              "description": "`if sku not in self._lines` becomes `if False`",
+              "file": "shopcart/cart.py",
+              "line": 37,
+              "diff": "mutants/generated_COND_FORCE_FALSE_shopcart_cart.py_37_11.diff",
+              "status": "killed",
+              "killed_by": [
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_unknown_sku_is_reported_before_an_invalid_quantity[-1]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "shopcart.errors.InvalidQuantityError",
+                  "message": "quantity must not be negative"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_unknown_sku_is_reported_before_an_invalid_quantity[1.5]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "shopcart.errors.InvalidQuantityError",
+                  "message": "quantity must be an integer"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_unknown_sku_is_reported_before_an_invalid_quantity[True]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "shopcart.errors.InvalidQuantityError",
+                  "message": "quantity must be an integer"
+                }
+              ],
+              "logs": "logs/run1/generated_COND_FORCE_FALSE_shopcart_cart.py_37_11"
+            },
+            {
+              "id": "generated:COND_FORCE_TRUE:shopcart/cart.py:37:11",
+              "origin": "generated",
+              "operator": "COND_FORCE_TRUE",
+              "description": "`if sku not in self._lines` becomes `if True`",
+              "file": "shopcart/cart.py",
+              "line": 37,
+              "diff": "mutants/generated_COND_FORCE_TRUE_shopcart_cart.py_37_11.diff",
+              "status": "killed",
+              "killed_by": [
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[-100]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[-1]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[1.5]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[2]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[False]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[None]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[True]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_update_can_lower_the_quantity_and_totals_follow",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_update_replaces_the_quantity",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_updated_line_keeps_its_position",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_zero_removes_the_line",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                }
+              ],
+              "logs": "logs/run1/generated_COND_FORCE_TRUE_shopcart_cart.py_37_11"
+            },
+            {
+              "id": "generated:CMP_NEGATE:shopcart/cart.py:37:15",
+              "origin": "generated",
+              "operator": "CMP_NEGATE",
+              "description": "`not in` becomes `in` in `sku not in self._lines`",
+              "file": "shopcart/cart.py",
+              "line": 37,
+              "diff": "mutants/generated_CMP_NEGATE_shopcart_cart.py_37_15.diff",
+              "status": "killed",
+              "killed_by": [
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[-100]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[-1]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[1.5]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[2]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[False]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[None]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[True]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_unknown_sku_is_reported_before_an_invalid_quantity[-1]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "shopcart.errors.InvalidQuantityError",
+                  "message": "quantity must not be negative"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_unknown_sku_is_reported_before_an_invalid_quantity[1.5]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "shopcart.errors.InvalidQuantityError",
+                  "message": "quantity must be an integer"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_unknown_sku_is_reported_before_an_invalid_quantity[True]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "shopcart.errors.InvalidQuantityError",
+                  "message": "quantity must be an integer"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_update_can_lower_the_quantity_and_totals_follow",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_update_replaces_the_quantity",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_updated_line_keeps_its_position",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_zero_removes_the_line",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                }
+              ],
+              "logs": "logs/run1/generated_CMP_NEGATE_shopcart_cart.py_37_15"
+            },
+            {
+              "id": "generated:COND_FORCE_FALSE:shopcart/cart.py:39:11",
+              "origin": "generated",
+              "operator": "COND_FORCE_FALSE",
+              "description": "`if isinstance(quantity, bool) or not isinstance(quantity, int)` becomes `if False`",
+              "file": "shopcart/cart.py",
+              "line": 39,
+              "diff": "mutants/generated_COND_FORCE_FALSE_shopcart_cart.py_39_11.diff",
+              "status": "killed",
+              "killed_by": [
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[1.5]",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.Failed",
+                  "message": "DID NOT RAISE <class 'shopcart.errors.InvalidQuantityError'>"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[2]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.TypeError",
+                  "message": "'<' not supported between instances of 'str' and 'int'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[False]",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.Failed",
+                  "message": "DID NOT RAISE <class 'shopcart.errors.InvalidQuantityError'>"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[None]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.TypeError",
+                  "message": "'<' not supported between instances of 'NoneType' and 'int'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[True]",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.Failed",
+                  "message": "DID NOT RAISE <class 'shopcart.errors.InvalidQuantityError'>"
+                }
+              ],
+              "logs": "logs/run1/generated_COND_FORCE_FALSE_shopcart_cart.py_39_11"
+            },
+            {
+              "id": "generated:COND_FORCE_TRUE:shopcart/cart.py:39:11",
+              "origin": "generated",
+              "operator": "COND_FORCE_TRUE",
+              "description": "`if isinstance(quantity, bool) or not isinstance(quantity, int)` becomes `if True`",
+              "file": "shopcart/cart.py",
+              "line": 39,
+              "diff": "mutants/generated_COND_FORCE_TRUE_shopcart_cart.py_39_11.diff",
+              "status": "killed",
+              "killed_by": [
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_update_can_lower_the_quantity_and_totals_follow",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "shopcart.errors.InvalidQuantityError",
+                  "message": "quantity must be an integer"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_update_replaces_the_quantity",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "shopcart.errors.InvalidQuantityError",
+                  "message": "quantity must be an integer"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_updated_line_keeps_its_position",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "shopcart.errors.InvalidQuantityError",
+                  "message": "quantity must be an integer"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_zero_removes_the_line",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "shopcart.errors.InvalidQuantityError",
+                  "message": "quantity must be an integer"
+                }
+              ],
+              "logs": "logs/run1/generated_COND_FORCE_TRUE_shopcart_cart.py_39_11"
+            },
+            {
+              "id": "generated:BOOL_SWAP:shopcart/cart.py:39:38",
+              "origin": "generated",
+              "operator": "BOOL_SWAP",
+              "description": "`or` becomes `and` in `isinstance(quantity, bool) or not isinstance(quantity, int)`",
+              "file": "shopcart/cart.py",
+              "line": 39,
+              "diff": "mutants/generated_BOOL_SWAP_shopcart_cart.py_39_38.diff",
+              "status": "killed",
+              "killed_by": [
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[1.5]",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.Failed",
+                  "message": "DID NOT RAISE <class 'shopcart.errors.InvalidQuantityError'>"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[2]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.TypeError",
+                  "message": "'<' not supported between instances of 'str' and 'int'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[False]",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.Failed",
+                  "message": "DID NOT RAISE <class 'shopcart.errors.InvalidQuantityError'>"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[None]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.TypeError",
+                  "message": "'<' not supported between instances of 'NoneType' and 'int'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[True]",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.Failed",
+                  "message": "DID NOT RAISE <class 'shopcart.errors.InvalidQuantityError'>"
+                }
+              ],
+              "logs": "logs/run1/generated_BOOL_SWAP_shopcart_cart.py_39_38"
+            },
+            {
+              "id": "generated:NOT_REMOVE:shopcart/cart.py:39:41",
+              "origin": "generated",
+              "operator": "NOT_REMOVE",
+              "description": "`not` removed from `not isinstance(quantity, int)`",
+              "file": "shopcart/cart.py",
+              "line": 39,
+              "diff": "mutants/generated_NOT_REMOVE_shopcart_cart.py_39_41.diff",
+              "status": "killed",
+              "killed_by": [
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[1.5]",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.Failed",
+                  "message": "DID NOT RAISE <class 'shopcart.errors.InvalidQuantityError'>"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[2]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.TypeError",
+                  "message": "'<' not supported between instances of 'str' and 'int'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[None]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.TypeError",
+                  "message": "'<' not supported between instances of 'NoneType' and 'int'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_update_can_lower_the_quantity_and_totals_follow",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "shopcart.errors.InvalidQuantityError",
+                  "message": "quantity must be an integer"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_update_replaces_the_quantity",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "shopcart.errors.InvalidQuantityError",
+                  "message": "quantity must be an integer"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_updated_line_keeps_its_position",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "shopcart.errors.InvalidQuantityError",
+                  "message": "quantity must be an integer"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_zero_removes_the_line",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "shopcart.errors.InvalidQuantityError",
+                  "message": "quantity must be an integer"
+                }
+              ],
+              "logs": "logs/run1/generated_NOT_REMOVE_shopcart_cart.py_39_41"
+            },
+            {
+              "id": "generated:COND_FORCE_FALSE:shopcart/cart.py:41:11",
+              "origin": "generated",
+              "operator": "COND_FORCE_FALSE",
+              "description": "`if quantity < 0` becomes `if False`",
+              "file": "shopcart/cart.py",
+              "line": 41,
+              "diff": "mutants/generated_COND_FORCE_FALSE_shopcart_cart.py_41_11.diff",
+              "status": "killed",
+              "killed_by": [
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[-100]",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.Failed",
+                  "message": "DID NOT RAISE <class 'shopcart.errors.InvalidQuantityError'>"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[-1]",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.Failed",
+                  "message": "DID NOT RAISE <class 'shopcart.errors.InvalidQuantityError'>"
+                }
+              ],
+              "logs": "logs/run1/generated_COND_FORCE_FALSE_shopcart_cart.py_41_11"
+            },
+            {
+              "id": "generated:COND_FORCE_TRUE:shopcart/cart.py:41:11",
+              "origin": "generated",
+              "operator": "COND_FORCE_TRUE",
+              "description": "`if quantity < 0` becomes `if True`",
+              "file": "shopcart/cart.py",
+              "line": 41,
+              "diff": "mutants/generated_COND_FORCE_TRUE_shopcart_cart.py_41_11.diff",
+              "status": "killed",
+              "killed_by": [
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_update_can_lower_the_quantity_and_totals_follow",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "shopcart.errors.InvalidQuantityError",
+                  "message": "quantity must not be negative"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_update_replaces_the_quantity",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "shopcart.errors.InvalidQuantityError",
+                  "message": "quantity must not be negative"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_updated_line_keeps_its_position",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "shopcart.errors.InvalidQuantityError",
+                  "message": "quantity must not be negative"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_zero_removes_the_line",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "shopcart.errors.InvalidQuantityError",
+                  "message": "quantity must not be negative"
+                }
+              ],
+              "logs": "logs/run1/generated_COND_FORCE_TRUE_shopcart_cart.py_41_11"
+            },
+            {
+              "id": "generated:CMP_BOUNDARY:shopcart/cart.py:41:20",
+              "origin": "generated",
+              "operator": "CMP_BOUNDARY",
+              "description": "`<` becomes `<=` in `quantity < 0`",
+              "file": "shopcart/cart.py",
+              "line": 41,
+              "diff": "mutants/generated_CMP_BOUNDARY_shopcart_cart.py_41_20.diff",
+              "status": "killed",
+              "killed_by": [
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_zero_removes_the_line",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "shopcart.errors.InvalidQuantityError",
+                  "message": "quantity must not be negative"
+                }
+              ],
+              "logs": "logs/run1/generated_CMP_BOUNDARY_shopcart_cart.py_41_20"
+            },
+            {
+              "id": "generated:COND_FORCE_FALSE:shopcart/cart.py:43:11",
+              "origin": "generated",
+              "operator": "COND_FORCE_FALSE",
+              "description": "`if quantity == 0` becomes `if False`",
+              "file": "shopcart/cart.py",
+              "line": 43,
+              "diff": "mutants/generated_COND_FORCE_FALSE_shopcart_cart.py_43_11.diff",
+              "status": "killed",
+              "killed_by": [
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_zero_removes_the_line",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.AssertionError",
+                  "message": "assert [('BK-1', 0), ('HM-1', 1)] == [('HM-1', 1)]\n  \n  At index 0 diff: ('BK-1', 0) != ('HM-1', 1)\n  Left contains one more item: ('HM-1', 1)\n  Use -v to get more diff"
+                }
+              ],
+              "logs": "logs/run1/generated_COND_FORCE_FALSE_shopcart_cart.py_43_11"
+            },
+            {
+              "id": "generated:COND_FORCE_TRUE:shopcart/cart.py:43:11",
+              "origin": "generated",
+              "operator": "COND_FORCE_TRUE",
+              "description": "`if quantity == 0` becomes `if True`",
+              "file": "shopcart/cart.py",
+              "line": 43,
+              "diff": "mutants/generated_COND_FORCE_TRUE_shopcart_cart.py_43_11.diff",
+              "status": "killed",
+              "killed_by": [
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_update_can_lower_the_quantity_and_totals_follow",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.AssertionError",
+                  "message": "assert Decimal('8.00') == Decimal('20.50')\n +  where Decimal('8.00') = subtotal()\n +    where subtotal = <shopcart.cart.Cart object at 0x7f53df9a8f80>.subtotal\n +  and   Decimal('20.50') = Decimal('20.50')"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_update_replaces_the_quantity",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.AssertionError",
+                  "message": "assert [('HM-1', 1)] == [('BK-1', 5), ('HM-1', 1)]\n  \n  At index 0 diff: ('HM-1', 1) != ('BK-1', 5)\n  Right contains one more item: ('HM-1', 1)\n  Use -v to get more diff"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_updated_line_keeps_its_position",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.AssertionError",
+                  "message": "assert [('OF-1', 1)] == [('BK-1', 7),..., ('OF-1', 1)]\n  \n  At index 0 diff: ('OF-1', 1) != ('BK-1', 7)\n  Right contains 2 more items, first extra item: ('HM-1', 2)\n  Use -v to get more diff"
+                }
+              ],
+              "logs": "logs/run1/generated_COND_FORCE_TRUE_shopcart_cart.py_43_11"
+            },
+            {
+              "id": "generated:CMP_NEGATE:shopcart/cart.py:43:20",
+              "origin": "generated",
+              "operator": "CMP_NEGATE",
+              "description": "`==` becomes `!=` in `quantity == 0`",
+              "file": "shopcart/cart.py",
+              "line": 43,
+              "diff": "mutants/generated_CMP_NEGATE_shopcart_cart.py_43_20.diff",
+              "status": "killed",
+              "killed_by": [
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_update_can_lower_the_quantity_and_totals_follow",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.AssertionError",
+                  "message": "assert Decimal('8.00') == Decimal('20.50')\n +  where Decimal('8.00') = subtotal()\n +    where subtotal = <shopcart.cart.Cart object at 0x7ff87493d6d0>.subtotal\n +  and   Decimal('20.50') = Decimal('20.50')"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_update_replaces_the_quantity",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.AssertionError",
+                  "message": "assert [('HM-1', 1)] == [('BK-1', 5), ('HM-1', 1)]\n  \n  At index 0 diff: ('HM-1', 1) != ('BK-1', 5)\n  Right contains one more item: ('HM-1', 1)\n  Use -v to get more diff"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_updated_line_keeps_its_position",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.AssertionError",
+                  "message": "assert [('OF-1', 1)] == [('BK-1', 7),..., ('OF-1', 1)]\n  \n  At index 0 diff: ('OF-1', 1) != ('BK-1', 7)\n  Right contains 2 more items, first extra item: ('HM-1', 2)\n  Use -v to get more diff"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_zero_removes_the_line",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.AssertionError",
+                  "message": "assert [('BK-1', 0), ('HM-1', 1)] == [('HM-1', 1)]\n  \n  At index 0 diff: ('BK-1', 0) != ('HM-1', 1)\n  Left contains one more item: ('HM-1', 1)\n  Use -v to get more diff"
+                }
+              ],
+              "logs": "logs/run1/generated_CMP_NEGATE_shopcart_cart.py_43_20"
+            },
+            {
+              "id": "contract:guard:shopcart/cart.py:_check_quantity:489e0964",
+              "origin": "contract",
+              "operator": "COND_FORCE_FALSE",
+              "description": "violates a verified contract: `_check_quantity` raises `InvalidQuantityError` when `isinstance(quantity, bool) or not isinstance(quantity, int)` (\"quantity must be an integer\")",
+              "file": "shopcart/cart.py",
+              "line": 67,
+              "diff": "mutants/contract_guard_shopcart_cart.py__check_quantity_489e0964.diff",
+              "status": "killed",
+              "killed_by": [
+                {
+                  "suite": "regression_repo",
+                  "test": "tests/test_cart.py::test_invalid_quantity_is_rejected[1.5]",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.Failed",
+                  "message": "DID NOT RAISE <class 'shopcart.errors.InvalidQuantityError'>"
+                },
+                {
+                  "suite": "regression_repo",
+                  "test": "tests/test_cart.py::test_invalid_quantity_is_rejected[2]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.TypeError",
+                  "message": "'<' not supported between instances of 'str' and 'int'"
+                },
+                {
+                  "suite": "regression_repo",
+                  "test": "tests/test_cart.py::test_invalid_quantity_is_rejected[True]",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.Failed",
+                  "message": "DID NOT RAISE <class 'shopcart.errors.InvalidQuantityError'>"
+                }
+              ],
+              "logs": "logs/run1/contract_guard_shopcart_cart.py__check_quantity_489e0964"
+            },
+            {
+              "id": "contract:guard:shopcart/cart.py:_check_quantity:ce994315",
+              "origin": "contract",
+              "operator": "COND_FORCE_FALSE",
+              "description": "violates a verified contract: `_check_quantity` raises `InvalidQuantityError` when `quantity < 1` (\"quantity must be at least 1\")",
+              "file": "shopcart/cart.py",
+              "line": 69,
+              "diff": "mutants/contract_guard_shopcart_cart.py__check_quantity_ce994315.diff",
+              "status": "killed",
+              "killed_by": [
+                {
+                  "suite": "regression_repo",
+                  "test": "tests/test_cart.py::test_invalid_quantity_is_rejected[-1]",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.Failed",
+                  "message": "DID NOT RAISE <class 'shopcart.errors.InvalidQuantityError'>"
+                },
+                {
+                  "suite": "regression_repo",
+                  "test": "tests/test_cart.py::test_invalid_quantity_is_rejected[0]",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.Failed",
+                  "message": "DID NOT RAISE <class 'shopcart.errors.InvalidQuantityError'>"
+                }
+              ],
+              "logs": "logs/run1/contract_guard_shopcart_cart.py__check_quantity_ce994315"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "index": 2,
+      "fingerprint": "5d41808b38d3cd9df02a373d6beba6b521bcea530771301eff01f719e3cb93a3",
+      "worlds": {
+        "gates": {
+          "title": "Static Gates",
+          "status": "passed",
+          "expectation": "the statement, the declared interface, the acceptance criteria and the feature tests are consistent with each other and with the base commit",
+          "summary": {
+            "acceptance_criteria": 5,
+            "feature_test_functions": 7,
+            "declared_interface": 1
+          },
+          "reasons": []
+        },
+        "world1": {
+          "title": "Broken World",
+          "status": "passed",
+          "expectation": "every feature test fails with an assertion-level failure; every regression test passes",
+          "summary": {
+            "feature_tests": 15,
+            "feature_failing_by_assertion": 0,
+            "regression_tests": 32,
+            "regression_passing": 32,
+            "feature_failing_by_declared_interface": 15,
+            "feature_files_blocked_by_declared_interface": []
+          },
+          "reasons": [],
+          "suites": {
+            "feature": {
+              "name": "feature",
+              "exit_code": 1,
+              "timed_out": false,
+              "duration_seconds": 0.267,
+              "log": "logs/run2/world1/feature.log",
+              "counts": {
+                "failed": 15
+              },
+              "collection_errors": [],
+              "tests": [
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[-100]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.AttributeError",
+                  "phase": "call",
+                  "raised_in": "_unwritten/feature/test_update_quantity.py",
+                  "raised_in_tests": true,
+                  "missing": {
+                    "kind": "attribute",
+                    "owner": "shopcart.cart.Cart",
+                    "name": "update_quantity"
+                  },
+                  "message": "'Cart' object has no attribute 'update_quantity'",
+                  "detail": "quantity = -100\n\n    @pytest.mark.parametrize(\"quantity\", [-1, -100, 1.5, \"2\", None, True, False])\n    def test_invalid_quantity_is_rejected_and_changes_nothing(quantity):\n        cart = cart_of((NOVEL, 2), (MUG, 1))\n        with pytest.raises(InvalidQuantityError):\n>           cart.update_quantity(\"BK-1\", quantity)\nE           AttributeError: 'Cart' object has no attribute 'update_quantity'\n\n_unwritten/feature/test_update_quantity.py:64: AttributeError"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[-1]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.AttributeError",
+                  "phase": "call",
+                  "raised_in": "_unwritten/feature/test_update_quantity.py",
+                  "raised_in_tests": true,
+                  "missing": {
+                    "kind": "attribute",
+                    "owner": "shopcart.cart.Cart",
+                    "name": "update_quantity"
+                  },
+                  "message": "'Cart' object has no attribute 'update_quantity'",
+                  "detail": "quantity = -1\n\n    @pytest.mark.parametrize(\"quantity\", [-1, -100, 1.5, \"2\", None, True, False])\n    def test_invalid_quantity_is_rejected_and_changes_nothing(quantity):\n        cart = cart_of((NOVEL, 2), (MUG, 1))\n        with pytest.raises(InvalidQuantityError):\n>           cart.update_quantity(\"BK-1\", quantity)\nE           AttributeError: 'Cart' object has no attribute 'update_quantity'\n\n_unwritten/feature/test_update_quantity.py:64: AttributeError"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[1.5]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.AttributeError",
+                  "phase": "call",
+                  "raised_in": "_unwritten/feature/test_update_quantity.py",
+                  "raised_in_tests": true,
+                  "missing": {
+                    "kind": "attribute",
+                    "owner": "shopcart.cart.Cart",
+                    "name": "update_quantity"
+                  },
+                  "message": "'Cart' object has no attribute 'update_quantity'",
+                  "detail": "quantity = 1.5\n\n    @pytest.mark.parametrize(\"quantity\", [-1, -100, 1.5, \"2\", None, True, False])\n    def test_invalid_quantity_is_rejected_and_changes_nothing(quantity):\n        cart = cart_of((NOVEL, 2), (MUG, 1))\n        with pytest.raises(InvalidQuantityError):\n>           cart.update_quantity(\"BK-1\", quantity)\nE           AttributeError: 'Cart' object has no attribute 'update_quantity'\n\n_unwritten/feature/test_update_quantity.py:64: AttributeError"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[2]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.AttributeError",
+                  "phase": "call",
+                  "raised_in": "_unwritten/feature/test_update_quantity.py",
+                  "raised_in_tests": true,
+                  "missing": {
+                    "kind": "attribute",
+                    "owner": "shopcart.cart.Cart",
+                    "name": "update_quantity"
+                  },
+                  "message": "'Cart' object has no attribute 'update_quantity'",
+                  "detail": "quantity = '2'\n\n    @pytest.mark.parametrize(\"quantity\", [-1, -100, 1.5, \"2\", None, True, False])\n    def test_invalid_quantity_is_rejected_and_changes_nothing(quantity):\n        cart = cart_of((NOVEL, 2), (MUG, 1))\n        with pytest.raises(InvalidQuantityError):\n>           cart.update_quantity(\"BK-1\", quantity)\nE           AttributeError: 'Cart' object has no attribute 'update_quantity'\n\n_unwritten/feature/test_update_quantity.py:64: AttributeError"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[False]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.AttributeError",
+                  "phase": "call",
+                  "raised_in": "_unwritten/feature/test_update_quantity.py",
+                  "raised_in_tests": true,
+                  "missing": {
+                    "kind": "attribute",
+                    "owner": "shopcart.cart.Cart",
+                    "name": "update_quantity"
+                  },
+                  "message": "'Cart' object has no attribute 'update_quantity'",
+                  "detail": "quantity = False\n\n    @pytest.mark.parametrize(\"quantity\", [-1, -100, 1.5, \"2\", None, True, False])\n    def test_invalid_quantity_is_rejected_and_changes_nothing(quantity):\n        cart = cart_of((NOVEL, 2), (MUG, 1))\n        with pytest.raises(InvalidQuantityError):\n>           cart.update_quantity(\"BK-1\", quantity)\nE           AttributeError: 'Cart' object has no attribute 'update_quantity'\n\n_unwritten/feature/test_update_quantity.py:64: AttributeError"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[None]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.AttributeError",
+                  "phase": "call",
+                  "raised_in": "_unwritten/feature/test_update_quantity.py",
+                  "raised_in_tests": true,
+                  "missing": {
+                    "kind": "attribute",
+                    "owner": "shopcart.cart.Cart",
+                    "name": "update_quantity"
+                  },
+                  "message": "'Cart' object has no attribute 'update_quantity'",
+                  "detail": "quantity = None\n\n    @pytest.mark.parametrize(\"quantity\", [-1, -100, 1.5, \"2\", None, True, False])\n    def test_invalid_quantity_is_rejected_and_changes_nothing(quantity):\n        cart = cart_of((NOVEL, 2), (MUG, 1))\n        with pytest.raises(InvalidQuantityError):\n>           cart.update_quantity(\"BK-1\", quantity)\nE           AttributeError: 'Cart' object has no attribute 'update_quantity'\n\n_unwritten/feature/test_update_quantity.py:64: AttributeError"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[True]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.AttributeError",
+                  "phase": "call",
+                  "raised_in": "_unwritten/feature/test_update_quantity.py",
+                  "raised_in_tests": true,
+                  "missing": {
+                    "kind": "attribute",
+                    "owner": "shopcart.cart.Cart",
+                    "name": "update_quantity"
+                  },
+                  "message": "'Cart' object has no attribute 'update_quantity'",
+                  "detail": "quantity = True\n\n    @pytest.mark.parametrize(\"quantity\", [-1, -100, 1.5, \"2\", None, True, False])\n    def test_invalid_quantity_is_rejected_and_changes_nothing(quantity):\n        cart = cart_of((NOVEL, 2), (MUG, 1))\n        with pytest.raises(InvalidQuantityError):\n>           cart.update_quantity(\"BK-1\", quantity)\nE           AttributeError: 'Cart' object has no attribute 'update_quantity'\n\n_unwritten/feature/test_update_quantity.py:64: AttributeError"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_unknown_sku_is_reported_before_an_invalid_quantity[-1]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.AttributeError",
+                  "phase": "call",
+                  "raised_in": "_unwritten/feature/test_update_quantity.py",
+                  "raised_in_tests": true,
+                  "missing": {
+                    "kind": "attribute",
+                    "owner": "shopcart.cart.Cart",
+                    "name": "update_quantity"
+                  },
+                  "message": "'Cart' object has no attribute 'update_quantity'",
+                  "detail": "quantity = -1\n\n    @pytest.mark.parametrize(\"quantity\", [-1, 1.5, True])\n    def test_unknown_sku_is_reported_before_an_invalid_quantity(quantity):\n        cart = cart_of((NOVEL, 2))\n        with pytest.raises(KeyError):\n>           cart.update_quantity(\"NOPE\", quantity)\nE           AttributeError: 'Cart' object has no attribute 'update_quantity'\n\n_unwritten/feature/test_update_quantity.py:57: AttributeError"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_unknown_sku_is_reported_before_an_invalid_quantity[1.5]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.AttributeError",
+                  "phase": "call",
+                  "raised_in": "_unwritten/feature/test_update_quantity.py",
+                  "raised_in_tests": true,
+                  "missing": {
+                    "kind": "attribute",
+                    "owner": "shopcart.cart.Cart",
+                    "name": "update_quantity"
+                  },
+                  "message": "'Cart' object has no attribute 'update_quantity'",
+                  "detail": "quantity = 1.5\n\n    @pytest.mark.parametrize(\"quantity\", [-1, 1.5, True])\n    def test_unknown_sku_is_reported_before_an_invalid_quantity(quantity):\n        cart = cart_of((NOVEL, 2))\n        with pytest.raises(KeyError):\n>           cart.update_quantity(\"NOPE\", quantity)\nE           AttributeError: 'Cart' object has no attribute 'update_quantity'\n\n_unwritten/feature/test_update_quantity.py:57: AttributeError"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_unknown_sku_is_reported_before_an_invalid_quantity[True]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.AttributeError",
+                  "phase": "call",
+                  "raised_in": "_unwritten/feature/test_update_quantity.py",
+                  "raised_in_tests": true,
+                  "missing": {
+                    "kind": "attribute",
+                    "owner": "shopcart.cart.Cart",
+                    "name": "update_quantity"
+                  },
+                  "message": "'Cart' object has no attribute 'update_quantity'",
+                  "detail": "quantity = True\n\n    @pytest.mark.parametrize(\"quantity\", [-1, 1.5, True])\n    def test_unknown_sku_is_reported_before_an_invalid_quantity(quantity):\n        cart = cart_of((NOVEL, 2))\n        with pytest.raises(KeyError):\n>           cart.update_quantity(\"NOPE\", quantity)\nE           AttributeError: 'Cart' object has no attribute 'update_quantity'\n\n_unwritten/feature/test_update_quantity.py:57: AttributeError"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_unknown_sku_raises_key_error_and_changes_nothing",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.AttributeError",
+                  "phase": "call",
+                  "raised_in": "_unwritten/feature/test_update_quantity.py",
+                  "raised_in_tests": true,
+                  "missing": {
+                    "kind": "attribute",
+                    "owner": "shopcart.cart.Cart",
+                    "name": "update_quantity"
+                  },
+                  "message": "'Cart' object has no attribute 'update_quantity'",
+                  "detail": "def test_unknown_sku_raises_key_error_and_changes_nothing():\n        cart = cart_of((NOVEL, 2))\n        with pytest.raises(KeyError):\n>           cart.update_quantity(\"NOPE\", 3)\nE           AttributeError: 'Cart' object has no attribute 'update_quantity'\n\n_unwritten/feature/test_update_quantity.py:49: AttributeError"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_update_can_lower_the_quantity_and_totals_follow",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.AttributeError",
+                  "phase": "call",
+                  "raised_in": "_unwritten/feature/test_update_quantity.py",
+                  "raised_in_tests": true,
+                  "missing": {
+                    "kind": "attribute",
+                    "owner": "shopcart.cart.Cart",
+                    "name": "update_quantity"
+                  },
+                  "message": "'Cart' object has no attribute 'update_quantity'",
+                  "detail": "def test_update_can_lower_the_quantity_and_totals_follow():\n        cart = cart_of((NOVEL, 4), (MUG, 1))\n>       cart.update_quantity(\"BK-1\", 1)\nE       AttributeError: 'Cart' object has no attribute 'update_quantity'\n\n_unwritten/feature/test_update_quantity.py:33: AttributeError"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_update_replaces_the_quantity",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.AttributeError",
+                  "phase": "call",
+                  "raised_in": "_unwritten/feature/test_update_quantity.py",
+                  "raised_in_tests": true,
+                  "missing": {
+                    "kind": "attribute",
+                    "owner": "shopcart.cart.Cart",
+                    "name": "update_quantity"
+                  },
+                  "message": "'Cart' object has no attribute 'update_quantity'",
+                  "detail": "def test_update_replaces_the_quantity():\n        cart = cart_of((NOVEL, 2), (MUG, 1))\n>       assert cart.update_quantity(\"BK-1\", 5) is None\nE       AttributeError: 'Cart' object has no attribute 'update_quantity'\n\n_unwritten/feature/test_update_quantity.py:27: AttributeError"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_updated_line_keeps_its_position",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.AttributeError",
+                  "phase": "call",
+                  "raised_in": "_unwritten/feature/test_update_quantity.py",
+                  "raised_in_tests": true,
+                  "missing": {
+                    "kind": "attribute",
+                    "owner": "shopcart.cart.Cart",
+                    "name": "update_quantity"
+                  },
+                  "message": "'Cart' object has no attribute 'update_quantity'",
+                  "detail": "def test_updated_line_keeps_its_position():\n        cart = cart_of((NOVEL, 1), (MUG, 1), (PEN, 1))\n>       cart.update_quantity(\"BK-1\", 7)\nE       AttributeError: 'Cart' object has no attribute 'update_quantity'\n\n_unwritten/feature/test_update_quantity.py:70: AttributeError"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_zero_removes_the_line",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.AttributeError",
+                  "phase": "call",
+                  "raised_in": "_unwritten/feature/test_update_quantity.py",
+                  "raised_in_tests": true,
+                  "missing": {
+                    "kind": "attribute",
+                    "owner": "shopcart.cart.Cart",
+                    "name": "update_quantity"
+                  },
+                  "message": "'Cart' object has no attribute 'update_quantity'",
+                  "detail": "def test_zero_removes_the_line():\n        cart = cart_of((NOVEL, 2), (MUG, 1))\n>       cart.update_quantity(\"BK-1\", 0)\nE       AttributeError: 'Cart' object has no attribute 'update_quantity'\n\n_unwritten/feature/test_update_quantity.py:40: AttributeError"
+                }
+              ]
+            },
+            "regression_package": {
+              "name": "regression_package",
+              "exit_code": 0,
+              "timed_out": false,
+              "duration_seconds": 0.218,
+              "log": "logs/run2/world1/regression_package.log",
+              "counts": {
+                "passed": 2
+              },
+              "collection_errors": [],
+              "tests": [
+                {
+                  "nodeid": "_unwritten/regression/test_cart_compatibility.py::test_add_still_merges_instead_of_replacing",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "_unwritten/regression/test_cart_compatibility.py::test_remove_then_add_still_moves_the_line_to_the_end",
+                  "outcome": "passed"
+                }
+              ]
+            },
+            "regression_repo": {
+              "name": "regression_repo",
+              "exit_code": 0,
+              "timed_out": false,
+              "duration_seconds": 0.265,
+              "log": "logs/run2/world1/regression_repo.log",
+              "counts": {
+                "passed": 30
+              },
+              "collection_errors": [],
+              "tests": [
+                {
+                  "nodeid": "tests/test_cart.py::test_adding_same_product_merges_quantities",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_empty_cart_totals_zero",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_float_prices_are_rejected",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[-1]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[0]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[1.5]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[2]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[True]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_lines_keep_insertion_order",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_product_price_is_normalised_to_cents",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_remove_deletes_line",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_remove_unknown_sku_raises_key_error",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_subtotal_sums_line_totals",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_code_is_trimmed_and_uppercased",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_config_must_be_a_mapping",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_discount_amount_rounds_half_up",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_full_discount_makes_cart_free",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_code_is_rejected[   ]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_code_is_rejected[7]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_code_is_rejected[None]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_code_is_rejected[]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[-5]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[0]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[101]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[2.5]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[None]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[True]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[abc]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_percentage_discount_applies_to_whole_subtotal",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_unknown_config_keys_are_ignored",
+                  "outcome": "passed"
+                }
+              ]
+            }
+          }
+        },
+        "world2": {
+          "title": "Correct World",
+          "status": "passed",
+          "expectation": "with the reference implementation, every feature test passes and every regression test ends exactly as it did in World 1",
+          "summary": {
+            "feature_tests": 15,
+            "feature_passing": 15,
+            "regression_tests": 32,
+            "regression_passing": 32
+          },
+          "reasons": [],
+          "suites": {
+            "feature": {
+              "name": "feature",
+              "exit_code": 0,
+              "timed_out": false,
+              "duration_seconds": 0.315,
+              "log": "logs/run2/world2/feature.log",
+              "counts": {
+                "passed": 15
+              },
+              "collection_errors": [],
+              "tests": [
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[-100]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[-1]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[1.5]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[2]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[False]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[None]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[True]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_unknown_sku_is_reported_before_an_invalid_quantity[-1]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_unknown_sku_is_reported_before_an_invalid_quantity[1.5]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_unknown_sku_is_reported_before_an_invalid_quantity[True]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_unknown_sku_raises_key_error_and_changes_nothing",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_update_can_lower_the_quantity_and_totals_follow",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_update_replaces_the_quantity",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_updated_line_keeps_its_position",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "_unwritten/feature/test_update_quantity.py::test_zero_removes_the_line",
+                  "outcome": "passed"
+                }
+              ]
+            },
+            "regression_package": {
+              "name": "regression_package",
+              "exit_code": 0,
+              "timed_out": false,
+              "duration_seconds": 0.266,
+              "log": "logs/run2/world2/regression_package.log",
+              "counts": {
+                "passed": 2
+              },
+              "collection_errors": [],
+              "tests": [
+                {
+                  "nodeid": "_unwritten/regression/test_cart_compatibility.py::test_add_still_merges_instead_of_replacing",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "_unwritten/regression/test_cart_compatibility.py::test_remove_then_add_still_moves_the_line_to_the_end",
+                  "outcome": "passed"
+                }
+              ]
+            },
+            "regression_repo": {
+              "name": "regression_repo",
+              "exit_code": 0,
+              "timed_out": false,
+              "duration_seconds": 0.265,
+              "log": "logs/run2/world2/regression_repo.log",
+              "counts": {
+                "passed": 30
+              },
+              "collection_errors": [],
+              "tests": [
+                {
+                  "nodeid": "tests/test_cart.py::test_adding_same_product_merges_quantities",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_empty_cart_totals_zero",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_float_prices_are_rejected",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[-1]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[0]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[1.5]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[2]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[True]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_lines_keep_insertion_order",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_product_price_is_normalised_to_cents",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_remove_deletes_line",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_remove_unknown_sku_raises_key_error",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_cart.py::test_subtotal_sums_line_totals",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_code_is_trimmed_and_uppercased",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_config_must_be_a_mapping",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_discount_amount_rounds_half_up",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_full_discount_makes_cart_free",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_code_is_rejected[   ]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_code_is_rejected[7]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_code_is_rejected[None]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_code_is_rejected[]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[-5]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[0]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[101]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[2.5]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[None]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[True]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_invalid_percent_is_rejected[abc]",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_percentage_discount_applies_to_whole_subtotal",
+                  "outcome": "passed"
+                },
+                {
+                  "nodeid": "tests/test_discounts.py::test_unknown_config_keys_are_ignored",
+                  "outcome": "passed"
+                }
+              ]
+            }
+          }
+        },
+        "world3": {
+          "title": "Deception World",
+          "status": "passed",
+          "expectation": "every mutant of the reference implementation makes at least one test fail that passed in World 2",
+          "summary": {
+            "mutants": 18,
+            "mutants_executed": 18,
+            "declared": 3,
+            "generated": 13,
+            "contract": 2,
+            "contract_guards_not_found": [],
+            "killed": 18,
+            "survived": 0,
+            "survived_waived": 0,
+            "equivalent": 0,
+            "invalid": 0,
+            "mutation_score": 1.0,
+            "mutation_score_basis": "killed / (killed + survived); equivalent and invalid mutants are excluded"
+          },
+          "reasons": [],
+          "mutants": [
+            {
+              "id": "declared:zero-keeps-empty-line",
+              "origin": "declared",
+              "operator": "DECLARED",
+              "description": "A quantity of 0 leaves a line with zero units instead of removing it.",
+              "file": null,
+              "line": null,
+              "diff": "mutants/declared_zero-keeps-empty-line.diff",
+              "status": "killed",
+              "killed_by": [
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_zero_removes_the_line",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.AssertionError",
+                  "message": "assert [('BK-1', 0), ('HM-1', 1)] == [('HM-1', 1)]\n  \n  At index 0 diff: ('BK-1', 0) != ('HM-1', 1)\n  Left contains one more item: ('HM-1', 1)\n  Use -v to get more diff"
+                }
+              ],
+              "logs": "logs/run2/declared_zero-keeps-empty-line"
+            },
+            {
+              "id": "declared:adds-instead-of-replacing",
+              "origin": "declared",
+              "operator": "DECLARED",
+              "description": "The new quantity is added to the old one, as Cart.add does.",
+              "file": null,
+              "line": null,
+              "diff": "mutants/declared_adds-instead-of-replacing.diff",
+              "status": "killed",
+              "killed_by": [
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_update_can_lower_the_quantity_and_totals_follow",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.AssertionError",
+                  "message": "assert Decimal('70.50') == Decimal('20.50')\n +  where Decimal('70.50') = subtotal()\n +    where subtotal = <shopcart.cart.Cart object at 0x7f647708caa0>.subtotal\n +  and   Decimal('20.50') = Decimal('20.50')"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_update_replaces_the_quantity",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.AssertionError",
+                  "message": "assert [('BK-1', 7), ('HM-1', 1)] == [('BK-1', 5), ('HM-1', 1)]\n  \n  At index 0 diff: ('BK-1', 7) != ('BK-1', 5)\n  Use -v to get more diff"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_updated_line_keeps_its_position",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.AssertionError",
+                  "message": "assert [('BK-1', 8),..., ('OF-1', 1)] == [('BK-1', 7),..., ('OF-1', 1)]\n  \n  At index 0 diff: ('BK-1', 8) != ('BK-1', 7)\n  Use -v to get more diff"
+                }
+              ],
+              "logs": "logs/run2/declared_adds-instead-of-replacing"
+            },
+            {
+              "id": "declared:moves-line-to-end",
+              "origin": "declared",
+              "operator": "DECLARED",
+              "description": "The updated line is re-inserted and loses its position.",
+              "file": null,
+              "line": null,
+              "diff": "mutants/declared_moves-line-to-end.diff",
+              "status": "killed",
+              "killed_by": [
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_update_replaces_the_quantity",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.AssertionError",
+                  "message": "assert [('HM-1', 1), ('BK-1', 5)] == [('BK-1', 5), ('HM-1', 1)]\n  \n  At index 0 diff: ('HM-1', 1) != ('BK-1', 5)\n  Use -v to get more diff"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_updated_line_keeps_its_position",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.AssertionError",
+                  "message": "assert [('OF-1', 1),..., ('HM-1', 2)] == [('BK-1', 7),..., ('OF-1', 1)]\n  \n  At index 0 diff: ('OF-1', 1) != ('BK-1', 7)\n  Use -v to get more diff"
+                }
+              ],
+              "logs": "logs/run2/declared_moves-line-to-end"
+            },
+            {
+              "id": "generated:COND_FORCE_FALSE:shopcart/cart.py:37:11",
+              "origin": "generated",
+              "operator": "COND_FORCE_FALSE",
+              "description": "`if sku not in self._lines` becomes `if False`",
+              "file": "shopcart/cart.py",
+              "line": 37,
+              "diff": "mutants/generated_COND_FORCE_FALSE_shopcart_cart.py_37_11.diff",
+              "status": "killed",
+              "killed_by": [
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_unknown_sku_is_reported_before_an_invalid_quantity[-1]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "shopcart.errors.InvalidQuantityError",
+                  "message": "quantity must not be negative"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_unknown_sku_is_reported_before_an_invalid_quantity[1.5]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "shopcart.errors.InvalidQuantityError",
+                  "message": "quantity must be an integer"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_unknown_sku_is_reported_before_an_invalid_quantity[True]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "shopcart.errors.InvalidQuantityError",
+                  "message": "quantity must be an integer"
+                }
+              ],
+              "logs": "logs/run2/generated_COND_FORCE_FALSE_shopcart_cart.py_37_11"
+            },
+            {
+              "id": "generated:COND_FORCE_TRUE:shopcart/cart.py:37:11",
+              "origin": "generated",
+              "operator": "COND_FORCE_TRUE",
+              "description": "`if sku not in self._lines` becomes `if True`",
+              "file": "shopcart/cart.py",
+              "line": 37,
+              "diff": "mutants/generated_COND_FORCE_TRUE_shopcart_cart.py_37_11.diff",
+              "status": "killed",
+              "killed_by": [
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[-100]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[-1]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[1.5]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[2]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[False]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[None]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[True]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_update_can_lower_the_quantity_and_totals_follow",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_update_replaces_the_quantity",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_updated_line_keeps_its_position",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_zero_removes_the_line",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                }
+              ],
+              "logs": "logs/run2/generated_COND_FORCE_TRUE_shopcart_cart.py_37_11"
+            },
+            {
+              "id": "generated:CMP_NEGATE:shopcart/cart.py:37:15",
+              "origin": "generated",
+              "operator": "CMP_NEGATE",
+              "description": "`not in` becomes `in` in `sku not in self._lines`",
+              "file": "shopcart/cart.py",
+              "line": 37,
+              "diff": "mutants/generated_CMP_NEGATE_shopcart_cart.py_37_15.diff",
+              "status": "killed",
+              "killed_by": [
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[-100]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[-1]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[1.5]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[2]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[False]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[None]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[True]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_unknown_sku_is_reported_before_an_invalid_quantity[-1]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "shopcart.errors.InvalidQuantityError",
+                  "message": "quantity must not be negative"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_unknown_sku_is_reported_before_an_invalid_quantity[1.5]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "shopcart.errors.InvalidQuantityError",
+                  "message": "quantity must be an integer"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_unknown_sku_is_reported_before_an_invalid_quantity[True]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "shopcart.errors.InvalidQuantityError",
+                  "message": "quantity must be an integer"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_update_can_lower_the_quantity_and_totals_follow",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_update_replaces_the_quantity",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_updated_line_keeps_its_position",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_zero_removes_the_line",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.KeyError",
+                  "message": "'BK-1'"
+                }
+              ],
+              "logs": "logs/run2/generated_CMP_NEGATE_shopcart_cart.py_37_15"
+            },
+            {
+              "id": "generated:COND_FORCE_FALSE:shopcart/cart.py:39:11",
+              "origin": "generated",
+              "operator": "COND_FORCE_FALSE",
+              "description": "`if isinstance(quantity, bool) or not isinstance(quantity, int)` becomes `if False`",
+              "file": "shopcart/cart.py",
+              "line": 39,
+              "diff": "mutants/generated_COND_FORCE_FALSE_shopcart_cart.py_39_11.diff",
+              "status": "killed",
+              "killed_by": [
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[1.5]",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.Failed",
+                  "message": "DID NOT RAISE <class 'shopcart.errors.InvalidQuantityError'>"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[2]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.TypeError",
+                  "message": "'<' not supported between instances of 'str' and 'int'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[False]",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.Failed",
+                  "message": "DID NOT RAISE <class 'shopcart.errors.InvalidQuantityError'>"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[None]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.TypeError",
+                  "message": "'<' not supported between instances of 'NoneType' and 'int'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[True]",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.Failed",
+                  "message": "DID NOT RAISE <class 'shopcart.errors.InvalidQuantityError'>"
+                }
+              ],
+              "logs": "logs/run2/generated_COND_FORCE_FALSE_shopcart_cart.py_39_11"
+            },
+            {
+              "id": "generated:COND_FORCE_TRUE:shopcart/cart.py:39:11",
+              "origin": "generated",
+              "operator": "COND_FORCE_TRUE",
+              "description": "`if isinstance(quantity, bool) or not isinstance(quantity, int)` becomes `if True`",
+              "file": "shopcart/cart.py",
+              "line": 39,
+              "diff": "mutants/generated_COND_FORCE_TRUE_shopcart_cart.py_39_11.diff",
+              "status": "killed",
+              "killed_by": [
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_update_can_lower_the_quantity_and_totals_follow",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "shopcart.errors.InvalidQuantityError",
+                  "message": "quantity must be an integer"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_update_replaces_the_quantity",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "shopcart.errors.InvalidQuantityError",
+                  "message": "quantity must be an integer"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_updated_line_keeps_its_position",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "shopcart.errors.InvalidQuantityError",
+                  "message": "quantity must be an integer"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_zero_removes_the_line",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "shopcart.errors.InvalidQuantityError",
+                  "message": "quantity must be an integer"
+                }
+              ],
+              "logs": "logs/run2/generated_COND_FORCE_TRUE_shopcart_cart.py_39_11"
+            },
+            {
+              "id": "generated:BOOL_SWAP:shopcart/cart.py:39:38",
+              "origin": "generated",
+              "operator": "BOOL_SWAP",
+              "description": "`or` becomes `and` in `isinstance(quantity, bool) or not isinstance(quantity, int)`",
+              "file": "shopcart/cart.py",
+              "line": 39,
+              "diff": "mutants/generated_BOOL_SWAP_shopcart_cart.py_39_38.diff",
+              "status": "killed",
+              "killed_by": [
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[1.5]",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.Failed",
+                  "message": "DID NOT RAISE <class 'shopcart.errors.InvalidQuantityError'>"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[2]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.TypeError",
+                  "message": "'<' not supported between instances of 'str' and 'int'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[False]",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.Failed",
+                  "message": "DID NOT RAISE <class 'shopcart.errors.InvalidQuantityError'>"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[None]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.TypeError",
+                  "message": "'<' not supported between instances of 'NoneType' and 'int'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[True]",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.Failed",
+                  "message": "DID NOT RAISE <class 'shopcart.errors.InvalidQuantityError'>"
+                }
+              ],
+              "logs": "logs/run2/generated_BOOL_SWAP_shopcart_cart.py_39_38"
+            },
+            {
+              "id": "generated:NOT_REMOVE:shopcart/cart.py:39:41",
+              "origin": "generated",
+              "operator": "NOT_REMOVE",
+              "description": "`not` removed from `not isinstance(quantity, int)`",
+              "file": "shopcart/cart.py",
+              "line": 39,
+              "diff": "mutants/generated_NOT_REMOVE_shopcart_cart.py_39_41.diff",
+              "status": "killed",
+              "killed_by": [
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[1.5]",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.Failed",
+                  "message": "DID NOT RAISE <class 'shopcart.errors.InvalidQuantityError'>"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[2]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.TypeError",
+                  "message": "'<' not supported between instances of 'str' and 'int'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[None]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.TypeError",
+                  "message": "'<' not supported between instances of 'NoneType' and 'int'"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_update_can_lower_the_quantity_and_totals_follow",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "shopcart.errors.InvalidQuantityError",
+                  "message": "quantity must be an integer"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_update_replaces_the_quantity",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "shopcart.errors.InvalidQuantityError",
+                  "message": "quantity must be an integer"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_updated_line_keeps_its_position",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "shopcart.errors.InvalidQuantityError",
+                  "message": "quantity must be an integer"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_zero_removes_the_line",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "shopcart.errors.InvalidQuantityError",
+                  "message": "quantity must be an integer"
+                }
+              ],
+              "logs": "logs/run2/generated_NOT_REMOVE_shopcart_cart.py_39_41"
+            },
+            {
+              "id": "generated:COND_FORCE_FALSE:shopcart/cart.py:41:11",
+              "origin": "generated",
+              "operator": "COND_FORCE_FALSE",
+              "description": "`if quantity < 0` becomes `if False`",
+              "file": "shopcart/cart.py",
+              "line": 41,
+              "diff": "mutants/generated_COND_FORCE_FALSE_shopcart_cart.py_41_11.diff",
+              "status": "killed",
+              "killed_by": [
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[-100]",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.Failed",
+                  "message": "DID NOT RAISE <class 'shopcart.errors.InvalidQuantityError'>"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing[-1]",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.Failed",
+                  "message": "DID NOT RAISE <class 'shopcart.errors.InvalidQuantityError'>"
+                }
+              ],
+              "logs": "logs/run2/generated_COND_FORCE_FALSE_shopcart_cart.py_41_11"
+            },
+            {
+              "id": "generated:COND_FORCE_TRUE:shopcart/cart.py:41:11",
+              "origin": "generated",
+              "operator": "COND_FORCE_TRUE",
+              "description": "`if quantity < 0` becomes `if True`",
+              "file": "shopcart/cart.py",
+              "line": 41,
+              "diff": "mutants/generated_COND_FORCE_TRUE_shopcart_cart.py_41_11.diff",
+              "status": "killed",
+              "killed_by": [
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_update_can_lower_the_quantity_and_totals_follow",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "shopcart.errors.InvalidQuantityError",
+                  "message": "quantity must not be negative"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_update_replaces_the_quantity",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "shopcart.errors.InvalidQuantityError",
+                  "message": "quantity must not be negative"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_updated_line_keeps_its_position",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "shopcart.errors.InvalidQuantityError",
+                  "message": "quantity must not be negative"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_zero_removes_the_line",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "shopcart.errors.InvalidQuantityError",
+                  "message": "quantity must not be negative"
+                }
+              ],
+              "logs": "logs/run2/generated_COND_FORCE_TRUE_shopcart_cart.py_41_11"
+            },
+            {
+              "id": "generated:CMP_BOUNDARY:shopcart/cart.py:41:20",
+              "origin": "generated",
+              "operator": "CMP_BOUNDARY",
+              "description": "`<` becomes `<=` in `quantity < 0`",
+              "file": "shopcart/cart.py",
+              "line": 41,
+              "diff": "mutants/generated_CMP_BOUNDARY_shopcart_cart.py_41_20.diff",
+              "status": "killed",
+              "killed_by": [
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_zero_removes_the_line",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "shopcart.errors.InvalidQuantityError",
+                  "message": "quantity must not be negative"
+                }
+              ],
+              "logs": "logs/run2/generated_CMP_BOUNDARY_shopcart_cart.py_41_20"
+            },
+            {
+              "id": "generated:COND_FORCE_FALSE:shopcart/cart.py:43:11",
+              "origin": "generated",
+              "operator": "COND_FORCE_FALSE",
+              "description": "`if quantity == 0` becomes `if False`",
+              "file": "shopcart/cart.py",
+              "line": 43,
+              "diff": "mutants/generated_COND_FORCE_FALSE_shopcart_cart.py_43_11.diff",
+              "status": "killed",
+              "killed_by": [
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_zero_removes_the_line",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.AssertionError",
+                  "message": "assert [('BK-1', 0), ('HM-1', 1)] == [('HM-1', 1)]\n  \n  At index 0 diff: ('BK-1', 0) != ('HM-1', 1)\n  Left contains one more item: ('HM-1', 1)\n  Use -v to get more diff"
+                }
+              ],
+              "logs": "logs/run2/generated_COND_FORCE_FALSE_shopcart_cart.py_43_11"
+            },
+            {
+              "id": "generated:COND_FORCE_TRUE:shopcart/cart.py:43:11",
+              "origin": "generated",
+              "operator": "COND_FORCE_TRUE",
+              "description": "`if quantity == 0` becomes `if True`",
+              "file": "shopcart/cart.py",
+              "line": 43,
+              "diff": "mutants/generated_COND_FORCE_TRUE_shopcart_cart.py_43_11.diff",
+              "status": "killed",
+              "killed_by": [
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_update_can_lower_the_quantity_and_totals_follow",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.AssertionError",
+                  "message": "assert Decimal('8.00') == Decimal('20.50')\n +  where Decimal('8.00') = subtotal()\n +    where subtotal = <shopcart.cart.Cart object at 0x7f19347ef410>.subtotal\n +  and   Decimal('20.50') = Decimal('20.50')"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_update_replaces_the_quantity",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.AssertionError",
+                  "message": "assert [('HM-1', 1)] == [('BK-1', 5), ('HM-1', 1)]\n  \n  At index 0 diff: ('HM-1', 1) != ('BK-1', 5)\n  Right contains one more item: ('HM-1', 1)\n  Use -v to get more diff"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_updated_line_keeps_its_position",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.AssertionError",
+                  "message": "assert [('OF-1', 1)] == [('BK-1', 7),..., ('OF-1', 1)]\n  \n  At index 0 diff: ('OF-1', 1) != ('BK-1', 7)\n  Right contains 2 more items, first extra item: ('HM-1', 2)\n  Use -v to get more diff"
+                }
+              ],
+              "logs": "logs/run2/generated_COND_FORCE_TRUE_shopcart_cart.py_43_11"
+            },
+            {
+              "id": "generated:CMP_NEGATE:shopcart/cart.py:43:20",
+              "origin": "generated",
+              "operator": "CMP_NEGATE",
+              "description": "`==` becomes `!=` in `quantity == 0`",
+              "file": "shopcart/cart.py",
+              "line": 43,
+              "diff": "mutants/generated_CMP_NEGATE_shopcart_cart.py_43_20.diff",
+              "status": "killed",
+              "killed_by": [
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_update_can_lower_the_quantity_and_totals_follow",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.AssertionError",
+                  "message": "assert Decimal('8.00') == Decimal('20.50')\n +  where Decimal('8.00') = subtotal()\n +    where subtotal = <shopcart.cart.Cart object at 0x7f42cdac8f80>.subtotal\n +  and   Decimal('20.50') = Decimal('20.50')"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_update_replaces_the_quantity",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.AssertionError",
+                  "message": "assert [('HM-1', 1)] == [('BK-1', 5), ('HM-1', 1)]\n  \n  At index 0 diff: ('HM-1', 1) != ('BK-1', 5)\n  Right contains one more item: ('HM-1', 1)\n  Use -v to get more diff"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_updated_line_keeps_its_position",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.AssertionError",
+                  "message": "assert [('OF-1', 1)] == [('BK-1', 7),..., ('OF-1', 1)]\n  \n  At index 0 diff: ('OF-1', 1) != ('BK-1', 7)\n  Right contains 2 more items, first extra item: ('HM-1', 2)\n  Use -v to get more diff"
+                },
+                {
+                  "suite": "feature",
+                  "test": "_unwritten/feature/test_update_quantity.py::test_zero_removes_the_line",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.AssertionError",
+                  "message": "assert [('BK-1', 0), ('HM-1', 1)] == [('HM-1', 1)]\n  \n  At index 0 diff: ('BK-1', 0) != ('HM-1', 1)\n  Left contains one more item: ('HM-1', 1)\n  Use -v to get more diff"
+                }
+              ],
+              "logs": "logs/run2/generated_CMP_NEGATE_shopcart_cart.py_43_20"
+            },
+            {
+              "id": "contract:guard:shopcart/cart.py:_check_quantity:489e0964",
+              "origin": "contract",
+              "operator": "COND_FORCE_FALSE",
+              "description": "violates a verified contract: `_check_quantity` raises `InvalidQuantityError` when `isinstance(quantity, bool) or not isinstance(quantity, int)` (\"quantity must be an integer\")",
+              "file": "shopcart/cart.py",
+              "line": 67,
+              "diff": "mutants/contract_guard_shopcart_cart.py__check_quantity_489e0964.diff",
+              "status": "killed",
+              "killed_by": [
+                {
+                  "suite": "regression_repo",
+                  "test": "tests/test_cart.py::test_invalid_quantity_is_rejected[1.5]",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.Failed",
+                  "message": "DID NOT RAISE <class 'shopcart.errors.InvalidQuantityError'>"
+                },
+                {
+                  "suite": "regression_repo",
+                  "test": "tests/test_cart.py::test_invalid_quantity_is_rejected[2]",
+                  "outcome": "failed",
+                  "failure_class": "runtime_error",
+                  "exc_type": "builtins.TypeError",
+                  "message": "'<' not supported between instances of 'str' and 'int'"
+                },
+                {
+                  "suite": "regression_repo",
+                  "test": "tests/test_cart.py::test_invalid_quantity_is_rejected[True]",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.Failed",
+                  "message": "DID NOT RAISE <class 'shopcart.errors.InvalidQuantityError'>"
+                }
+              ],
+              "logs": "logs/run2/contract_guard_shopcart_cart.py__check_quantity_489e0964"
+            },
+            {
+              "id": "contract:guard:shopcart/cart.py:_check_quantity:ce994315",
+              "origin": "contract",
+              "operator": "COND_FORCE_FALSE",
+              "description": "violates a verified contract: `_check_quantity` raises `InvalidQuantityError` when `quantity < 1` (\"quantity must be at least 1\")",
+              "file": "shopcart/cart.py",
+              "line": 69,
+              "diff": "mutants/contract_guard_shopcart_cart.py__check_quantity_ce994315.diff",
+              "status": "killed",
+              "killed_by": [
+                {
+                  "suite": "regression_repo",
+                  "test": "tests/test_cart.py::test_invalid_quantity_is_rejected[-1]",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.Failed",
+                  "message": "DID NOT RAISE <class 'shopcart.errors.InvalidQuantityError'>"
+                },
+                {
+                  "suite": "regression_repo",
+                  "test": "tests/test_cart.py::test_invalid_quantity_is_rejected[0]",
+                  "outcome": "failed",
+                  "failure_class": "assertion",
+                  "exc_type": "builtins.Failed",
+                  "message": "DID NOT RAISE <class 'shopcart.errors.InvalidQuantityError'>"
+                }
+              ],
+              "logs": "logs/run2/contract_guard_shopcart_cart.py__check_quantity_ce994315"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "timing": {
+    "started_at": "2026-11-14T11:16:10+00:00",
+    "finished_at": "2026-11-14T11:16:30+00:00",
+    "duration_seconds": 20.07
+  }
+}

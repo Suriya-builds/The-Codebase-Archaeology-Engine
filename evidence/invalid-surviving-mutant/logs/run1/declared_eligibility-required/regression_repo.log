@@ -8,8 +8,8 @@ ______________ test_percentage_discount_applies_to_whole_subtotal ______________
 >       assert cart_of((NOVEL, 2), (MUG, 1)).total(discount) == Decimal("29.70")
 E       AssertionError: assert Decimal('33.00') == Decimal('29.70')
 E        +  where Decimal('33.00') = total(Discount(code='TEN', percent=Decimal('10'), eligibility=None))
-E        +    where total = <shopcart.cart.Cart object at 0x7f204e839790>.total
-E        +      where <shopcart.cart.Cart object at 0x7f204e839790> = cart_of((Product(sku='BK-1', name='Novel', price=Decimal('12.50'), category='books'), 2), (Product(sku='HM-1', name='Mug', price=Decimal('8.00'), category='home'), 1))
+E        +    where total = <shopcart.cart.Cart object at 0x7f5476d9d520>.total
+E        +      where <shopcart.cart.Cart object at 0x7f5476d9d520> = cart_of((Product(sku='BK-1', name='Novel', price=Decimal('12.50'), category='books'), 2), (Product(sku='HM-1', name='Mug', price=Decimal('8.00'), category='home'), 1))
 E        +  and   Decimal('29.70') = Decimal('29.70')
 
 tests/test_discounts.py:20: AssertionError
@@ -20,7 +20,7 @@ _____________________ test_discount_amount_rounds_half_up ______________________
         cart = cart_of((Product("P", "Pen", "0.30", "office"), 1))
 >       assert discount.amount_for(cart) == Decimal("0.05")
 E       AssertionError: assert Decimal('0.00') == Decimal('0.05')
-E        +  where Decimal('0.00') = amount_for(<shopcart.cart.Cart object at 0x7f204e812240>)
+E        +  where Decimal('0.00') = amount_for(<shopcart.cart.Cart object at 0x7f5476d9dc10>)
 E        +    where amount_for = Discount(code='ODD', percent=Decimal('15'), eligibility=None).amount_for
 E        +  and   Decimal('0.05') = Decimal('0.05')
 
@@ -32,8 +32,8 @@ ______________________ test_full_discount_makes_cart_free ______________________
 >       assert cart_of((MUG, 3)).total(discount) == Decimal("0.00")
 E       AssertionError: assert Decimal('24.00') == Decimal('0.00')
 E        +  where Decimal('24.00') = total(Discount(code='FREE', percent=Decimal('100'), eligibility=None))
-E        +    where total = <shopcart.cart.Cart object at 0x7f204e839e50>.total
-E        +      where <shopcart.cart.Cart object at 0x7f204e839e50> = cart_of((Product(sku='HM-1', name='Mug', price=Decimal('8.00'), category='home'), 3))
+E        +    where total = <shopcart.cart.Cart object at 0x7f5476d9e420>.total
+E        +      where <shopcart.cart.Cart object at 0x7f5476d9e420> = cart_of((Product(sku='HM-1', name='Mug', price=Decimal('8.00'), category='home'), 3))
 E        +  and   Decimal('0.00') = Decimal('0.00')
 
 tests/test_discounts.py:32: AssertionError
@@ -41,4 +41,4 @@ tests/test_discounts.py:32: AssertionError
 FAILED tests/test_discounts.py::test_percentage_discount_applies_to_whole_subtotal
 FAILED tests/test_discounts.py::test_discount_amount_rounds_half_up - Asserti...
 FAILED tests/test_discounts.py::test_full_discount_makes_cart_free - Assertio...
-3 failed, 27 passed in 0.05s
+3 failed, 27 passed in 0.04s

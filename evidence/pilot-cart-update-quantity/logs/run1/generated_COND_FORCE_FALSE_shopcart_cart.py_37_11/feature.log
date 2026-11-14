@@ -1,0 +1,85 @@
+$ pytest -p unwritten_probe -p no:cacheprovider --rootdir . -q --continue-on-collection-errors _unwritten/feature
+....FFF........                                                          [100%]
+=================================== FAILURES ===================================
+_________ test_unknown_sku_is_reported_before_an_invalid_quantity[-1] __________
+
+quantity = -1
+
+    @pytest.mark.parametrize("quantity", [-1, 1.5, True])
+    def test_unknown_sku_is_reported_before_an_invalid_quantity(quantity):
+        cart = cart_of((NOVEL, 2))
+        with pytest.raises(KeyError):
+>           cart.update_quantity("NOPE", quantity)
+
+_unwritten/feature/test_update_quantity.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <shopcart.cart.Cart object at 0x7fa1e4291e80>, sku = 'NOPE'
+quantity = -1
+
+    def update_quantity(self, sku, quantity):
+        """Set the quantity of a product already in the cart; zero removes the line."""
+        if False:
+            raise KeyError(sku)
+        if isinstance(quantity, bool) or not isinstance(quantity, int):
+            raise InvalidQuantityError("quantity must be an integer")
+        if quantity < 0:
+>           raise InvalidQuantityError("quantity must not be negative")
+E           shopcart.errors.InvalidQuantityError: quantity must not be negative
+
+shopcart/cart.py:42: InvalidQuantityError
+_________ test_unknown_sku_is_reported_before_an_invalid_quantity[1.5] _________
+
+quantity = 1.5
+
+    @pytest.mark.parametrize("quantity", [-1, 1.5, True])
+    def test_unknown_sku_is_reported_before_an_invalid_quantity(quantity):
+        cart = cart_of((NOVEL, 2))
+        with pytest.raises(KeyError):
+>           cart.update_quantity("NOPE", quantity)
+
+_unwritten/feature/test_update_quantity.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <shopcart.cart.Cart object at 0x7fa1e427ff20>, sku = 'NOPE'
+quantity = 1.5
+
+    def update_quantity(self, sku, quantity):
+        """Set the quantity of a product already in the cart; zero removes the line."""
+        if False:
+            raise KeyError(sku)
+        if isinstance(quantity, bool) or not isinstance(quantity, int):
+>           raise InvalidQuantityError("quantity must be an integer")
+E           shopcart.errors.InvalidQuantityError: quantity must be an integer
+
+shopcart/cart.py:40: InvalidQuantityError
+________ test_unknown_sku_is_reported_before_an_invalid_quantity[True] _________
+
+quantity = True
+
+    @pytest.mark.parametrize("quantity", [-1, 1.5, True])
+    def test_unknown_sku_is_reported_before_an_invalid_quantity(quantity):
+        cart = cart_of((NOVEL, 2))
+        with pytest.raises(KeyError):
+>           cart.update_quantity("NOPE", quantity)
+
+_unwritten/feature/test_update_quantity.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <shopcart.cart.Cart object at 0x7fa1e42bac90>, sku = 'NOPE'
+quantity = True
+
+    def update_quantity(self, sku, quantity):
+        """Set the quantity of a product already in the cart; zero removes the line."""
+        if False:
+            raise KeyError(sku)
+        if isinstance(quantity, bool) or not isinstance(quantity, int):
+>           raise InvalidQuantityError("quantity must be an integer")
+E           shopcart.errors.InvalidQuantityError: quantity must be an integer
+
+shopcart/cart.py:40: InvalidQuantityError
+=========================== short test summary info ============================
+FAILED _unwritten/feature/test_update_quantity.py::test_unknown_sku_is_reported_before_an_invalid_quantity[-1]
+FAILED _unwritten/feature/test_update_quantity.py::test_unknown_sku_is_reported_before_an_invalid_quantity[1.5]
+FAILED _unwritten/feature/test_update_quantity.py::test_unknown_sku_is_reported_before_an_invalid_quantity[True]
+3 failed, 12 passed in 0.04s
