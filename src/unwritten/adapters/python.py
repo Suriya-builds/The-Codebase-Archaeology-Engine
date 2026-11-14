@@ -115,3 +115,150 @@ class PythonAdapter:
 
     def probe_filename(self, slug):
         return f"test_{slug}.py"
+
+    # ---- public surface: used to hold a task's tests to its declared interface
+
+    def top_level_packages(self, root, python_path):
+        """Importable top-level names: packages and modules under the python path."""
+        names = set()
+        for base in python_path:
+            directory = Path(root) / base
+            if not directory.is_dir():
+                continue
+            for entry in directory.iterdir():
+                if entry.is_dir() and (entry / "__init__.py").is_file():
+                    names.add(entry.name)
+                elif entry.suffix == ".py":
+                    names.add(entry.stem)
+        return names
+
+    def module_file(self, root, python_path, module):
+        """Workspace-relative path of a module, or None when it does not exist."""
+        parts = module.split(".")
+        for base in python_path:
+            for candidate in (Path(base, *parts).with_suffix(".py"), Path(base, *parts, "__init__.py")):
+                if (Path(root) / candidate).is_file():
+                    return candidate.as_posix()
+        return None
+
+    def exported_names(self, data):
+        """Names bound at the top level of a module, including re-exports."""
+        names = set()
+        try:
+            tree = ast.parse(data)
+        except SyntaxError:
+            return names
+        for node in tree.body:
+            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+                names.add(node.name)
+            elif isinstance(node, (ast.Import, ast.ImportFrom)):
+                names.update((alias.asname or alias.name).split(".")[0] for alias in node.names)
+            elif isinstance(node, (ast.Assign, ast.AnnAssign, ast.AugAssign)):
+                targets = node.targets if isinstance(node, ast.Assign) else [node.target]
+                names.update(t.id for t in targets if isinstance(t, ast.Name))
+        return names
+
+    def member(self, data, dotted):
+        """Describe ``Class.method``-style member of a module, or return None.
+
+        Result: {"kind": function | class | attribute, "signature": canonical or None}.
+        """
+        try:
+            scope = ast.parse(data).body
+        except SyntaxError:
+            return None
+        parts = dotted.split(".")
+        for depth, part in enumerate(parts):
+            last = depth == len(parts) - 1
+            found = None
+            for node in scope:
+                if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)) and node.name == part:
+                    found = node
+                    break
+            if found is None:
+                return {"kind": "attribute", "signature": None} if last and self._binds(scope, part) else None
+            if last:
+                if isinstance(found, ast.ClassDef):
+                    return {"kind": "class", "signature": None}
+                return {"kind": "function", "signature": _canonical(found.args)}
+            if not isinstance(found, ast.ClassDef):
+                return None
+            scope = found.body
+        return None
+
+    @staticmethod
+    def _binds(scope, name):
+        """Is ``name`` assigned in this scope, or as ``self.name`` in one of its methods?"""
+        for node in scope:
+            if isinstance(node, (ast.Assign, ast.AnnAssign)):
+                targets = node.targets if isinstance(node, ast.Assign) else [node.target]
+                if any(isinstance(t, ast.Name) and t.id == name for t in targets):
+                    return True
+            elif isinstance(node, (ast.Import, ast.ImportFrom)):
+                if any((alias.asname or alias.name).split(".")[0] == name for alias in node.names):
+                    return True
+            elif isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                for inner in ast.walk(node):
+                    if (isinstance(inner, ast.Attribute) and isinstance(inner.ctx, ast.Store)
+                            and inner.attr == name and isinstance(inner.value, ast.Name)
+                            and inner.value.id == "self"):
+                        return True
+        return False
+
+    def declared_signature(self, text):
+        """Parse a declared signature such as ``name(self, a, b=None)``.
+
+        Returns (name, canonical parameters); raises ValueError when it is not one.
+        """
+        try:
+            (node,) = ast.parse(f"def {text.strip()}: pass").body
+        except (SyntaxError, ValueError) as exc:
+            raise ValueError(f"not a signature: {text!r}") from exc
+        return node.name, _canonical(node.args)
+
+    def test_functions(self, data):
+        """Test ids defined in a test module: ``test_x`` and ``TestClass::test_y``."""
+        found = []
+        try:
+            tree = ast.parse(data)
+        except SyntaxError:
+            return found
+        for node in tree.body:
+            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) and node.name.startswith("test"):
+                found.append(node.name)
+            elif isinstance(node, ast.ClassDef) and node.name.startswith("Test"):
+                found += [f"{node.name}::{inner.name}" for inner in node.body
+                          if isinstance(inner, (ast.FunctionDef, ast.AsyncFunctionDef))
+                          and inner.name.startswith("test")]
+        return found
+
+    def imports(self, data):
+        """Absolute imports of a module as (module, imported name or None, line)."""
+        found = []
+        try:
+            tree = ast.parse(data)
+        except SyntaxError:
+            return found
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Import):
+                found += [(alias.name, None, node.lineno) for alias in node.names]
+            elif isinstance(node, ast.ImportFrom) and node.level == 0 and node.module:
+                found += [(node.module, alias.name, node.lineno) for alias in node.names]
+        return found
+
+
+def _canonical(arguments):
+    """Parameters as (name, kind, has default): what callers can rely on."""
+    result = []
+    positional = arguments.posonlyargs + arguments.args
+    first_default = len(positional) - len(arguments.defaults)
+    for index, argument in enumerate(positional):
+        kind = "positional_only" if index < len(arguments.posonlyargs) else "positional"
+        result.append((argument.arg, kind, index >= first_default))
+    if arguments.vararg:
+        result.append((arguments.vararg.arg, "var_positional", False))
+    for argument, default in zip(arguments.kwonlyargs, arguments.kw_defaults):
+        result.append((argument.arg, "keyword_only", default is not None))
+    if arguments.kwarg:
+        result.append((arguments.kwarg.arg, "var_keyword", False))
+    return result

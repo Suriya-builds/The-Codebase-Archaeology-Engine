@@ -15,6 +15,9 @@ from pathlib import Path
 
 from unwritten.classify import BENIGN
 from unwritten.execution import run_in_sandbox
+from unwritten.gates import StaticGates
+from unwritten.interface import (describe, lookup, match_declared, repo_related,
+                                 signature_problem)
 from unwritten.adapters import detect_adapter
 from unwritten.mutation import declared_mutants, generate_mutants
 from unwritten.patches import PatchDoesNotApply, apply_patch, is_under, touched_paths
@@ -192,11 +195,50 @@ class BrokenWorld:
         _timeouts(world, world.suites)
         feature = world.suites["feature"]
 
-        if feature.collection_errors:
+        # Schema 0.2: a name the statement declares may legitimately be missing here.
+        by_interface, blocked_files, undeclared = [], [], []
+        collection_errors = feature.collection_errors
+        if ctx.package.checks_statement:
+            base = ctx.build_source("world1-source")
+            adapter = detect_adapter(base)
+            top_levels = adapter.top_level_packages(base, ctx.package.python_path)
+            shutil.rmtree(base, ignore_errors=True)
+
+            def judge(missing, in_tests):
+                """declared | undeclared | None (not a missing-name failure of the task)."""
+                if not missing or not in_tests or not repo_related(missing, top_levels):
+                    return None
+                return "declared" if match_declared(missing, ctx.package, adapter) else "undeclared"
+
+            collection_errors = []
+            for error in feature.collection_errors:
+                verdict = judge(error.get("missing"), error.get("raised_in_tests"))
+                if verdict == "declared":
+                    blocked_files.append(error["nodeid"])
+                elif verdict == "undeclared":
+                    undeclared.append(f"{error['nodeid']} [{describe(error['missing'])}]")
+                else:
+                    collection_errors.append(error)
+            for test in feature.tests:
+                if test.failure_class != "runtime_error" or test.phase != "call":
+                    continue
+                verdict = judge(test.missing, test.raised_in_tests)
+                if verdict == "declared":
+                    by_interface.append(test.nodeid)
+                elif verdict == "undeclared":
+                    undeclared.append(f"{test.nodeid} [{describe(test.missing)}]")
+            if undeclared:
+                world.reject("W1_FEATURE_USES_UNDECLARED_INTERFACE",
+                             "feature tests depend on names that do not exist at the base "
+                             "commit and that the statement does not declare; a solver could "
+                             "not know to provide them", undeclared)
+        explained = set(by_interface) | {u.split(" [", 1)[0] for u in undeclared}
+
+        if collection_errors:
             world.reject("W1_FEATURE_COLLECTION_ERROR",
                          "feature tests could not be imported or collected at the base commit; "
                          "that says nothing about the missing behaviour",
-                         [e["nodeid"] for e in feature.collection_errors])
+                         [e["nodeid"] for e in collection_errors])
         if not feature.tests and not feature.collection_errors:
             world.reject("W1_NO_FEATURE_TESTS", "the package has no feature tests")
         passing = [t.nodeid for t in feature.tests if t.outcome in ("passed", "xpassed")]
@@ -205,7 +247,8 @@ class BrokenWorld:
                          "feature tests already pass before the feature exists, so they do not "
                          "detect its absence", passing)
         crashed = [f"{t.nodeid} [{t.exc_type} in {t.phase}, raised in {t.raised_in}]"
-                   for t in feature.tests if t.failure_class == "runtime_error"]
+                   for t in feature.tests
+                   if t.failure_class == "runtime_error" and t.nodeid not in explained]
         if crashed:
             world.reject("W1_FEATURE_RUNTIME_ERROR",
                          "feature tests must fail through a behavioural assertion; these crash "
@@ -240,6 +283,9 @@ class BrokenWorld:
             "regression_tests": len(regression),
             "regression_passing": sum(t.outcome == "passed" for t in regression.values()),
         }
+        if ctx.package.checks_statement:
+            world.summary["feature_failing_by_declared_interface"] = len(by_interface)
+            world.summary["feature_files_blocked_by_declared_interface"] = sorted(blocked_files)
         return world
 
 
@@ -305,6 +351,8 @@ class CorrectWorld:
                          "the reference implementation breaks contracts that were verified at "
                          "the base commit", violated)
         self._check_overrides(world, package)
+        if package.checks_statement and package.public_interface:
+            self._check_declared_interface(world, ctx)
 
         world.summary = {
             "feature_tests": len(feature.tests),
@@ -314,6 +362,32 @@ class CorrectWorld:
         }
         return world
 
+
+    @staticmethod
+    def _check_declared_interface(world, ctx):
+        """What the statement promises a solver must be what the reference provides."""
+        package = ctx.package
+        reference = ctx.build_source("world2-source", [package.reference_patch])
+        adapter = detect_adapter(reference)
+        absent, different = [], []
+        for entry in package.public_interface:
+            label = entry["module"] + (f".{entry['name']}" if entry["name"] else "")
+            found = lookup(adapter, reference, package.python_path, entry)
+            if found is None:
+                absent.append(label)
+                continue
+            problem = signature_problem(adapter, entry, found)
+            if problem:
+                different.append(f"{label}: {problem}")
+        shutil.rmtree(reference, ignore_errors=True)
+        if absent:
+            world.reject("W2_DECLARED_INTERFACE_NOT_IMPLEMENTED",
+                         "the statement declares names the reference implementation does not "
+                         "define", absent)
+        if different:
+            world.reject("W2_DECLARED_SIGNATURE_MISMATCH",
+                         "the reference implementation's signatures differ from the statement",
+                         different)
 
     @staticmethod
     def _check_overrides(world, package):
@@ -473,3 +547,8 @@ def _killers(baseline, suites):
 
 
 PIPELINE = (BrokenWorld, CorrectWorld, DeceptionWorld)
+
+
+def pipeline_for(package):
+    """Schema 0.1 packages run the three worlds; later schemas pass the static gates first."""
+    return (StaticGates, *PIPELINE) if package.checks_statement else PIPELINE

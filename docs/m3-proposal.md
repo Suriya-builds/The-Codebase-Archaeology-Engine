@@ -1,7 +1,57 @@
 # M3 proposal: The Challenge Factory
 
-Status: **proposal, awaiting approval. Nothing in this document is implemented.**
+Status: **approved by TEAM EDITH on 14 November 2026, with the decisions in
+section 0.** Implementation status is tracked in the README, not here.
 Baseline: M1 and M2 as accepted at commit `7ccf936`.
+
+## 0. Approved decisions
+
+These override anything below that says otherwise.
+
+1. **World 1 extension: approved.** A missing public name counts as a
+   legitimate feature failure only when its exact interface is declared in
+   the task statement: module, public name and expected signature. The
+   failure must be attributed to that name, there must be no unrelated
+   collection or import failure, and the test must pass against the
+   reference. Existing packages keep their behaviour. Dedicated regression
+   tests come before any use in generation.
+2. **Validated and released: approved.** `validated` means every automated
+   check passes. `released` adds a human review with explicit approval,
+   storing reviewer identity, timestamp and hashes of the reviewed statement
+   and tests. Any later modification invalidates the release. Only released
+   tasks enter the submission.
+3. **Models: `claude-opus-5-5` for specification and implementation;
+   `claude-sonnet-5-5` for the test author, as an experiment.** Inputs are
+   isolated by role. Every call records exact model id, input, prompt and
+   output hashes, token usage, decisions and actual cost. Separate calls are
+   not assumed to give independent correctness. No temperature-based
+   reproducibility; full recording and replay instead.
+4. **Budget: up to 100 US dollars, conditionally.** Before spending: check
+   for organiser-provided credits, estimate from a small pilot, implement
+   usage accounting and a hard limit. Credentials are never committed.
+5. **Repositories:** the shopping-cart pilot, a task-management application
+   and a backend API application, with different behavioural and
+   architectural characteristics. Licence, test coverage, dependencies and
+   reproducibility are checked for each.
+6. **World 4: approved in principle.** Pluggable solver, three attempts per
+   task, no exposure of reference patches, hidden tests, contract maps or
+   generation prompts. It is evaluation evidence, not an automatic validity
+   gate. Not implemented until its protocol is documented and tested.
+7. **Organiser compatibility.** The official interface, supplied repository
+   and execution rules are authoritative. A compatibility checkpoint comes
+   before the generation pipeline is finalised. Python and pytest are not
+   assumed to be the target; language adapters stay modular.
+
+Non-negotiable: the generator is not its own judge; test generation is
+isolated from the reference; every criterion maps to a test and every test to
+a criterion; variation is behavioural; overrides stay explicit and auditable;
+no fabricated metrics; only released tasks are submitted; M1 and M2 stay
+stable; the frontend is secondary.
+
+Implementation order: the deterministic half (World 1 extension, schema,
+declared-interface validation, traceability, variation, override
+integration), then generation roles and replay, then repository
+generalisation and World 4, then the evidence viewer.
 
 ## 1. What M3 has to prove
 

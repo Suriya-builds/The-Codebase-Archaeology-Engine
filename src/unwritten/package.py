@@ -1,4 +1,4 @@
-"""Loading and validating a task package (schema 0.1).
+"""Loading and validating a task package (schema 0.1 or 0.2).
 
 Layout, fixed by convention:
 
@@ -11,6 +11,18 @@ Layout, fixed by convention:
     environment/Dockerfile  execution environment (dependencies only, no repo)
     contracts.json          optional; verified contracts this task must preserve
     tests/contracts/        optional; probes of those contracts (see contracts.attach)
+
+Schema 0.2 adds, in task.json, what makes a task checkable against its own
+statement:
+
+    "acceptance_criteria": [{"id": "AC-1", "text": "..."}]
+    "test_criteria": {"tests/feature/test_x.py::test_name": ["AC-1"]}
+    "public_interface": [{"module": "pkg.mod", "name": "Class.method",
+                          "kind": "function", "signature": "method(self, a, b=None)"}]
+
+``public_interface`` lists every public name a solver is expected to add or
+change. Only names listed there (and repeated in statement.md) may be missing
+at the base commit.
 
 A task that intentionally changes a verified contract declares it in task.json:
 
@@ -28,7 +40,13 @@ from pathlib import Path
 
 from unwritten.errors import PackageError
 
-SCHEMA_VERSION = "0.1"
+SCHEMA_VERSION = "0.2"
+SUPPORTED_SCHEMAS = ("0.1", "0.2")
+RELEASE_FILE = "release.json"
+INTERFACE_KINDS = ("function", "class", "attribute", "module")
+_DOTTED = re.compile(r"[A-Za-z_]\w*(\.[A-Za-z_]\w*)*")
+_CRITERION = re.compile(r"AC-\d+")
+_TEST_ID = re.compile(r"tests/feature/[\w./-]+\.py::[\w:]+")
 CONTRACTS_FILE = "contracts.json"
 _SHA = re.compile(r"[0-9a-f]{40}")
 _ID = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]*")
@@ -74,6 +92,19 @@ class TaskPackage:
     provenance: dict = field(default_factory=dict)
     contracts: tuple = ()
     contract_overrides: tuple = ()
+    schema_version: str = "0.1"
+    acceptance_criteria: tuple = ()     # ({"id", "text"}, ...)
+    test_criteria: dict = field(default_factory=dict)
+    public_interface: tuple = ()        # ({"module", "name", "kind", "signature"}, ...)
+
+    @property
+    def statement(self):
+        return self.root / "statement.md"
+
+    @property
+    def checks_statement(self):
+        """Schema 0.2 packages are held to their own statement."""
+        return self.schema_version != "0.1"
 
     @property
     def contract_tests(self):
@@ -130,8 +161,11 @@ def load_package(root):
         raise PackageError(["task.json must contain a JSON object"])
 
     problems = []
-    if raw.get("schema_version") != SCHEMA_VERSION:
-        problems.append(f"schema_version must be {SCHEMA_VERSION!r}")
+    schema_version = raw.get("schema_version")
+    if schema_version not in SUPPORTED_SCHEMAS:
+        problems.append(f"schema_version must be one of {', '.join(SUPPORTED_SCHEMAS)}")
+        schema_version = "0.1"
+    criteria, test_criteria, interface = _statement_fields(raw, problems, schema_version)
     task_id = raw.get("task_id")
     if not isinstance(task_id, str) or not _ID.fullmatch(task_id):
         problems.append("task_id must match [A-Za-z0-9][A-Za-z0-9._-]*")
@@ -240,8 +274,73 @@ def load_package(root):
         dockerfile=dockerfile, python_path=python_path, repo_test_paths=repo_test_paths,
         timeout_seconds=timeout, declared_mutants=tuple(declared), generate_mutants=generate,
         waivers=tuple(waivers), provenance=provenance, contracts=tuple(contracts),
-        contract_overrides=tuple(overrides),
+        contract_overrides=tuple(overrides), schema_version=schema_version,
+        acceptance_criteria=tuple(criteria), test_criteria=test_criteria,
+        public_interface=tuple(interface),
     )
+
+
+def _statement_fields(raw, problems, schema_version):
+    """Parse acceptance criteria, test mapping and declared interface (schema 0.2)."""
+    if schema_version == "0.1":
+        for key in ("acceptance_criteria", "test_criteria", "public_interface"):
+            if key in raw:
+                problems.append(f"{key} needs schema_version 0.2")
+        return [], {}, []
+    criteria, ids = [], set()
+    for index, entry in enumerate(raw.get("acceptance_criteria") or []):
+        entry = entry if isinstance(entry, dict) else {}
+        ident, text = entry.get("id"), entry.get("text")
+        if (not isinstance(ident, str) or not _CRITERION.fullmatch(ident) or ident in ids
+                or not isinstance(text, str) or not text.strip()):
+            problems.append(f"acceptance_criteria[{index}] needs a unique id like AC-1 and a text")
+            continue
+        ids.add(ident)
+        criteria.append({"id": ident, "text": text.strip()})
+    if not criteria:
+        problems.append("schema 0.2 needs at least one acceptance criterion")
+
+    test_criteria = {}
+    mapping = raw.get("test_criteria")
+    if not isinstance(mapping, dict) or not mapping:
+        problems.append("schema 0.2 needs test_criteria: feature test -> acceptance criteria")
+        mapping = {}
+    for test, wanted in mapping.items():
+        if not _TEST_ID.fullmatch(test):
+            problems.append(f"test_criteria key must look like tests/feature/<file>.py::<test>: {test!r}")
+        elif (not isinstance(wanted, list) or not wanted
+              or not all(isinstance(w, str) and w in ids for w in wanted)):
+            problems.append(f"test_criteria[{test!r}] must list known acceptance criteria")
+        else:
+            test_criteria[test] = list(wanted)
+
+    interface, seen = [], set()
+    declared = raw.get("public_interface", [])
+    if not isinstance(declared, list):
+        problems.append("public_interface must be a list")
+        declared = []
+    for index, entry in enumerate(declared):
+        label = f"public_interface[{index}]"
+        entry = entry if isinstance(entry, dict) else {}
+        module, name, kind, signature = (entry.get(k) for k in ("module", "name", "kind", "signature"))
+        if not isinstance(module, str) or not _DOTTED.fullmatch(module):
+            problems.append(f"{label}.module must be a dotted module name")
+        elif kind not in INTERFACE_KINDS:
+            problems.append(f"{label}.kind must be one of {', '.join(INTERFACE_KINDS)}")
+        elif kind != "module" and (not isinstance(name, str) or not _DOTTED.fullmatch(name)):
+            problems.append(f"{label}.name must be a (dotted) name inside the module")
+        elif any(part.startswith("_") for part in f"{module}.{name or ''}".split(".") if part):
+            problems.append(f"{label} declares a private name; only public names can be declared")
+        elif kind == "function" and (not isinstance(signature, str) or "(" not in signature):
+            problems.append(f"{label}.signature is required for a function, e.g. \"name(a, b=None)\"")
+        elif (module, name) in seen:
+            problems.append(f"{label} is declared twice")
+        else:
+            seen.add((module, name))
+            interface.append({"module": module, "name": name if kind != "module" else None,
+                              "kind": kind,
+                              "signature": signature if isinstance(signature, str) else None})
+    return criteria, test_criteria, interface
 
 
 def package_digest(root):
@@ -252,6 +351,8 @@ def package_digest(root):
         relative = path.relative_to(root)
         if "__pycache__" in relative.parts or ".pytest_cache" in relative.parts:
             continue
+        if relative.as_posix() == RELEASE_FILE:
+            continue  # the release record refers to this digest and cannot be part of it
         digest.update(relative.as_posix().encode("utf-8") + b"\0")
         digest.update(hashlib.sha256(path.read_bytes()).digest())
     return digest.hexdigest()

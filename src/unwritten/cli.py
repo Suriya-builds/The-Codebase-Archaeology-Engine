@@ -22,11 +22,20 @@ _SHOWN_ITEMS = 8
 
 def _world_line(world):
     s = world.summary
-    if world.status == "not_run" or "feature_tests" not in s and "mutants_executed" not in s:
+    if world.status == "not_run" or not ({"feature_tests", "mutants_executed",
+                                          "acceptance_criteria"} & set(s)):
         text = s.get("note", "")  # skipped, or stopped before anything ran
+    elif world.name == "gates":
+        text = (f"{s['acceptance_criteria']} criteria, {s['feature_test_functions']} feature "
+                f"tests, {s['declared_interface']} declared names: consistent"
+                if world.status == "passed" else "")
     elif world.name == "world1":
         text = (f"{s['feature_failing_by_assertion']}/{s['feature_tests']} feature tests fail by "
                 f"assertion; {s['regression_passing']}/{s['regression_tests']} regression pass")
+        declared = s.get("feature_failing_by_declared_interface", 0)
+        blocked = len(s.get("feature_files_blocked_by_declared_interface", ()))
+        if declared or blocked:
+            text += (f"; {declared} tests and {blocked} files fail on a declared missing name")
     elif world.name == "world2":
         text = (f"{s['feature_passing']}/{s['feature_tests']} feature tests pass; "
                 f"{s['regression_passing']}/{s['regression_tests']} regression pass")
@@ -37,7 +46,8 @@ def _world_line(world):
                 + (f"; {s['invalid']} without verdict" if s["invalid"] else ""))
     else:
         text = ""
-    return f"  {world.name[-1]}  {world.title:<16}{world.status.upper():<9}{text}"
+    label = "0" if world.name == "gates" else world.name[-1]
+    return f"  {label}  {world.title:<16}{world.status.upper():<9}{text}"
 
 
 def _progress(kind, *args):

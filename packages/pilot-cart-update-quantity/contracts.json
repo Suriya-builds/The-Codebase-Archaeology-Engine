@@ -1,0 +1,250 @@
+{
+  "contract_map_fingerprint": "3e79e740f4bee2a0d27094ee3a7be9f2eb0a4029f946b37352085d007f437008",
+  "commit": "667512bac0534ea742a7a7c3e3262142ac914c30",
+  "selection": "verified contracts whose source or related symbols lie in files the reference patch touches",
+  "touched_files": [
+    "shopcart/cart.py"
+  ],
+  "contracts": [
+    {
+      "id": "test:tests/test_cart.py::test_adding_same_product_merges_quantities",
+      "description": "adding same product merges quantities",
+      "category": "behaviour",
+      "origin": "repository",
+      "evidence_type": "existing_test",
+      "source": {
+        "file": "tests/test_cart.py",
+        "symbol": "test_adding_same_product_merges_quantities",
+        "line": 25
+      },
+      "probes": [
+        {
+          "suite": "regression_repo",
+          "nodeid": "tests/test_cart.py::test_adding_same_product_merges_quantities"
+        }
+      ]
+    },
+    {
+      "id": "test:tests/test_cart.py::test_empty_cart_totals_zero",
+      "description": "empty cart totals zero",
+      "category": "behaviour",
+      "origin": "repository",
+      "evidence_type": "existing_test",
+      "source": {
+        "file": "tests/test_cart.py",
+        "symbol": "test_empty_cart_totals_zero",
+        "line": 11
+      },
+      "probes": [
+        {
+          "suite": "regression_repo",
+          "nodeid": "tests/test_cart.py::test_empty_cart_totals_zero"
+        }
+      ]
+    },
+    {
+      "id": "test:tests/test_cart.py::test_invalid_quantity_is_rejected",
+      "description": "invalid quantity is rejected",
+      "category": "behaviour",
+      "origin": "repository",
+      "evidence_type": "existing_test",
+      "source": {
+        "file": "tests/test_cart.py",
+        "symbol": "test_invalid_quantity_is_rejected",
+        "line": 53
+      },
+      "probes": [
+        {
+          "suite": "regression_repo",
+          "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[-1]"
+        },
+        {
+          "suite": "regression_repo",
+          "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[0]"
+        },
+        {
+          "suite": "regression_repo",
+          "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[1.5]"
+        },
+        {
+          "suite": "regression_repo",
+          "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[2]"
+        },
+        {
+          "suite": "regression_repo",
+          "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[True]"
+        }
+      ]
+    },
+    {
+      "id": "test:tests/test_cart.py::test_lines_keep_insertion_order",
+      "description": "lines keep insertion order",
+      "category": "behaviour",
+      "origin": "repository",
+      "evidence_type": "existing_test",
+      "source": {
+        "file": "tests/test_cart.py",
+        "symbol": "test_lines_keep_insertion_order",
+        "line": 32
+      },
+      "probes": [
+        {
+          "suite": "regression_repo",
+          "nodeid": "tests/test_cart.py::test_lines_keep_insertion_order"
+        }
+      ]
+    },
+    {
+      "id": "test:tests/test_cart.py::test_remove_deletes_line",
+      "description": "remove deletes line",
+      "category": "behaviour",
+      "origin": "repository",
+      "evidence_type": "existing_test",
+      "source": {
+        "file": "tests/test_cart.py",
+        "symbol": "test_remove_deletes_line",
+        "line": 39
+      },
+      "probes": [
+        {
+          "suite": "regression_repo",
+          "nodeid": "tests/test_cart.py::test_remove_deletes_line"
+        }
+      ]
+    },
+    {
+      "id": "test:tests/test_cart.py::test_subtotal_sums_line_totals",
+      "description": "subtotal sums line totals",
+      "category": "behaviour",
+      "origin": "repository",
+      "evidence_type": "existing_test",
+      "source": {
+        "file": "tests/test_cart.py",
+        "symbol": "test_subtotal_sums_line_totals",
+        "line": 18
+      },
+      "probes": [
+        {
+          "suite": "regression_repo",
+          "nodeid": "tests/test_cart.py::test_subtotal_sums_line_totals"
+        }
+      ]
+    },
+    {
+      "id": "test:tests/test_discounts.py::test_discount_amount_rounds_half_up",
+      "description": "discount amount rounds half up",
+      "category": "behaviour",
+      "origin": "repository",
+      "evidence_type": "existing_test",
+      "source": {
+        "file": "tests/test_discounts.py",
+        "symbol": "test_discount_amount_rounds_half_up",
+        "line": 23
+      },
+      "probes": [
+        {
+          "suite": "regression_repo",
+          "nodeid": "tests/test_discounts.py::test_discount_amount_rounds_half_up"
+        }
+      ]
+    },
+    {
+      "id": "test:tests/test_discounts.py::test_full_discount_makes_cart_free",
+      "description": "full discount makes cart free",
+      "category": "behaviour",
+      "origin": "repository",
+      "evidence_type": "existing_test",
+      "source": {
+        "file": "tests/test_discounts.py",
+        "symbol": "test_full_discount_makes_cart_free",
+        "line": 30
+      },
+      "probes": [
+        {
+          "suite": "regression_repo",
+          "nodeid": "tests/test_discounts.py::test_full_discount_makes_cart_free"
+        }
+      ]
+    },
+    {
+      "id": "test:tests/test_discounts.py::test_percentage_discount_applies_to_whole_subtotal",
+      "description": "percentage discount applies to whole subtotal",
+      "category": "behaviour",
+      "origin": "repository",
+      "evidence_type": "existing_test",
+      "source": {
+        "file": "tests/test_discounts.py",
+        "symbol": "test_percentage_discount_applies_to_whole_subtotal",
+        "line": 18
+      },
+      "probes": [
+        {
+          "suite": "regression_repo",
+          "nodeid": "tests/test_discounts.py::test_percentage_discount_applies_to_whole_subtotal"
+        }
+      ]
+    },
+    {
+      "id": "guard:shopcart/cart.py:_check_quantity:489e0964",
+      "description": "`_check_quantity` raises `InvalidQuantityError` when `isinstance(quantity, bool) or not isinstance(quantity, int)` (\"quantity must be an integer\")",
+      "category": "type_validation",
+      "origin": "static_analysis",
+      "evidence_type": "guard_clause",
+      "source": {
+        "file": "shopcart/cart.py",
+        "symbol": "_check_quantity",
+        "line": 54
+      },
+      "probes": [
+        {
+          "suite": "regression_repo",
+          "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[1.5]"
+        },
+        {
+          "suite": "regression_repo",
+          "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[2]"
+        },
+        {
+          "suite": "regression_repo",
+          "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[True]"
+        }
+      ],
+      "guard": {
+        "file": "shopcart/cart.py",
+        "symbol": "_check_quantity",
+        "key": "489e0964",
+        "condition": "isinstance(quantity, bool) or not isinstance(quantity, int)",
+        "exception": "InvalidQuantityError"
+      }
+    },
+    {
+      "id": "guard:shopcart/cart.py:_check_quantity:ce994315",
+      "description": "`_check_quantity` raises `InvalidQuantityError` when `quantity < 1` (\"quantity must be at least 1\")",
+      "category": "value_validation",
+      "origin": "static_analysis",
+      "evidence_type": "guard_clause",
+      "source": {
+        "file": "shopcart/cart.py",
+        "symbol": "_check_quantity",
+        "line": 56
+      },
+      "probes": [
+        {
+          "suite": "regression_repo",
+          "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[-1]"
+        },
+        {
+          "suite": "regression_repo",
+          "nodeid": "tests/test_cart.py::test_invalid_quantity_is_rejected[0]"
+        }
+      ],
+      "guard": {
+        "file": "shopcart/cart.py",
+        "symbol": "_check_quantity",
+        "key": "ce994315",
+        "condition": "quantity < 1",
+        "exception": "InvalidQuantityError"
+      }
+    }
+  ]
+}

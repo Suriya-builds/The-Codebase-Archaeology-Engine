@@ -1,0 +1,13 @@
+diff --git a/shopcart/cart.py b/shopcart/cart.py
+index 2a90aa4..d52c1e4 100644
+--- a/shopcart/cart.py
++++ b/shopcart/cart.py
+@@ -43,7 +43,7 @@ class Cart:
+         if quantity == 0:
+             del self._lines[sku]
+             return
+-        self._lines[sku] = CartLine(self._lines[sku].product, quantity)
++        self._lines[sku] = CartLine(self._lines[sku].product, self._lines[sku].quantity + quantity)
+ 
+     def lines(self):
+         """Lines in the order their products were first added."""

@@ -1,0 +1,24 @@
+diff --git a/shopcart/cart.py b/shopcart/cart.py
+index 5d22266..2a90aa4 100644
+--- a/shopcart/cart.py
++++ b/shopcart/cart.py
+@@ -32,6 +32,19 @@ class Cart:
+             raise KeyError(sku)
+         del self._lines[sku]
+ 
++    def update_quantity(self, sku, quantity):
++        """Set the quantity of a product already in the cart; zero removes the line."""
++        if sku not in self._lines:
++            raise KeyError(sku)
++        if isinstance(quantity, bool) or not isinstance(quantity, int):
++            raise InvalidQuantityError("quantity must be an integer")
++        if quantity < 0:
++            raise InvalidQuantityError("quantity must not be negative")
++        if quantity == 0:
++            del self._lines[sku]
++            return
++        self._lines[sku] = CartLine(self._lines[sku].product, quantity)
++
+     def lines(self):
+         """Lines in the order their products were first added."""
+         return list(self._lines.values())

@@ -9,9 +9,9 @@ from pathlib import Path
 
 from unwritten import __version__
 from unwritten.errors import HarnessError, PackageError
-from unwritten.package import SCHEMA_VERSION, load_package, package_digest
+from unwritten.package import SCHEMA_VERSION, SUPPORTED_SCHEMAS, load_package, package_digest
 from unwritten.workspace import resolve_commit
-from unwritten.worlds import PIPELINE, RunContext
+from unwritten.worlds import RunContext, pipeline_for
 
 EVIDENCE_FILE = "evidence.json"
 
@@ -73,12 +73,13 @@ def verify_package(package_dir, repo, runner, out_dir, repeat=2, progress=None, 
     except PackageError as exc:
         evidence["verdict"] = "rejected"
         evidence["reasons"] = [{"code": "PACKAGE_INVALID", "world": "package",
-                                "message": "the package does not follow schema " + SCHEMA_VERSION,
+                                "message": "the package does not follow schema " + " or ".join(SUPPORTED_SCHEMAS),
                                 "items": exc.problems, "runs": []}]
         return _finish(evidence, out_dir, started, clock)
 
     tree = resolve_commit(repo, package.commit)
-    evidence["task"].update(task_id=package.task_id, title=package.title)
+    evidence["task"].update(task_id=package.task_id, title=package.title,
+                            schema_version=package.schema_version)
     evidence["repository"] = {"name": package.repo_name, "commit": package.commit, "tree": tree}
     environment = runner.prepare(package)
     evidence["environment"] = environment
@@ -101,7 +102,7 @@ def verify_package(package_dir, repo, runner, out_dir, repeat=2, progress=None, 
             progress("run", index, repeat)
             ctx = RunContext(package, repo, runner, scratch, out_dir, f"run{index}", jobs)
             worlds = {}
-            for world_class in PIPELINE:
+            for world_class in pipeline_for(package):
                 world = world_class().run(ctx, worlds)
                 worlds[world.name] = world
                 progress("world", world)

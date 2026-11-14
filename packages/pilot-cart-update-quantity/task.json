@@ -1,0 +1,99 @@
+{
+  "schema_version": "0.2",
+  "task_id": "pilot-cart-update-quantity",
+  "title": "Update the quantity of a cart line",
+  "repo": {
+    "name": "unwritten-pilot",
+    "commit": "667512bac0534ea742a7a7c3e3262142ac914c30"
+  },
+  "execution": {
+    "dockerfile": "environment/Dockerfile",
+    "python_path": [
+      "."
+    ],
+    "repo_test_paths": [
+      "tests"
+    ],
+    "timeout_seconds": 120
+  },
+  "acceptance_criteria": [
+    {
+      "id": "AC-1",
+      "text": "A positive integer quantity replaces the line's quantity; totals follow."
+    },
+    {
+      "id": "AC-2",
+      "text": "A quantity of 0 removes the line."
+    },
+    {
+      "id": "AC-3",
+      "text": "An unknown sku raises KeyError, before any quantity check, and changes nothing."
+    },
+    {
+      "id": "AC-4",
+      "text": "A negative or non-integer quantity raises InvalidQuantityError and changes nothing."
+    },
+    {
+      "id": "AC-5",
+      "text": "An updated line keeps its position in the cart."
+    }
+  ],
+  "public_interface": [
+    {
+      "module": "shopcart.cart",
+      "name": "Cart.update_quantity",
+      "kind": "function",
+      "signature": "update_quantity(self, sku, quantity)"
+    }
+  ],
+  "test_criteria": {
+    "tests/feature/test_update_quantity.py::test_update_replaces_the_quantity": [
+      "AC-1"
+    ],
+    "tests/feature/test_update_quantity.py::test_update_can_lower_the_quantity_and_totals_follow": [
+      "AC-1"
+    ],
+    "tests/feature/test_update_quantity.py::test_zero_removes_the_line": [
+      "AC-2"
+    ],
+    "tests/feature/test_update_quantity.py::test_unknown_sku_raises_key_error_and_changes_nothing": [
+      "AC-3"
+    ],
+    "tests/feature/test_update_quantity.py::test_unknown_sku_is_reported_before_an_invalid_quantity": [
+      "AC-3"
+    ],
+    "tests/feature/test_update_quantity.py::test_invalid_quantity_is_rejected_and_changes_nothing": [
+      "AC-4"
+    ],
+    "tests/feature/test_update_quantity.py::test_updated_line_keeps_its_position": [
+      "AC-5",
+      "AC-1"
+    ]
+  },
+  "mutation": {
+    "generate": true,
+    "declared": [
+      {
+        "id": "zero-keeps-empty-line",
+        "patch": "mutants/zero-keeps-empty-line.patch",
+        "description": "A quantity of 0 leaves a line with zero units instead of removing it."
+      },
+      {
+        "id": "adds-instead-of-replacing",
+        "patch": "mutants/adds-instead-of-replacing.patch",
+        "description": "The new quantity is added to the old one, as Cart.add does."
+      },
+      {
+        "id": "moves-line-to-end",
+        "patch": "mutants/moves-line-to-end.patch",
+        "description": "The updated line is re-inserted and loses its position."
+      }
+    ],
+    "waivers": []
+  },
+  "provenance": {
+    "authored_by": "human",
+    "llm_calls": 0,
+    "notes": "Hand-written schema 0.2 fixture for milestone M3a: a task that adds a new public name. No part of this package was generated."
+  }
+}

@@ -31,6 +31,8 @@ class TestResult:
     exc_type: str | None = None
     phase: str | None = None    # setup | call | teardown, for failures
     raised_in: str | None = None
+    raised_in_tests: bool | None = None
+    missing: dict | None = None   # the name that was not there, when the failure is of that kind
     message: str | None = None
     detail: str | None = None
 
@@ -76,7 +78,8 @@ def classify_test(raw):
 
     def failed(phase, name, outcome, failure_class):
         return TestResult(nodeid, outcome, failure_class, phase.get("exc_type"), name,
-                          phase.get("raised_in"), phase.get("message"), phase.get("detail"))
+                          phase.get("raised_in"), phase.get("raised_in_tests"),
+                          phase.get("missing"), phase.get("message"), phase.get("detail"))
 
     if setup and setup["outcome"] == "failed":
         return failed(setup, "setup", "error", "runtime_error")
